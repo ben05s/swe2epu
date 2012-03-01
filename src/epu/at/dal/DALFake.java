@@ -8,6 +8,8 @@ public class DALFake implements DALInterface{
 	
 	ArrayList<Angebot> angebot_liste = new ArrayList<Angebot>();
 	ArrayList<Kunde> kunde_liste = new ArrayList<Kunde>();
+	ArrayList<AusgRechnung> ausgrechnung_liste = new ArrayList<AusgRechnung>();
+	ArrayList<Rechnungszeile> rechnungszeile_liste = new ArrayList<Rechnungszeile>();
 	
 	public DALFake() {
 		saveKunde(getNewKunde(1, "Benny", "Steindl", "Möbel AG", "b.s80@gmx.at", "06604850184", getAngebote()));
@@ -16,6 +18,7 @@ public class DALFake implements DALInterface{
 		saveAngebot(getNewAngebot(1,getKunden().get(0),200.50,180,new Date(10102012),0.65));
 		saveAngebot(getNewAngebot(2,getKunden().get(1),2100,100,new Date(10102012),0.80));
 		saveAngebot(getNewAngebot(3,getKunden().get(2),500.00,180,new Date(10102012),0.55));
+		
 	}
 
 	public Angebot getNewAngebot(int id, Kunde kunde, double summe, int dauer, Date datum, double chance) {
@@ -102,14 +105,12 @@ public class DALFake implements DALInterface{
 	
 	@Override
 	public ArrayList<Rechnungszeile> getRechnungszeilen() {
-		// TODO Auto-generated method stub
-		return null;
+		return rechnungszeile_liste;
 	}
 
 	@Override
 	public ArrayList<AusgRechnung> getAusgRechnungen() {
-		// TODO Auto-generated method stub
-		return null;
+		return ausgrechnung_liste;
 	}
 
 	@Override
@@ -138,40 +139,51 @@ public class DALFake implements DALInterface{
 
 	@Override
 	public Rechnungszeile getRechnungszeile(int id) {
+		for(int i=0;i<rechnungszeile_liste.size();i++) {
+			if(rechnungszeile_liste.get(i).getID()==id) {
+				return rechnungszeile_liste.get(i);
+			}
+		}
 		return null;
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void saveRechnungszeile(Rechnungszeile rzeile) {
-		// TODO Auto-generated method stub
-		
+		rechnungszeile_liste.add(rzeile);
 	}
 
 	@Override
 	public void deleteRechnungszeile(Rechnungszeile rzeile) {
-		// TODO Auto-generated method stub
-		
+		for(int i=0;i<rechnungszeile_liste.size();i++) {
+			if(rechnungszeile_liste.get(i)==rzeile) {
+				rechnungszeile_liste.remove(i);
+			}
+		}
 	}
 
 	@Override
 	public AusgRechnung getAusgRechnung(int id) {
+		for(int i=0;i<ausgrechnung_liste.size();i++) {
+			if(ausgrechnung_liste.get(i).getID()==id) {
+				return ausgrechnung_liste.get(i);
+			}
+		}
 		return null;
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void saveAusgRechnung(AusgRechnung arechnung) {
-		// TODO Auto-generated method stub
-		
+		ausgrechnung_liste.add(arechnung);
 	}
 
 	@Override
 	public void deleteAusgrechnung(AusgRechnung arechnung) {
-		// TODO Auto-generated method stub
-		
+		for(int i=0;i<ausgrechnung_liste.size();i++) {
+			if(ausgrechnung_liste.get(i)==arechnung) {
+				ausgrechnung_liste.remove(i);
+			}
+		}
 	}
 
 	@Override
