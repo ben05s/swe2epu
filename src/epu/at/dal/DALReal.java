@@ -1,14 +1,11 @@
 package epu.at.dal;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import DataObjects.*;
+//SQL Light
 public class DALReal implements DALInterface{
-
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public ArrayList<Angebot> getAngebote() {
@@ -178,5 +175,27 @@ public class DALReal implements DALInterface{
 		
 	}
 
+	@Override
+	public ArrayList<Kunde> getKunden() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public Kunde getKunde(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveKunde(Kunde kunde) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteKunde(Kunde kunde) {
+		// TODO Auto-generated method stub
+		
+	}
 }

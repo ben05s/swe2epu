@@ -1,10 +1,12 @@
 package epu.at.dal;
 
 import java.util.ArrayList;
+import java.util.Date;
+import DataObjects.*;
 
 public interface DALInterface {
-	public void init();
 	public ArrayList<Angebot> getAngebote();
+	public ArrayList<Kunde> getKunden();
 	public ArrayList<Rechnungszeile> getRechnungszeilen();
 	public ArrayList<AusgRechnung> getAusgRechnungen();
 	public ArrayList<EingRechnung> getEingRechnungen();
@@ -15,6 +17,9 @@ public interface DALInterface {
 	public Angebot getAngebot(int id);
 	public void saveAngebot(Angebot angebot);
 	public void deleteAngebot(Angebot angebot);
+	public Kunde getKunde(int id);
+	public void saveKunde(Kunde kunde);
+	public void deleteKunde(Kunde kunde);
 	public Rechnungszeile getRechnungszeile(int id);
 	public void saveRechnungszeile(Rechnungszeile rzeile);
 	public void deleteRechnungszeile(Rechnungszeile rzeile);
