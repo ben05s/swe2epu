@@ -1,4 +1,4 @@
-package epu.at.main;
+package at.epu.PresentationLayer;
 
 public class EpuMain {
 	

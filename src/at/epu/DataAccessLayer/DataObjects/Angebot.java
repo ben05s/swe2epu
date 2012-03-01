@@ -1,4 +1,4 @@
-package DataObjects;
+package at.epu.DataAccessLayer.DataObjects;
 
 import java.util.Date;
 

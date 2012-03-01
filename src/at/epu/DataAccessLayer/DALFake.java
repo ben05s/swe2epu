@@ -1,8 +1,9 @@
-package epu.at.dal;
+package at.epu.DataAccessLayer;
 
 import java.util.ArrayList;
 import java.util.Date;
-import DataObjects.*;
+
+import at.epu.DataAccessLayer.DataObjects.*;
 
 public class DALFake implements DALInterface{
 	
