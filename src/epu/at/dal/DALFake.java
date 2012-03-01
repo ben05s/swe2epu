@@ -18,7 +18,6 @@ public class DALFake implements DALInterface{
 		saveAngebot(getNewAngebot(1,getKunden().get(0),200.50,180,new Date(10102012),0.65));
 		saveAngebot(getNewAngebot(2,getKunden().get(1),2100,100,new Date(10102012),0.80));
 		saveAngebot(getNewAngebot(3,getKunden().get(2),500.00,180,new Date(10102012),0.55));
-		
 	}
 
 	public Angebot getNewAngebot(int id, Kunde kunde, double summe, int dauer, Date datum, double chance) {
@@ -103,6 +102,20 @@ public class DALFake implements DALInterface{
 		}
 	}
 	
+	public Rechnungszeile getNewRechnungszeile(int id, AusgRechnung arechnung, Angebot angebot, 
+			String status, String kommentar, int anzahl, double steuern, double betrag) {
+		Rechnungszeile rzeile = new Rechnungszeile();
+		rzeile.setID(id);
+		rzeile.setAusgRechnung(arechnung);
+		rzeile.setAngebot(angebot);
+		rzeile.setStatus(status);
+		rzeile.setKommentar(kommentar);
+		rzeile.setAnzahl(anzahl);
+		rzeile.setSteuern(steuern);
+		rzeile.setBetrag(betrag);
+		return rzeile;
+	}
+	
 	@Override
 	public ArrayList<Rechnungszeile> getRechnungszeilen() {
 		return rechnungszeile_liste;
@@ -160,6 +173,15 @@ public class DALFake implements DALInterface{
 				rechnungszeile_liste.remove(i);
 			}
 		}
+	}
+	
+	public AusgRechnung getNewAusgRechnung(int id, ArrayList<Rechnungszeile> rzeile_liste, ArrayList<Buchungszeile> bzeile_liste, Kunde kunde) {
+		AusgRechnung ausgrechnung = new AusgRechnung();
+		ausgrechnung.setID(id);
+		ausgrechnung.setRechnungszeilen(rzeile_liste);
+		ausgrechnung.setBuchungszeilen(bzeile_liste);
+		ausgrechnung.setKunde(kunde);
+		return ausgrechnung;
 	}
 
 	@Override

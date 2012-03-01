@@ -25,8 +25,8 @@ public class AusgRechnung {
 		}
 	}
 	
-	public void setRechnungszeilen(Rechnungszeile rechnungszeile) {
-		rechnungszeile_liste_.add(rechnungszeile);
+	public void setRechnungszeilen(ArrayList<Rechnungszeile> rechnungszeile) {
+		rechnungszeile_liste_.addAll(rechnungszeile);
 	}
 	
 	public ArrayList<Buchungszeile> getBuchungszeilen() {
@@ -38,8 +38,8 @@ public class AusgRechnung {
 		}
 	}
 	
-	public void setBuchungszeilen(Buchungszeile buchungszeile) {
-		buchungszeile_liste_.add(buchungszeile);
+	public void setBuchungszeilen(ArrayList<Buchungszeile> buchungszeile) {
+		buchungszeile_liste_.addAll(buchungszeile);
 	}
 	
 	public Kunde getKunde() {
