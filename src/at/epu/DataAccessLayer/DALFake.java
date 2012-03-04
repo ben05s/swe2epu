@@ -1,18 +1,9 @@
 package at.epu.DataAccessLayer;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import at.epu.DataAccessLayer.DataModels.BankAccountDataModel;
-import at.epu.DataAccessLayer.DataModels.BillDataModel;
-import at.epu.DataAccessLayer.DataModels.ContactDataModel;
-import at.epu.DataAccessLayer.DataModels.CustomerDataModel;
-import at.epu.DataAccessLayer.DataModels.OfferDataModel;
-import at.epu.DataAccessLayer.DataModels.ProjectDataModel;
-import at.epu.DataAccessLayer.DataObjects.*;
+import at.epu.DataAccessLayer.DataModels.*;
+import at.epu.DataAccessLayer.DataModels.MockModels.*;
 
 public class DALFake implements DALInterface {
-
 	@Override
 	public ContactDataModel getContactDataModel() {
 		return new MockContactDataModel();
@@ -20,32 +11,26 @@ public class DALFake implements DALInterface {
 
 	@Override
 	public CustomerDataModel getCustomerDataModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockCustomerDataModel();
 	}
 
 	@Override
 	public OfferDataModel getOfferDataModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockOfferDataModel();
 	}
 
 	@Override
 	public ProjectDataModel getProjectDataModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockProjectDataModel();
 	}
 
 	@Override
 	public BillDataModel getBillDataModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockBillDataModel();
 	}
 
 	@Override
 	public BankAccountDataModel getBankAccountDataModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockBankAccountDataModel();
 	}
-	
 }

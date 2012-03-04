@@ -12,6 +12,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
+import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.DatabaseManager;
+
 public class MainWindow {
 
 	JFrame frmBackoffice;
@@ -21,6 +24,9 @@ public class MainWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
+		appManager.applicationStarted();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -52,8 +58,10 @@ public class MainWindow {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmBackoffice.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		addViewToMainControl("ASDF", new GenericSplitTableView(new ArrayList<JButton>(),
-							 new DefaultTableModel()));
+		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+		
+		addViewToMainControl("Kontakte", new GenericSplitTableView(new ArrayList<JButton>(),
+							 databaseManager.getDataSource().getContactDataModel()));
 	}
 	
 	/**

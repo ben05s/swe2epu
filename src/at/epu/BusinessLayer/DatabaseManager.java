@@ -1,7 +1,7 @@
 package at.epu.BusinessLayer;
 
 import at.epu.DataAccessLayer.*;
-import javax.naming.ConfigurationException;
+import java.lang.NullPointerException;
 
 public class DatabaseManager {
 	DALInterface dataSource = null;
@@ -10,9 +10,9 @@ public class DatabaseManager {
 		dataSource = dataSource_;
 	}
 	
-	public DALInterface getDataSource() throws ConfigurationException {
+	public DALInterface getDataSource() {
 		if(dataSource == null) {
-			throw new ConfigurationException("Data source was null. You must supply a data source first.");
+			throw new NullPointerException("Data source was null. You must supply a data source first.");
 		}
 		
 		return dataSource;

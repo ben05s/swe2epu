@@ -9,11 +9,17 @@ public class MockContactDataModel extends ContactDataModel {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	@Override
+	public String getColumnName(int column)
+	{
+		return "ASDF";
+	}
+	
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
