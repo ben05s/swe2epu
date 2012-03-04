@@ -4,7 +4,7 @@ import at.epu.DataAccessLayer.*;
 
 public class ApplicationManager {
 	static ApplicationManager instance = null;
-	DatabaseManager databaseManager = null;
+	DatabaseManager databaseManager    = null;
 	
 	private ApplicationManager() {
 		databaseManager = new DatabaseManager();
@@ -24,7 +24,7 @@ public class ApplicationManager {
 	}
 	
 	/**
-	 * Teardown code.
+	 * Tear-down code.
 	 */
 	public void applicationEnded() {
 		

@@ -4,6 +4,33 @@ import at.epu.DataAccessLayer.DataModels.ContactDataModel;
 
 public class MockContactDataModel extends ContactDataModel {
 	private static final long serialVersionUID = 5426244662861198543L;
+	String[] columnNames;
+	Object[][] data;
+	
+	public MockContactDataModel() {
+		
+		String[] columnNames_ = {"First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+		
+		Object[][] data_ = {
+			    {"Kathy", "Smith",
+			     "Snowboarding", new Integer(5), new Boolean(false)},
+			    {"John", "Doe",
+			     "Rowing", new Integer(3), new Boolean(true)},
+			    {"Sue", "Black",
+			     "Knitting", new Integer(2), new Boolean(false)},
+			    {"Jane", "White",
+			     "Speed reading", new Integer(20), new Boolean(true)},
+			    {"Joe", "Brown",
+			     "Pool", new Integer(10), new Boolean(false)}
+			};
+		
+		columnNames = columnNames_;
+		data = data_;
+	}
 
 	public void filterDataModel(String filterString) {
 		// TODO Auto-generated method stub
@@ -13,25 +40,22 @@ public class MockContactDataModel extends ContactDataModel {
 	@Override
 	public String getColumnName(int column)
 	{
-		return "ASDF";
+		return columnNames[column];
 	}
 	
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 1;
+		return columnNames.length;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return data.length;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return data[rowIndex][columnIndex];
 	}
 
 }

@@ -59,7 +59,11 @@ public class MainWindow {
 		
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
-		addViewToMainControl("Kontakte", new GenericSplitTableView(new ArrayList<JButton>(),
+		ArrayList<JButton> buttonList = new ArrayList<JButton>();
+		buttonList.add(new JButton("Finden"));
+		buttonList.add(new JButton("Hinzufügen"));
+
+		addViewToMainControl("Kontakte", new GenericSplitTableView(buttonList,
 							 databaseManager.getDataSource().getContactDataModel()));
 	}
 	

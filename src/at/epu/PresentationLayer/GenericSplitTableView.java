@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
 import java.awt.SystemColor;
+import javax.swing.JScrollPane;
 
 public class GenericSplitTableView extends JPanel {
 
@@ -25,9 +26,6 @@ public class GenericSplitTableView extends JPanel {
 	 */
 	public GenericSplitTableView(List<JButton> buttons, TableModel tableModel) {
 		setBackground(SystemColor.control);
-		buttons.add(new JButton("Finden"));
-		buttons.add(new JButton("Hinzufügen"));
-		buttons.add(new JButton("Zeiten buchen"));
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -47,11 +45,6 @@ public class GenericSplitTableView extends JPanel {
 		
 		table = new JTable(tableModel);
 		table.setBackground(Color.ORANGE);
-		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.anchor = GridBagConstraints.NORTHEAST;
-		gbc_table.gridx = 1;
-		gbc_table.gridy = 0;
-		add(table, gbc_table);
 		
 		GridBagLayout btnGridBagLayout = new GridBagLayout();
 		btnGridBagLayout.columnWidths = new int[]{0, 0};
@@ -59,6 +52,16 @@ public class GenericSplitTableView extends JPanel {
 		btnGridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		btnGridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(btnGridBagLayout);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.HORIZONTAL;
+		gbc_scrollPane.anchor = GridBagConstraints.NORTHEAST;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 0;
+		add(scrollPane, gbc_scrollPane);
+		scrollPane.setBackground(Color.GRAY);
+		scrollPane.setViewportView(table);
 		
 		int i = 0;
 		for(JButton button : buttons) {
