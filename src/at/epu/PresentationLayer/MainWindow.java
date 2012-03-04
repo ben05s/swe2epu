@@ -1,18 +1,15 @@
 package at.epu.PresentationLayer;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 
-import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.PresentationLayer.ViewControllers.ContactViewController;
+import at.epu.PresentationLayer.ViewControllers.ViewController;
 
 public class MainWindow {
 
@@ -57,36 +54,14 @@ public class MainWindow {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmBackoffice.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-		
-		ArrayList<JButton> buttonList = new ArrayList<JButton>();
-		buttonList.add(new JButton("Finden"));
-		buttonList.add(new JButton("Hinzufügen"));
-
-		addViewToMainControl("Kontakte", new GenericSplitTableView(buttonList,
-							 databaseManager.getDataSource().getContactDataModel()));
+		addViewToMainControl(new ContactViewController());
 	}
 	
 	/**
 	 * This method adds a tab to the main menu control.
-	 * 
-	 * @param title
-	 * @param icon
-	 * @param component
 	 */
-	public void addViewToMainControl(String title, Icon icon, Component component)
+	public void addViewToMainControl(ViewController viewController)
 	{
-		tabbedPane.addTab(title, icon, component);
-	}
-	
-	/**
-	 * This method adds a tab to the main menu control.
-	 * 
-	 * @param title
-	 * @param component
-	 */
-	public void addViewToMainControl(String title, Component component)
-	{
-		tabbedPane.addTab(title, component);
+		tabbedPane.addTab(viewController.getTitle(), viewController.getIcon(), viewController.getRootComponent());
 	}
 }
