@@ -7,7 +7,6 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;

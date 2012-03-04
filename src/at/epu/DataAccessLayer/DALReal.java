@@ -1,12 +1,6 @@
 package at.epu.DataAccessLayer;
 
 import at.epu.DataAccessLayer.DataModels.*;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockBankAccountDataModel;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockBillDataModel;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockContactDataModel;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockCustomerDataModel;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockOfferDataModel;
-import at.epu.DataAccessLayer.DataModels.MockModels.MockProjectDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.*;
 
 public class DALReal implements DALInterface {
