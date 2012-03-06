@@ -1,26 +1,26 @@
 package at.epu.DataAccessLayer.DataModels.MockModels;
 
-import at.epu.DataAccessLayer.DataModels.ProjectDataModel;
-
+import at.epu.DataAccessLayer.DataModels.OutBillDataModel;
 /*
- * ID(PK) | Angebot_ID(FK) | AusgRechnung_ID(FK/PK)
+ * ID(PK) | Rechnungszeile_ID(FK/PK) | Kunde_ID(FK) | Buchungszeile_ID
  */
-public class MockProjectDataModel extends ProjectDataModel {
-	private static final long serialVersionUID = -4733926290403533192L;
+public class MockOutBillDataModel extends OutBillDataModel {
+	private static final long serialVersionUID = -8018265297745567701L;
 	private String[] columnNames;
 	private Object[][] data;
 	
-	public MockProjectDataModel() {
+	public MockOutBillDataModel() {
 		
 		String [] columnNames_ = {"ID",
-				"Angebot_ID",
-				"AusgRechnung_ID"};
+				"Rechnungszeile_ID",
+				"Kunde_ID",
+				"Buchungszeile_ID"};
 
 		Object [][] data_ = {
-				{new Integer(1), new Integer(2), new Integer(1)},
-				{new Integer(1), new Integer(2), new Integer(2)},
-				{new Integer(2), new Integer(1), null},
-				{new Integer(3), new Integer(3), new Integer(3)}
+				{new Integer(1), new Integer(1), new Integer(1), new Integer(1)},
+				{new Integer(1), new Integer(2), new Integer(1), new Integer(1)},
+				{new Integer(2), new Integer(3), new Integer(2), new Integer(2)},
+				{new Integer(3), new Integer(4), new Integer(3), new Integer(3)}
 		};
 		columnNames = columnNames_;
 		data = data_;

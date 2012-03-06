@@ -48,7 +48,7 @@ public class MainWindow {
 	private void initialize() {
 		frmBackoffice = new JFrame();
 		frmBackoffice.setTitle("Backoffice");
-		frmBackoffice.setBounds(100, 100, 1024, 768);
+		frmBackoffice.setBounds(100, 100, 800, 600);
 		frmBackoffice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);

@@ -1,7 +1,9 @@
 package at.epu.DataAccessLayer.DataModels.MockModels;
 
 import at.epu.DataAccessLayer.DataModels.ContactDataModel;
-
+/*
+ * ID | Vorname | Nachname | Adresse | Email | Telefon 
+ */
 public class MockContactDataModel extends ContactDataModel {
 	private static final long serialVersionUID = 5426244662861198543L;
 	String[] columnNames;
@@ -9,23 +11,20 @@ public class MockContactDataModel extends ContactDataModel {
 	
 	public MockContactDataModel() {
 		
-		String[] columnNames_ = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
+		String[] columnNames_ = {"ID",
+				"Vorname",
+                "Nachname",
+                "Adresse",
+                "Email",
+                "Telefon"};
 		
 		Object[][] data_ = {
-			    {"Kathy", "Smith",
-			     "Snowboarding", new Integer(5), new Boolean(false)},
-			    {"John", "Doe",
-			     "Rowing", new Integer(3), new Boolean(true)},
-			    {"Sue", "Black",
-			     "Knitting", new Integer(2), new Boolean(false)},
-			    {"Jane", "White",
-			     "Speed reading", new Integer(20), new Boolean(true)},
-			    {"Joe", "Brown",
-			     "Pool", new Integer(10), new Boolean(false)}
+			    {new Integer(1), "Kathy", "Smith",
+			     "Landstr 33/7", "sd.sd@gmx.at", "066034212502"},
+			    {new Integer(2), "John", "Doe",
+			     "Hansgasse 43/2", "asd.asd@gmail.com", null},
+			    {new Integer(3), "Sue", "Black",
+			     "Hufoasdgasse 89/12", "asgdgs.s@chello.at", "06646342325"}
 			};
 		
 		columnNames = columnNames_;
@@ -33,8 +32,7 @@ public class MockContactDataModel extends ContactDataModel {
 	}
 
 	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-
+		
 	}
 	
 	@Override

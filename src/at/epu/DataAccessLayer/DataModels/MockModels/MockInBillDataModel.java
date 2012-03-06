@@ -1,13 +1,15 @@
-package at.epu.DataAccessLayer.DataModels.SQLModels;
+package at.epu.DataAccessLayer.DataModels.MockModels;
 
-import at.epu.DataAccessLayer.DataModels.OutBillDataModel;
+import at.epu.DataAccessLayer.DataModels.InBillDataModel;
 
-public class SQLBillDataModel extends OutBillDataModel {
-	private static final long serialVersionUID = -2612819716366533584L;
+public class MockInBillDataModel extends InBillDataModel{
 
+	private static final long serialVersionUID = -1104930535218893118L;
+
+	@Override
 	public void filterDataModel(String filterString) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

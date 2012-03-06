@@ -25,7 +25,7 @@ public class DALReal implements DALInterface {
 	}
 
 	@Override
-	public BillDataModel getBillDataModel() {
+	public OutBillDataModel getBillDataModel() {
 		return new SQLBillDataModel();
 	}
 

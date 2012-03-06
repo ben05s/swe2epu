@@ -25,8 +25,8 @@ public class DALFake implements DALInterface {
 	}
 
 	@Override
-	public BillDataModel getBillDataModel() {
-		return new MockBillDataModel();
+	public OutBillDataModel getBillDataModel() {
+		return new MockOutBillDataModel();
 	}
 
 	@Override
