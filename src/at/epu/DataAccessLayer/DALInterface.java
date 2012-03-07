@@ -7,6 +7,10 @@ public interface DALInterface {
 	public CustomerDataModel	getCustomerDataModel();
 	public OfferDataModel 		getOfferDataModel();
 	public ProjectDataModel 	getProjectDataModel();
-	public OutBillDataModel 		getBillDataModel();
+	public OutBillDataModel 	getOutBillDataModel();
 	public BankAccountDataModel getBankAccountDataModel();
+	public BillRowDataModel 	getBillRowDataModel();
+	public BookRowDataModel		getBookRowDataModel();
+	public CategoryDataModel	getCategoryDataModel();
+	public InBillDataModel		getInBillDataModel();
 }

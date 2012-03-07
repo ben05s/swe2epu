@@ -25,12 +25,32 @@ public class DALReal implements DALInterface {
 	}
 
 	@Override
-	public OutBillDataModel getBillDataModel() {
-		return new SQLBillDataModel();
+	public BankAccountDataModel getBankAccountDataModel() {
+		return new SQLBankAccountDataModel();
 	}
 
 	@Override
-	public BankAccountDataModel getBankAccountDataModel() {
-		return new SQLBankAccountDataModel();
+	public OutBillDataModel getOutBillDataModel() {
+		return new SQLOutBillDataModel();
+	}
+
+	@Override
+	public BillRowDataModel getBillRowDataModel() {
+		return new SQLBillRowDataModel();
+	}
+
+	@Override
+	public BookRowDataModel getBookRowDataModel() {
+		return new SQLBookRowDataModel();
+	}
+
+	@Override
+	public CategoryDataModel getCategoryDataModel() {
+		return new SQLCategoryDataModel();
+	}
+
+	@Override
+	public InBillDataModel getInBillDataModel() {
+		return new SQLInBillDataModel();
 	}
 }
