@@ -21,7 +21,7 @@ public class MainWindow {
 	 */
 	public static void main(String[] args) {
 		ApplicationManager appManager = ApplicationManager.getInstance();
-		appManager.applicationStarted();
+		appManager.applicationStarted(args);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

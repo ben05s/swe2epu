@@ -1,7 +1,16 @@
 package at.epu.DataAccessLayer.DataModels;
 
-import javax.swing.table.AbstractTableModel;
-
-public abstract class OfferDataModel extends AbstractTableModel implements FilterableDataModel {
+public abstract class OfferDataModel extends BackofficeTableModel {
 	private static final long serialVersionUID = 8460071465554605263L;
+	
+	public OfferDataModel() {
+		String[] columnNames_ = {"ID",
+				"Kunde_ID",
+                "Summe",
+                "Dauer",
+                "Datum",
+                "Chance"};
+		
+		columnNames = columnNames_;
+	}
 }

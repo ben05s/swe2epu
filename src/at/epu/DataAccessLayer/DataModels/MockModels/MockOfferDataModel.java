@@ -9,18 +9,8 @@ import at.epu.DataAccessLayer.DataModels.OfferDataModel;
  */
 public class MockOfferDataModel extends OfferDataModel {
 	private static final long serialVersionUID = -3046727189620679978L;
-	private String[] columnNames;
-	private Object[][] data;
 	
-	public MockOfferDataModel() {
-		
-		String[] columnNames_ = {"ID",
-				"Kunde_ID",
-                "Summe",
-                "Dauer",
-                "Datum",
-                "Chance"};
-		
+	public MockOfferDataModel() {		
 		Object[][] data_ = {
 			    {new Integer(1), new Integer(1), new Double(20000.00), new Integer(365),
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.55)},
@@ -30,32 +20,11 @@ public class MockOfferDataModel extends OfferDataModel {
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.80)},
 			};
 		
-		columnNames = columnNames_;
 		data = data_;
 	}
+	
 	public void filterDataModel(String filterString) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public String getColumnName(int column)
-	{
-		return columnNames[column];
-	}
-	
-	@Override
-	public int getColumnCount() {
-		return columnNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return data.length;
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
 	}
 }

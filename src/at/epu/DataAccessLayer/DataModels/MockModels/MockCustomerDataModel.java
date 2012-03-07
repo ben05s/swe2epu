@@ -6,19 +6,8 @@ import at.epu.DataAccessLayer.DataModels.CustomerDataModel;
  */
 public class MockCustomerDataModel extends CustomerDataModel {
 	private static final long serialVersionUID = 8742379763002040092L;
-	private String[] columnNames;
-	private Object[][] data;
 	
-	public MockCustomerDataModel() {
-
-		String[] columnNames_ = {"ID",
-				"Vorname",
-                "Nachname",
-                "Adresse",
-                "Email",
-                "Telefon",
-                "Angebote"};
-		
+	public MockCustomerDataModel() {		
 		Object[][] data_ = {
 			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
 			     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", new Integer(1)},
@@ -30,7 +19,6 @@ public class MockCustomerDataModel extends CustomerDataModel {
 			     "Franzgasse 9/12", "x.x@chello.at", "066465352325", new Integer(3)},
 			};
 		
-		columnNames = columnNames_;
 		data = data_;
 	}
 	
@@ -38,26 +26,4 @@ public class MockCustomerDataModel extends CustomerDataModel {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public String getColumnName(int column)
-	{
-		return columnNames[column];
-	}
-	
-	@Override
-	public int getColumnCount() {
-		return columnNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return data.length;
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
-	}
-
 }

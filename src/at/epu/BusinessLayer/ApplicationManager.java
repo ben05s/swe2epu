@@ -19,8 +19,15 @@ public class ApplicationManager {
 	/**
 	 * Setup code.
 	 */
-	public void applicationStarted() {
-		databaseManager.setDataSource(new DALFake());
+	public void applicationStarted(String[] args) {
+		if(args.length > 0)
+		{
+			databaseManager.setDataSource(new DALReal(args[0]));
+		}
+		else
+		{
+			databaseManager.setDataSource(new DALFake());
+		}
 	}
 	
 	/**

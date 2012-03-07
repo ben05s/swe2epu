@@ -1,7 +1,13 @@
 package at.epu.DataAccessLayer.DataModels;
 
-import javax.swing.table.AbstractTableModel;
-
-public abstract class InBillDataModel extends AbstractTableModel implements FilterableDataModel{
+public abstract class InBillDataModel extends BackofficeTableModel {
 	private static final long serialVersionUID = -8915600980699424021L;
+	
+	public InBillDataModel() {
+		String[] columnNames_ = {"ID",
+				"Buchungszeile",
+				"Kontakt"};
+		
+		columnNames = columnNames_;
+	}
 }

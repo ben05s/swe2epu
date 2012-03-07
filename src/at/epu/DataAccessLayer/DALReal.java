@@ -1,9 +1,26 @@
 package at.epu.DataAccessLayer;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import at.epu.DataAccessLayer.DataModels.*;
 import at.epu.DataAccessLayer.DataModels.SQLModels.*;
 
 public class DALReal implements DALInterface {
+	Connection databaseHandle = null;
+	
+	public DALReal(String databaseName) {
+		String db_url = "jdbc:hsqldb:file:" + databaseName;
+		
+		try {
+			databaseHandle = DriverManager.getConnection(db_url, "SA", "");
+		} catch (SQLException e) {
+			System.err.println("Could not open connection to database at " + db_url);
+			System.exit(0);
+		}
+	}
+
 	@Override
 	public ContactDataModel getContactDataModel() {
 		return new SQLContactDataModel();

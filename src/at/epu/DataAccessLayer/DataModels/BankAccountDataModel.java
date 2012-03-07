@@ -1,7 +1,16 @@
 package at.epu.DataAccessLayer.DataModels;
 
-import javax.swing.table.AbstractTableModel;
-
-public abstract class BankAccountDataModel extends AbstractTableModel implements FilterableDataModel {
+public abstract class BankAccountDataModel extends BackofficeTableModel {
 	private static final long serialVersionUID = -7180241673211578694L;
+	
+	public BankAccountDataModel() {
+		String [] columnNames_ = {"ID",
+				"Kontonummer",
+				"Vorname",
+				"Nachname",
+				"Bank",
+				"BLZ"};
+
+		columnNames = columnNames_;
+	}
 }
