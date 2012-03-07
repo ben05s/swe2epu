@@ -8,7 +8,12 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.PresentationLayer.ViewControllers.BankAccountViewController;
+import at.epu.PresentationLayer.ViewControllers.BillViewController;
 import at.epu.PresentationLayer.ViewControllers.ContactViewController;
+import at.epu.PresentationLayer.ViewControllers.CustomerViewController;
+import at.epu.PresentationLayer.ViewControllers.OfferViewController;
+import at.epu.PresentationLayer.ViewControllers.ProjectViewController;
 import at.epu.PresentationLayer.ViewControllers.ViewController;
 
 public class MainWindow {
@@ -55,6 +60,11 @@ public class MainWindow {
 		frmBackoffice.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		addViewToMainControl(new ContactViewController());
+		addViewToMainControl(new CustomerViewController());
+		addViewToMainControl(new OfferViewController());
+		addViewToMainControl(new ProjectViewController());
+		addViewToMainControl(new BillViewController());
+		addViewToMainControl(new BankAccountViewController());
 	}
 	
 	/**

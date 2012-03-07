@@ -9,7 +9,9 @@ import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
-public class ContactViewController extends ViewController {
+// TODO: combine OutBill and InBill DataObjects
+// currently only OutBill
+public class BillViewController extends ViewController{
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -17,12 +19,15 @@ public class ContactViewController extends ViewController {
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		buttonList.add(new JButton("Finden"));
 		buttonList.add(new JButton("Hinzufügen"));
-
+		buttonList.add(new JButton("PDF aller Rechnungen generieren"));
+		buttonList.add(new JButton("Rechnungsreport PDF ..."));
+		buttonList.add(new JButton("Ein- Ausgaben Report PDF ..."));
+		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-		
+		labelList.add(new JLabel("Offene Rechnungen: "));
 		rootComponent = new GenericSplitTableView(buttonList, labelList,
-					                              databaseManager.getDataSource().getContactDataModel());
+					                              databaseManager.getDataSource().getOutBillDataModel());
 		
-		title = "Kontakte";
+		title = "Rechnungen";
 	}
 }

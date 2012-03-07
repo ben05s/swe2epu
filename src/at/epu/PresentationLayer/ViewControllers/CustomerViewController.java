@@ -9,7 +9,7 @@ import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
-public class ContactViewController extends ViewController {
+public class CustomerViewController extends ViewController{
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -21,8 +21,8 @@ public class ContactViewController extends ViewController {
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList,
-					                              databaseManager.getDataSource().getContactDataModel());
+					                              databaseManager.getDataSource().getCustomerDataModel());
 		
-		title = "Kontakte";
+		title = "Kunden";
 	}
 }

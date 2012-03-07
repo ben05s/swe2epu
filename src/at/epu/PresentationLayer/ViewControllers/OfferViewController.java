@@ -9,7 +9,7 @@ import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
-public class ContactViewController extends ViewController {
+public class OfferViewController extends ViewController{
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -17,12 +17,13 @@ public class ContactViewController extends ViewController {
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		buttonList.add(new JButton("Finden"));
 		buttonList.add(new JButton("Hinzufügen"));
+		buttonList.add(new JButton("Jahresprognose der Angebote (PDF)"));
 
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList,
-					                              databaseManager.getDataSource().getContactDataModel());
+					                              databaseManager.getDataSource().getOfferDataModel());
 		
-		title = "Kontakte";
+		title = "Angebote";
 	}
 }

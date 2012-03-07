@@ -1,3 +1,3 @@
-bin/*
-*/.DS_STORE
-db/*
+bin/
+.DS_STORE
+db/
