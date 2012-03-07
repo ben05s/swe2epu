@@ -25,12 +25,32 @@ public class DALFake implements DALInterface {
 	}
 
 	@Override
-	public OutBillDataModel getBillDataModel() {
+	public BankAccountDataModel getBankAccountDataModel() {
+		return new MockBankAccountDataModel();
+	}
+
+	@Override
+	public OutBillDataModel getOutBillDataModel() {
 		return new MockOutBillDataModel();
 	}
 
 	@Override
-	public BankAccountDataModel getBankAccountDataModel() {
-		return new MockBankAccountDataModel();
+	public BillRowDataModel getBillRowDataModel() {
+		return new MockBillRowDataModel();
+	}
+
+	@Override
+	public BookRowDataModel getBookRowDataModel() {
+		return new MockBookRowDataModel();
+	}
+
+	@Override
+	public CategoryDataModel getCategoryDataModel() {
+		return new MockCategoryDataModel();
+	}
+
+	@Override
+	public InBillDataModel getInBillDataModel() {
+		return new MockInBillDataModel();
 	}
 }
