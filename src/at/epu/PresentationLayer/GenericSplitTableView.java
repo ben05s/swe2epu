@@ -1,17 +1,18 @@
 package at.epu.PresentationLayer;
 
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.SystemColor;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JScrollPane;
 
 public class GenericSplitTableView extends JPanel {
 
@@ -24,7 +25,7 @@ public class GenericSplitTableView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GenericSplitTableView(List<JButton> buttons, TableModel tableModel) {
+	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, TableModel tableModel) {
 		setBackground(SystemColor.control);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -72,6 +73,16 @@ public class GenericSplitTableView extends JPanel {
 			gbc_button.anchor = GridBagConstraints.NORTH;
 			gbc_button.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(button, gbc_button);
+		}
+		
+		for(JLabel label : labels) {
+			GridBagConstraints gbc_label = new GridBagConstraints();
+			gbc_label.insets = new Insets(5, 10, 5, 10);
+			gbc_label.gridx = 0;
+			gbc_label.gridy = i++;
+			gbc_label.anchor = GridBagConstraints.NORTH;
+			gbc_label.fill = GridBagConstraints.HORIZONTAL;
+			panel.add(label, gbc_label);
 		}
 	}
 
