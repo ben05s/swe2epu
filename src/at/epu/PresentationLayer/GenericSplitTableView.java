@@ -5,11 +5,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -25,6 +28,7 @@ public class GenericSplitTableView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JFrame newFrame;
 	
 	/**
 	 * Create the panel.
@@ -88,28 +92,35 @@ public class GenericSplitTableView extends JPanel {
 			gbc_label.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(label, gbc_label);
 		}
-		
-		 table.addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mouseReleased(MouseEvent e) {
-		            int r = table.rowAtPoint(e.getPoint());
-		            if (r >= 0 && r < table.getRowCount()) {
-		                table.setRowSelectionInterval(r, r);
-		            } else {
-		                table.clearSelection();
-		            }
+		table.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseReleased(MouseEvent e) {
+	            int r = table.rowAtPoint(e.getPoint());
+	            if (r >= 0 && r < table.getRowCount()) {
+	                table.setRowSelectionInterval(r, r);
+	            } else {
+	                table.clearSelection();
+	            }
 
-		            int rowindex = table.getSelectedRow();
-		            if (rowindex < 0)
-		                return;
-		            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
-		                JPopupMenu popup = new JPopupMenu();
-		                for(JMenuItem menu : menuList) {
-		                	popup.add(menu);
-		                }
-		                popup.show(e.getComponent(), e.getX(), e.getY());
-		            }
-		        } 
-		 });
+	            int rowindex = table.getSelectedRow();
+	            if (rowindex < 0)
+	                return;
+	            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+	                JPopupMenu popup = new JPopupMenu();
+	                for(JMenuItem menu : menuList) {
+	                	popup.add(menu);
+	                	menu.addActionListener(new ActionListener() {
+	                		public void actionPerformed(ActionEvent e) {
+	                			newFrame = new JFrame();
+		                		newFrame.setTitle("Umbenennen");
+		                		newFrame.setBounds(300, 150, 300, 500);
+		                		newFrame.setVisible(true);
+	                		}
+	                	});
+	                }
+	                popup.show(e.getComponent(), e.getX(), e.getY());
+	            }
+	        } 
+	 });
 	}
 }
