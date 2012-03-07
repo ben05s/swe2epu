@@ -5,11 +5,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -21,11 +25,11 @@ public class GenericSplitTableView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-
+	
 	/**
 	 * Create the panel.
 	 */
-	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, TableModel tableModel) {
+	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, TableModel tableModel) {
 		setBackground(SystemColor.control);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -84,6 +88,28 @@ public class GenericSplitTableView extends JPanel {
 			gbc_label.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(label, gbc_label);
 		}
-	}
+		
+		 table.addMouseListener(new MouseAdapter() {
+		        @Override
+		        public void mouseReleased(MouseEvent e) {
+		            int r = table.rowAtPoint(e.getPoint());
+		            if (r >= 0 && r < table.getRowCount()) {
+		                table.setRowSelectionInterval(r, r);
+		            } else {
+		                table.clearSelection();
+		            }
 
+		            int rowindex = table.getSelectedRow();
+		            if (rowindex < 0)
+		                return;
+		            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+		                JPopupMenu popup = new JPopupMenu();
+		                for(JMenuItem menu : menuList) {
+		                	popup.add(menu);
+		                }
+		                popup.show(e.getComponent(), e.getX(), e.getY());
+		            }
+		        } 
+		 });
+	}
 }

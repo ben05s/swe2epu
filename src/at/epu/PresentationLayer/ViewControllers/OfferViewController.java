@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
@@ -21,7 +22,9 @@ public class OfferViewController extends ViewController{
 
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
-		rootComponent = new GenericSplitTableView(buttonList, labelList,
+		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
+		
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, 
 					                              databaseManager.getDataSource().getOfferDataModel());
 		
 		title = "Angebote";
