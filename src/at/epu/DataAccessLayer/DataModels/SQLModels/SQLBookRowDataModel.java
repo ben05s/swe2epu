@@ -4,8 +4,4 @@ import at.epu.DataAccessLayer.DataModels.BookRowDataModel;
 
 public class SQLBookRowDataModel extends BookRowDataModel {
 	private static final long serialVersionUID = -9020214319267958852L;
-	
-	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-	}
 }

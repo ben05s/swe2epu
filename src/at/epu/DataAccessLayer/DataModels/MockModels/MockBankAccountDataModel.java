@@ -19,8 +19,4 @@ public class MockBankAccountDataModel extends BankAccountDataModel {
 
 		data = data_;
 	}
-	
-	public void filterDataModel(String filterString) {
-		;
-	}
 }

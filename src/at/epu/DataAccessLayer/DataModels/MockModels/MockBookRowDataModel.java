@@ -9,7 +9,6 @@ import at.epu.DataAccessLayer.DataModels.BookRowDataModel;
  * | Betrag | Umsatzsteuer | Buchungsdatum | Kategorie(FK)
  */
 public class MockBookRowDataModel extends BookRowDataModel {
-
 	private static final long serialVersionUID = 1845438830429021423L;
 	
 	public MockBookRowDataModel() {
@@ -24,9 +23,5 @@ public class MockBookRowDataModel extends BookRowDataModel {
 		};
 		
 		data = data_;
-	}
-	
-	public void filterDataModel(String filterString) {
-		;
 	}
 }

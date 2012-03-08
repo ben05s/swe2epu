@@ -5,7 +5,6 @@ import at.epu.DataAccessLayer.DataModels.CategoryDataModel;
  * ID | Name
  */
 public class MockCategoryDataModel extends CategoryDataModel{
-
 	private static final long serialVersionUID = -7645574178851868140L;
 	
 	public MockCategoryDataModel() {		
@@ -16,10 +15,5 @@ public class MockCategoryDataModel extends CategoryDataModel{
 			};
 		
 		data = data_;
-	}
-	
-	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-
 	}
 }

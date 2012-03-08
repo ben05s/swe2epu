@@ -22,11 +22,11 @@ public class ApplicationManager {
 	public void applicationStarted(String[] args) {
 		if(args.length > 0)
 		{
-			databaseManager.setDataSource(new DALReal(args[0]));
+			databaseManager.setDataSource(new DatabaseDataSource(args[0]));
 		}
 		else
 		{
-			databaseManager.setDataSource(new DALFake());
+			databaseManager.setDataSource(new MockDataSource());
 		}
 	}
 	

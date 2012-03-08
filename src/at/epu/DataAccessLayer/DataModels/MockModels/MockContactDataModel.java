@@ -1,6 +1,7 @@
 package at.epu.DataAccessLayer.DataModels.MockModels;
 
 import at.epu.DataAccessLayer.DataModels.ContactDataModel;
+import at.epu.DataAccessLayer.DataModels.DataFilterProvider;
 /*
  * ID | Vorname | Nachname | Adresse | Email | Telefon 
  */
@@ -18,9 +19,5 @@ public class MockContactDataModel extends ContactDataModel {
 			};
 		
 		data = data_;
-	}
-
-	public void filterDataModel(String filterString) {
-		
 	}
 }

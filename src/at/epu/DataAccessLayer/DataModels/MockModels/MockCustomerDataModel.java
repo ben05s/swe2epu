@@ -21,9 +21,4 @@ public class MockCustomerDataModel extends CustomerDataModel {
 		
 		data = data_;
 	}
-	
-	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-
-	}
 }

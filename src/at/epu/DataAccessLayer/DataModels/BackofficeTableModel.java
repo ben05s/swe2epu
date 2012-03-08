@@ -34,4 +34,9 @@ public abstract class BackofficeTableModel extends AbstractTableModel implements
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return data[rowIndex][columnIndex];
 	}
+	
+	public void filterDataModel(String filterString) {
+		data = DataFilterProvider.filterDataModel(filterString, data);
+		fireTableDataChanged();
+	}
 }

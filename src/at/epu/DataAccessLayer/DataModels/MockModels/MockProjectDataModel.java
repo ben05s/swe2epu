@@ -18,9 +18,4 @@ public class MockProjectDataModel extends ProjectDataModel {
 		
 		data = data_;
 	}
-	
-	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-
-	}
 }

@@ -17,9 +17,4 @@ public class MockOutBillDataModel extends OutBillDataModel {
 		
 		data = data_;
 	}
-	
-	public void filterDataModel(String filterString) {
-		// TODO Auto-generated method stub
-
-	}
 }

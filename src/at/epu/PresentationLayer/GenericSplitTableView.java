@@ -92,6 +92,7 @@ public class GenericSplitTableView extends JPanel {
 			gbc_label.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(label, gbc_label);
 		}
+		
 		table.addMouseListener(new MouseAdapter() {
 	        @Override
 	        public void mouseReleased(MouseEvent e) {

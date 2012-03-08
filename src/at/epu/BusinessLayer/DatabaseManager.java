@@ -4,13 +4,13 @@ import at.epu.DataAccessLayer.*;
 import java.lang.NullPointerException;
 
 public class DatabaseManager {
-	DALInterface dataSource = null;
+	DataSource dataSource = null;
 	
-	public void setDataSource(DALInterface dataSource_) {
+	public void setDataSource(DataSource dataSource_) {
 		dataSource = dataSource_;
 	}
 	
-	public DALInterface getDataSource() {
+	public DataSource getDataSource() {
 		if(dataSource == null) {
 			throw new NullPointerException("Data source was null. You must supply a data source first.");
 		}
