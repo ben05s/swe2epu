@@ -18,6 +18,5 @@ public class MockInBillDataModel extends InBillDataModel{
 	
 	public void filterDataModel(String filterString) {
 		// TODO Auto-generated method stub
-
 	}
 }

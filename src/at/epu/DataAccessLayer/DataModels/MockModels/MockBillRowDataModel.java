@@ -26,6 +26,5 @@ public class MockBillRowDataModel extends BillRowDataModel{
 	
 	public void filterDataModel(String filterString) {
 		// TODO Auto-generated method stub
-
 	}
 }
