@@ -10,7 +10,7 @@ public class ApplicationManager {
 		databaseManager = new DatabaseManager();
 	}
 	
-	public static ApplicationManager getInstance() {
+	public static synchronized ApplicationManager getInstance() {
 		return ApplicationManager.instance == null ?
 				(ApplicationManager.instance = new ApplicationManager()) :
 					ApplicationManager.instance;
