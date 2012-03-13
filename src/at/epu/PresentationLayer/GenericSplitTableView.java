@@ -2,7 +2,6 @@ package at.epu.PresentationLayer;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -30,7 +29,7 @@ import javax.swing.table.TableModel;
 public class GenericSplitTableView extends JPanel {
 
 	/**
-	 * 
+	 * comment
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
