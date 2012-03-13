@@ -30,7 +30,7 @@ public class ContactViewController extends ViewController implements ActionListe
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
-		menuList.add(new JMenuItem("Umbenennen"));
+		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,

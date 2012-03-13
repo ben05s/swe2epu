@@ -25,6 +25,9 @@ public class ProjectViewController extends ViewController{
 		labelList.add(new JLabel("Stundensatz(gesamt): "));
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
+		menuList.add(new JMenuItem("Editieren"));
+		menuList.add(new JMenuItem("Löschen"));
+		menuList.add(new JMenuItem("Ausgangsrechnung stellen"));
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,
 					                              databaseManager.getDataSource().getProjectDataModel());

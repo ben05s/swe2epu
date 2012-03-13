@@ -23,6 +23,8 @@ public class OfferViewController extends ViewController{
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
+		menuList.add(new JMenuItem("Editieren"));
+		menuList.add(new JMenuItem("Löschen"));
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, 
 					                              databaseManager.getDataSource().getOfferDataModel());
