@@ -7,7 +7,7 @@ import at.epu.DataAccessLayer.DataModels.CustomerDataModel;
 public class MockCustomerDataModel extends CustomerDataModel {
 	private static final long serialVersionUID = 8742379763002040092L;
 	
-	public MockCustomerDataModel() {		
+	public MockCustomerDataModel() {
 		Object[][] data_ = {
 			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
 			     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", new Integer(1)},
