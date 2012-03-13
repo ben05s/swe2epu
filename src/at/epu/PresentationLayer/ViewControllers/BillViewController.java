@@ -28,6 +28,9 @@ public class BillViewController extends ViewController{
 		labelList.add(new JLabel("Offene Rechnungen: "));
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
+		menuList.add(new JMenuItem("Editieren"));
+		menuList.add(new JMenuItem("Details"));
+		menuList.add(new JMenuItem("Löschen"));
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,
 					                              databaseManager.getDataSource().getOutBillDataModel());

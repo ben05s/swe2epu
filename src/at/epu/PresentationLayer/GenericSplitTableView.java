@@ -33,7 +33,6 @@ public class GenericSplitTableView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JFrame newFrame;
 	
 	/**
 	 * Create the panel.
@@ -117,16 +116,74 @@ public class GenericSplitTableView extends JPanel {
 	                return;
 	            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
 	                JPopupMenu popup = new JPopupMenu();
+	                
 	                for(JMenuItem menu : menuList) {
+	                	//remove any before added actionListeners
+	                	for(ActionListener al : menu.getActionListeners()) {
+                			menu.removeActionListener(al);
+                		}
 	                	popup.add(menu);
-	                	menu.addActionListener(new ActionListener() {
-	                		public void actionPerformed(ActionEvent e) {
-	                			newFrame = new JFrame();
-		                		newFrame.setTitle("Umbenennen");
-		                		newFrame.setBounds(300, 150, 300, 500);
-		                		newFrame.setVisible(true);
-	                		}
-	                	});
+	                	if(menu.getLabel() == "Editieren") {
+		                	menu.addActionListener(new ActionListener() {
+		                		public void actionPerformed(ActionEvent e) {
+		                			JFrame newFrame = new JFrame();
+			                		newFrame.setTitle("Editieren");
+			                		newFrame.setBounds(300, 150, 300, 500);
+			                		newFrame.setVisible(true);
+		                		}
+		                	});
+	                	}
+	                	if(menu.getLabel() == "Löschen") {
+	                		menu.addActionListener(new ActionListener() {
+		                		public void actionPerformed(ActionEvent e) {
+			                		JFrame newFrame = new JFrame();
+			                		newFrame.setTitle("Löschen");
+			                		JLabel note = new JLabel("Dieser Datensatz wird gelöscht");
+			                		newFrame.add(note);
+			                		newFrame.setBounds(300, 150, 300, 500);
+			                		newFrame.setVisible(true);
+		                		}
+	                		}); 
+	                	}
+	                	//in Bill-Tab
+	                	if(menu.getLabel() == "Details") {
+	                		menu.addActionListener(new ActionListener() {
+		                		public void actionPerformed(ActionEvent e) {
+			                		JFrame newFrame = new JFrame();
+			                		newFrame.setTitle("Rechnungs - Details");
+			                		JLabel note = new JLabel("Hier werden die Rechnungszeilen der Rechnung angezeigt");
+			                		newFrame.add(note);
+			                		newFrame.setBounds(300, 150, 300, 500);
+			                		newFrame.setVisible(true);
+		                		}
+	                		}); 
+	                	}
+	                	//Ausgangsrechnung stellen(in Projekt Tab)
+	                	if(menu.getLabel() == "Ausgangsrechnung stellen") {
+	                		menu.addActionListener(new ActionListener() {
+		                		public void actionPerformed(ActionEvent e) {
+			                		JFrame newFrame = new JFrame();
+			                		newFrame.setTitle("Ausgangsrechnung stellen");
+			                		JLabel note = new JLabel("Hier werden die Ausgangsrechnungen gestellt");
+			                		newFrame.add(note);
+			                		newFrame.setBounds(300, 150, 300, 500);
+			                		newFrame.setVisible(true);
+		                		}
+	                		}); 
+	                	}
+	                	//Splitten in Bankkonto Tab
+	                	if(menu.getLabel() == "Rechnung Splitten") {
+	                		menu.addActionListener(new ActionListener() {
+		                		public void actionPerformed(ActionEvent e) {
+			                		JFrame newFrame = new JFrame();
+			                		newFrame.setTitle("Rechnung Splitten");
+			                		JLabel note = new JLabel("Hier wird die Rechnung gesplittet (Umsatzsteuer/Rechnungssumme)");
+			                		newFrame.add(note);
+			                		newFrame.setBounds(300, 150, 300, 500);
+			                		newFrame.setVisible(true);
+		                		}
+	                		}); 
+	                	}
 	                }
 	                popup.show(e.getComponent(), e.getX(), e.getY());
 	            }
