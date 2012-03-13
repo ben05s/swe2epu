@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -114,7 +115,7 @@ public class GenericSplitTableView extends JPanel {
 	            int rowindex = table.getSelectedRow();
 	            if (rowindex < 0)
 	                return;
-	            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+	            if (SwingUtilities.isRightMouseButton(e) && e.getComponent() instanceof JTable ) {
 	                JPopupMenu popup = new JPopupMenu();
 	                
 	                for(JMenuItem menu : menuList) {
