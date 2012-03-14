@@ -47,6 +47,10 @@ public class MainWindow {
 		initialize();
 	}
 
+	public JFrame getFrmBackoffice() {
+		return frmBackoffice;
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -59,12 +63,12 @@ public class MainWindow {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmBackoffice.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		addViewToMainControl(new ContactViewController());
-		addViewToMainControl(new CustomerViewController());
-		addViewToMainControl(new OfferViewController());
-		addViewToMainControl(new ProjectViewController());
-		addViewToMainControl(new BillViewController());
-		addViewToMainControl(new BankAccountViewController());
+		addViewToMainControl(new ContactViewController(frmBackoffice));
+		addViewToMainControl(new CustomerViewController(frmBackoffice));
+		addViewToMainControl(new OfferViewController(frmBackoffice));
+		addViewToMainControl(new ProjectViewController(frmBackoffice));
+		addViewToMainControl(new BillViewController(frmBackoffice));
+		addViewToMainControl(new BankAccountViewController(frmBackoffice));
 	}
 	
 	/**

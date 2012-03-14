@@ -26,6 +26,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
+
 public class GenericSplitTableView extends JPanel {
 
 	/**
@@ -33,11 +35,12 @@ public class GenericSplitTableView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JFrame newFrame;
 	
 	/**
 	 * Create the panel.
 	 */
-	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, TableModel tableModel) {
+	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final JFrame parent, TableModel tableModel) {
 		setBackground(SystemColor.control);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -111,7 +114,7 @@ public class GenericSplitTableView extends JPanel {
 	                table.clearSelection();
 	            }
 
-	            int rowindex = table.getSelectedRow();
+	            final int rowindex = table.getSelectedRow();
 	            if (rowindex < 0)
 	                return;
 	            if (SwingUtilities.isRightMouseButton(e) && e.getComponent() instanceof JTable ) {
@@ -126,10 +129,15 @@ public class GenericSplitTableView extends JPanel {
 	                	if(menu.getLabel() == "Editieren") {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			JFrame newFrame = new JFrame();
-			                		newFrame.setTitle("Editieren");
-			                		newFrame.setBounds(300, 150, 300, 500);
-			                		newFrame.setVisible(true);
+		                			String cmd = "EDIT";
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex);
+		                			newFrame = new JFrame();
+		                			newFrame.setTitle("Editieren");
+		                			newFrame.add(controller.getRootComponent());
+		                			newFrame.pack();
+		                			newFrame.setLocationRelativeTo(parent);
+		                    		newFrame.setVisible(true);
+		                    		controller.setNewFrame(newFrame);
 		                		}
 		                	});
 	                	}

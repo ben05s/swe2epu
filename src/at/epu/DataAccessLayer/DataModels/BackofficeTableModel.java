@@ -55,4 +55,10 @@ public abstract class BackofficeTableModel extends AbstractTableModel implements
 	public void setData(Object[][] data) {
 		this.data = data;
 	}
+	
+	public void saveData(Object[] data) {
+		/*for(int i=0;i<2;i++) {
+			this.data[0][i] = data[i];
+		}*/
+	}
 }

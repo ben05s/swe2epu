@@ -1,17 +1,14 @@
 package at.epu.PresentationLayer.ViewControllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
@@ -19,8 +16,13 @@ import at.epu.PresentationLayer.GenericSplitTableView;
 
 public class ContactViewController extends ViewController implements ActionListener {	
 	JPanel panel = new JPanel();
-	JFrame newFrame;
+	private JFrame newFrame;
+	private JFrame parent;
+	private String tab_title;
 	
+	public ContactViewController(JFrame mainWindow) {
+		parent = mainWindow;
+	}
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -40,10 +42,17 @@ public class ContactViewController extends ViewController implements ActionListe
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
-		menuList.add(new JMenuItem("Editieren"));
-		menuList.add(new JMenuItem("Löschen"));
+		JMenuItem popEdit = new JMenuItem("Editieren");
+		popEdit.setActionCommand("EDIT");
+		popEdit.addActionListener(this);
+		menuList.add(popEdit);
 		
-		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,
+		JMenuItem popDelete = new JMenuItem("Löschen");
+		popEdit.setActionCommand("DELETE");
+		popEdit.addActionListener(this);
+		menuList.add(popDelete);
+		tab_title = "Kontakte";
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
 					                              databaseManager.getDataSource().getContactDataModel());
 		
 		title = "Kontakte";
@@ -60,18 +69,14 @@ public class ContactViewController extends ViewController implements ActionListe
 		}
 		
 		if( cmd.equals("ADD") ) {
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen/Editieren");
-			
-			JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			newFrame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.addTab(this.getTitle(), new AddEditViewController(this.getTitle()).getRootComponent());
-			newFrame.setBounds(300, 150, 300, 500);
+			newFrame.add(controller.getRootComponent());
+			newFrame.pack();
+			newFrame.setLocationRelativeTo(parent);
     		newFrame.setVisible(true);
-		}
-	}
-	
-	public void addTabtoWindow(AddEditViewController viewController) {
-		
+    		controller.setNewFrame(newFrame);
+		}	
 	}
 }

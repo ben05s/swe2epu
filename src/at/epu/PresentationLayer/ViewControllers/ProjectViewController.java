@@ -1,8 +1,11 @@
 package at.epu.PresentationLayer.ViewControllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -10,14 +13,31 @@ import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
-public class ProjectViewController extends ViewController{
+public class ProjectViewController extends ViewController implements ActionListener{
+	
+	private JFrame parent;
+	private String tab_title;
+	private JFrame newFrame;
+	
+	public ProjectViewController(JFrame mainWindow) {
+		parent = mainWindow;
+	}
+	
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
-		buttonList.add(new JButton("Finden"));
-		buttonList.add(new JButton("Hinzufügen"));
+		JButton btnFind = new JButton("Finden");
+		JButton btnAdd  = new JButton("Hinzufügen");
+		
+		btnFind.setActionCommand("FILTER");
+		btnFind.addActionListener(this);
+		btnAdd.setActionCommand("ADD");
+		btnAdd.addActionListener(this);
+		
+		buttonList.add(btnFind);
+		buttonList.add(btnAdd);
 		buttonList.add(new JButton("Zeiten Buchen"));
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
@@ -28,10 +48,31 @@ public class ProjectViewController extends ViewController{
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
 		menuList.add(new JMenuItem("Ausgangsrechnung stellen"));
-		
-		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,
-					                              databaseManager.getDataSource().getProjectDataModel());
+		tab_title = "Projekte";
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
+													databaseManager.getDataSource().getProjectDataModel());
 		
 		title = "Projekte";
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		String cmd = event.getActionCommand();
+		
+		if( cmd.equals("FILTER") ) {
+			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+
+		}
+		
+		if( cmd.equals("ADD") ) {
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0);
+			newFrame = new JFrame();
+			newFrame.setTitle("Hinzufügen/Editieren");
+			newFrame.add(controller.getRootComponent());
+			newFrame.pack();
+			newFrame.setLocationRelativeTo(parent);
+    		newFrame.setVisible(true);
+    		controller.setNewFrame(newFrame);
+		}
 	}
 }
