@@ -1,18 +1,26 @@
 package at.epu.PresentationLayer.ViewControllers;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
 public class ContactViewController extends ViewController implements ActionListener {	
+	JPanel panel = new JPanel();
+	JFrame newFrame;
+	
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -23,6 +31,8 @@ public class ContactViewController extends ViewController implements ActionListe
 		
 		btnFind.setActionCommand("FILTER");
 		btnFind.addActionListener(this);
+		btnAdd.setActionCommand("ADD");
+		btnAdd.addActionListener(this);
 		
 		buttonList.add(btnFind);
 		buttonList.add(btnAdd);
@@ -48,5 +58,20 @@ public class ContactViewController extends ViewController implements ActionListe
 			
 			databaseManager.getDataSource().getContactDataModel().filterDataModel("Kathy");
 		}
+		
+		if( cmd.equals("ADD") ) {
+			newFrame = new JFrame();
+			newFrame.setTitle("Hinzufügen/Editieren");
+			
+			JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+			newFrame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.addTab(this.getTitle(), new AddEditViewController(this.getTitle()).getRootComponent());
+			newFrame.setBounds(300, 150, 300, 500);
+    		newFrame.setVisible(true);
+		}
+	}
+	
+	public void addTabtoWindow(AddEditViewController viewController) {
+		
 	}
 }

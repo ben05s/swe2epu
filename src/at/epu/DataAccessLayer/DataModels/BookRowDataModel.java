@@ -13,6 +13,6 @@ public abstract class BookRowDataModel extends BackofficeTableModel {
 				"Buchungsdatum",
 				"Kategorie"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

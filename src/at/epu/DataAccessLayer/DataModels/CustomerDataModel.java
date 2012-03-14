@@ -12,6 +12,6 @@ public abstract class CustomerDataModel extends BackofficeTableModel {
                 "Telefon",
                 "Angebote"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

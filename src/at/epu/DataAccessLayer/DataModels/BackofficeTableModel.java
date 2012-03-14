@@ -10,12 +10,12 @@ public abstract class BackofficeTableModel extends AbstractTableModel implements
 	
 	@Override
 	public String getColumnName(int column) {
-		return columnNames[column];
+		return getColumnNames()[column];
 	}
 	
 	@Override
 	public int getColumnCount() {
-		return columnNames.length;
+		return getColumnNames().length;
 	}
 	
 	@Override
@@ -38,5 +38,21 @@ public abstract class BackofficeTableModel extends AbstractTableModel implements
 	public void filterDataModel(String filterString) {
 		data = DataFilterProvider.filterDataModel(filterString, data);
 		fireTableDataChanged();
+	}
+
+	public String[] getColumnNames() {
+		return columnNames;
+	}
+
+	public void setColumnNames(String[] columnNames) {
+		this.columnNames = columnNames;
+	}
+
+	public Object[][] getData() {
+		return data;
+	}
+
+	public void setData(Object[][] data) {
+		this.data = data;
 	}
 }

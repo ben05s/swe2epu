@@ -9,6 +9,6 @@ public abstract class OutBillDataModel extends BackofficeTableModel {
 				"Kunde_ID",
 				"Buchungszeile_ID"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

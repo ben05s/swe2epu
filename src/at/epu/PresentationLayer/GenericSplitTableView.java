@@ -190,7 +190,7 @@ public class GenericSplitTableView extends JPanel {
 	        } 
 	 });
 	}
-		
+	
 	public void packColumns(JTable table, int margin) {
 	    for (int c=0; c<table.getColumnCount(); c++) {
 	        packColumn(table, c, 2);

@@ -11,6 +11,6 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 				"Bank",
 				"BLZ"};
 
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }
