@@ -130,7 +130,7 @@ public class GenericSplitTableView extends JPanel {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex);
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, parent);
 		                			newFrame = new JFrame();
 		                			newFrame.setTitle("Editieren");
 		                			newFrame.add(controller.getRootComponent());

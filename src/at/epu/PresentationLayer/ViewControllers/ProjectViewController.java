@@ -65,7 +65,7 @@ public class ProjectViewController extends ViewController implements ActionListe
 		}
 		
 		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0);
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen/Editieren");
 			newFrame.add(controller.getRootComponent());

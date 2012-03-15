@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
@@ -24,12 +25,13 @@ public class AddEditViewController implements ActionListener{
 	String cmd;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
 	ArrayList<JTextField> textList;
+	JFrame parent;
 	
 	public void setNewFrame(JFrame newFrame) {
 		this.newFrame = newFrame;
 	}
 
-	public AddEditViewController(String title, String action, int rowindex_) {
+	public AddEditViewController(String title, String action, int rowindex_, JFrame parent_) {
 		if(title == "Kontakte"){
 			columnNames = databaseManager.getDataSource().getContactDataModel().getColumnNames();
 			data = databaseManager.getDataSource().getContactDataModel().getData();
@@ -58,6 +60,7 @@ public class AddEditViewController implements ActionListener{
 		
 		cmd = action;
 		rowindex = rowindex_;
+		this.parent = parent_;
 		
 		initialize();
 	}
@@ -108,9 +111,13 @@ public class AddEditViewController implements ActionListener{
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
-			//Object[] data = {textList.get(0).toString(), textList.get(1).toString()}; 
-			//databaseManager.getDataSource().getContactDataModel().saveData(data);
+			Object[] data = {textList.get(0).toString(), textList.get(1).toString(),
+					textList.get(2).toString(),textList.get(3).toString(),textList.get(4).toString(),
+					textList.get(5).toString()}; 
+			databaseManager.getDataSource().getContactDataModel().saveData(data);
 			newFrame.dispose();
+			rootComponent.updateUI();	//seems not to work...
+			
 		}
 		
 		if(cmd.equals("CANCEL")) {
