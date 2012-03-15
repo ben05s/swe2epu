@@ -25,13 +25,10 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
-import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
-import at.epu.PresentationLayer.ViewControllers.ContactViewController;
 
 public class GenericSplitTableView extends JPanel {
 
@@ -39,7 +36,6 @@ public class GenericSplitTableView extends JPanel {
 	 * comment
 	 */
 	private static final long serialVersionUID = 1L;
-	private DefaultTableModel defaultTable = new DefaultTableModel();
 	private JTable table;
 	private JFrame newFrame;
 	DatabaseManager databaseManager;
@@ -47,7 +43,7 @@ public class GenericSplitTableView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final JFrame parent, TableModel tableModel) {
+	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final JFrame parent, final DefaultTableModel tableModel) {
 		setBackground(SystemColor.control);
 	
 		GridBagLayout gridBagLayout = new GridBagLayout();

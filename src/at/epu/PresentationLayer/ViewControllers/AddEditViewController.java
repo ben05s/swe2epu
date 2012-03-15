@@ -22,10 +22,11 @@ public class AddEditViewController implements ActionListener{
 	String[] columnNames = null;
 	JPanel rootComponent = new JPanel();
 	JFrame newFrame;
-	String cmd;			//determines what command called the controller(Edit or Add)
+	String cmd_;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
 	ArrayList<JTextField> textList;
 	JFrame parent;
+	String title;
 	
 	public void setNewFrame(JFrame newFrame) {
 		this.newFrame = newFrame;
@@ -58,9 +59,10 @@ public class AddEditViewController implements ActionListener{
 			data = databaseManager.getDataSource().getBankAccountDataModel().getData();
 		}
 		
-		cmd = action;
+		cmd_ = action;
 		rowindex = rowindex_;
 		this.parent = parent_;
+		this.title = title;
 		
 		initialize();
 	}
@@ -84,7 +86,7 @@ public class AddEditViewController implements ActionListener{
 		}
 		
 		textList = new ArrayList<JTextField>();
-		if(cmd.equals("EDIT")) {
+		if(cmd_.equals("EDIT")) {
 			for(int i=0;i<columnNames.length;i++) {
 				if(data[rowindex][i] != null) {
 					textList.add(new JTextField(data[rowindex][i].toString(),20));
@@ -94,7 +96,7 @@ public class AddEditViewController implements ActionListener{
 				}
 			}
 		}
-		if(cmd.equals("ADD")) {
+		if(cmd_.equals("ADD")) {
 			for(int i=0;i<columnNames.length;i++) {
 				textList.add(new JTextField("",20));
 			}
@@ -111,10 +113,36 @@ public class AddEditViewController implements ActionListener{
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
-			Object[] data = {textList.get(0).getText(), textList.get(1).getText(),
-					textList.get(2).getText(),textList.get(3).getText(),textList.get(4).getText(),
-					textList.get(5).getText()}; 
-			databaseManager.getDataSource().getContactDataModel().saveData(data);
+			Object[] data = new Object[textList.size()];
+			
+			for(int i=0;i<textList.size();i++) {
+				data[i] = textList.get(i).getText();
+			}
+			if(title == "Kontakte") { 
+				if(cmd_.equals("ADD")) { databaseManager.getDataSource().getContactDataModel().saveData(data); } 
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getContactDataModel().updateData(data,rowindex);  } 
+			}
+			if(title == "Kunden") { 
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getCustomerDataModel().saveData(data); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getCustomerDataModel().updateData(data,rowindex); }
+			}
+			if(title == "Angebote") { 
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOfferDataModel().saveData(data); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOfferDataModel().updateData(data,rowindex); }
+			}
+			if(title == "Projekte") { 
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getProjectDataModel().saveData(data); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getProjectDataModel().updateData(data,rowindex); }
+			}
+			//TODO: distinguish between IN and OUT bill 
+			if(title == "Rechnungen") { 
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOutBillDataModel().saveData(data); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOutBillDataModel().updateData(data,rowindex); }
+			}
+			if(title == "Bankkonto") { 
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getBankAccountDataModel().saveData(data); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getBankAccountDataModel().updateData(data,rowindex); }
+			}
 			newFrame.dispose();
 			
 		}

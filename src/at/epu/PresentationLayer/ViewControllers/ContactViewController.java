@@ -51,13 +51,9 @@ public class ContactViewController extends ViewController implements ActionListe
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		JMenuItem popEdit = new JMenuItem("Editieren");
-		popEdit.setActionCommand("EDIT");
-		popEdit.addActionListener(this);
 		menuList.add(popEdit);
 		
 		JMenuItem popDelete = new JMenuItem("Löschen");
-		popEdit.setActionCommand("DELETE");
-		popEdit.addActionListener(this);
 		menuList.add(popDelete);
 		tab_title = "Kontakte";
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
@@ -79,19 +75,12 @@ public class ContactViewController extends ViewController implements ActionListe
 		if( cmd.equals("ADD") ) {
 			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
 			newFrame = new JFrame();
-			newFrame.setTitle("Hinzufügen/Editieren");
+			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());
 			newFrame.pack();
 			newFrame.setLocationRelativeTo(parent);
     		newFrame.setVisible(true);
     		controller.setNewFrame(newFrame);
 		}	
-		
-		if( cmd.equals("DELETE")) {
-			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-			
-			databaseManager.getDataSource().getContactDataModel().deleteData(0);
-			
-		}
 	}
 }

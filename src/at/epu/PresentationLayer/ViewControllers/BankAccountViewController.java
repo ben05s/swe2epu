@@ -63,7 +63,7 @@ public class BankAccountViewController extends ViewController implements ActionL
 		if( cmd.equals("ADD") ) {
 			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
 			newFrame = new JFrame();
-			newFrame.setTitle("Hinzufügen/Editieren");
+			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());
 			newFrame.pack();
 			newFrame.setLocationRelativeTo(parent);
