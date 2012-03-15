@@ -9,11 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericAddEditFormView;
+import at.epu.PresentationLayer.GenericSplitTableView;
 
 public class AddEditViewController implements ActionListener{
 	
@@ -111,12 +111,11 @@ public class AddEditViewController implements ActionListener{
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
-			Object[] data = {textList.get(0).toString(), textList.get(1).toString(),
-					textList.get(2).toString(),textList.get(3).toString(),textList.get(4).toString(),
-					textList.get(5).toString()}; 
+			Object[] data = {textList.get(0).getText(), textList.get(1).getText(),
+					textList.get(2).getText(),textList.get(3).getText(),textList.get(4).getText(),
+					textList.get(5).getText()}; 
 			databaseManager.getDataSource().getContactDataModel().saveData(data);
 			newFrame.dispose();
-			rootComponent.updateUI();	//seems not to work...
 			
 		}
 		

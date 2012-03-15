@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
@@ -19,7 +20,14 @@ public class ContactViewController extends ViewController implements ActionListe
 	private JFrame newFrame;
 	private JFrame parent;
 	private String tab_title;
+	private JTable table;
 	
+	public JTable getTable() {
+		return table;
+	}
+	public void setTable(JTable table) {
+		this.table = table;
+	}
 	public ContactViewController(JFrame mainWindow) {
 		parent = mainWindow;
 	}
@@ -78,5 +86,12 @@ public class ContactViewController extends ViewController implements ActionListe
     		newFrame.setVisible(true);
     		controller.setNewFrame(newFrame);
 		}	
+		
+		if( cmd.equals("DELETE")) {
+			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+			
+			databaseManager.getDataSource().getContactDataModel().deleteData(0);
+			
+		}
 	}
 }

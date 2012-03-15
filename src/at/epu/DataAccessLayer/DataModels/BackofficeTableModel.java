@@ -56,21 +56,51 @@ public abstract class BackofficeTableModel extends AbstractTableModel implements
 		this.data = data;
 	}
 	
-	public void saveData(Object[] data) {
-		int col = this.columnNames.length;
+	public void deleteData(int rowindex) {
 		int row = this.data.length;
-		
+		int col = this.columnNames.length;
 		Object[][] newData = new Object[row][col];
 		for(int i=0;i<row;i++) {
 			for(int x=0;x<col;x++) {
-				if(i <= row-1) {
+				if(i != rowindex) {
 					newData[i][x] = this.data[i][x]; 
-				}
-				if(i == row) {
-					newData[i][x] = data[x];
 				}
 			}
 		}
 		setData(newData);
+		fireTableDataChanged();
+	}
+	
+	public void saveData(Object[] data_) {
+		int col = this.columnNames.length;
+		int row = this.data.length;
+		
+		for(int z=0;z<row;z++) {
+			if(this.data[z][0].toString().equals(data_[0].toString())) {
+				for(int e=0;e<col;e++) {
+					this.data[z][e] = data_[e];
+				}
+				break;
+			}
+			else { 
+				if(z == row-1) {
+					row++;
+					Object[][] newData = new Object[row][col];
+					for(int i=0;i<row;i++) {
+						for(int x=0;x<col;x++) {
+							if(i < row-1) {
+								newData[i][x] = this.data[i][x]; 
+							}
+							if(i == row-1) {
+								newData[i][x] = data_[x];
+							}
+						}
+					}
+					setData(newData);
+					break;
+				}
+			}
+		}
+		fireTableDataChanged();
 	}
 }

@@ -22,11 +22,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
+import at.epu.PresentationLayer.ViewControllers.ContactViewController;
 
 public class GenericSplitTableView extends JPanel {
 
@@ -34,15 +39,17 @@ public class GenericSplitTableView extends JPanel {
 	 * comment
 	 */
 	private static final long serialVersionUID = 1L;
+	private DefaultTableModel defaultTable = new DefaultTableModel();
 	private JTable table;
 	private JFrame newFrame;
+	DatabaseManager databaseManager;
 	
 	/**
 	 * Create the panel.
 	 */
 	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final JFrame parent, TableModel tableModel) {
 		setBackground(SystemColor.control);
-		
+	
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0};
@@ -62,7 +69,7 @@ public class GenericSplitTableView extends JPanel {
 		table = new JTable(tableModel);
 		table.setBackground(Color.ORANGE);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		
+	
 		for(int i = 0; i < table.getColumnCount(); i++) {
 			packColumn(table, i, 10);
 		}
@@ -144,12 +151,26 @@ public class GenericSplitTableView extends JPanel {
 	                	if(menu.getLabel() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-			                		JFrame newFrame = new JFrame();
-			                		newFrame.setTitle("Löschen");
-			                		JLabel note = new JLabel("Dieser Datensatz wird gelöscht");
-			                		newFrame.add(note);
-			                		newFrame.setBounds(300, 150, 300, 500);
-			                		newFrame.setVisible(true);
+		                			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+		                			if(title == "Kontakte"){
+		                				databaseManager.getDataSource().getContactDataModel().deleteData(rowindex);
+		                			}
+		                			if(title == "Kunden"){
+		                				databaseManager.getDataSource().getCustomerDataModel().deleteData(rowindex);
+		                			}
+		                			if(title == "Angebote"){
+		                				databaseManager.getDataSource().getOfferDataModel().deleteData(rowindex);
+		                			}
+		                			if(title == "Projekte"){
+		                				databaseManager.getDataSource().getProjectDataModel().deleteData(rowindex);
+		                			}
+		                			//TODO: distinguish between IN and OUT bill 
+		                			if(title == "Rechnungen"){
+		                				databaseManager.getDataSource().getOutBillDataModel().deleteData(rowindex);
+		                			}
+		                			if(title == "Bankkonto"){
+		                				databaseManager.getDataSource().getBankAccountDataModel().deleteData(rowindex);
+		                			}
 		                		}
 	                		}); 
 	                	}
