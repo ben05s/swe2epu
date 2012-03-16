@@ -1,5 +1,5 @@
 bin/
-.DS_STORE
+.DS_STORE*
 .class
 db/
 *.class
