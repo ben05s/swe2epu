@@ -7,6 +7,6 @@ public abstract class CategoryDataModel extends BackofficeTableModel {
 		String[] columnNames_ = {"ID",
 		"Name"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

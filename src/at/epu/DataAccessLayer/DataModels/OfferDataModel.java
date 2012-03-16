@@ -11,6 +11,6 @@ public abstract class OfferDataModel extends BackofficeTableModel {
                 "Datum",
                 "Chance"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

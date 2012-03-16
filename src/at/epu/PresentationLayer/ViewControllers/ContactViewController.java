@@ -5,14 +5,32 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 
 public class ContactViewController extends ViewController implements ActionListener {	
+	JPanel panel = new JPanel();
+	private JFrame newFrame;
+	private JFrame parent;
+	private String tab_title;
+	private JTable table;
+	
+	public JTable getTable() {
+		return table;
+	}
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+	public ContactViewController(JFrame mainWindow) {
+		parent = mainWindow;
+	}
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
@@ -23,6 +41,8 @@ public class ContactViewController extends ViewController implements ActionListe
 		
 		btnFind.setActionCommand("FILTER");
 		btnFind.addActionListener(this);
+		btnAdd.setActionCommand("ADD");
+		btnAdd.addActionListener(this);
 		
 		buttonList.add(btnFind);
 		buttonList.add(btnAdd);
@@ -30,10 +50,13 @@ public class ContactViewController extends ViewController implements ActionListe
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
-		menuList.add(new JMenuItem("Editieren"));
-		menuList.add(new JMenuItem("Löschen"));
+		JMenuItem popEdit = new JMenuItem("Editieren");
+		menuList.add(popEdit);
 		
-		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList,
+		JMenuItem popDelete = new JMenuItem("Löschen");
+		menuList.add(popDelete);
+		tab_title = "Kontakte";
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
 					                              databaseManager.getDataSource().getContactDataModel());
 		
 		title = "Kontakte";
@@ -48,5 +71,16 @@ public class ContactViewController extends ViewController implements ActionListe
 			
 			databaseManager.getDataSource().getContactDataModel().filterDataModel("Kathy");
 		}
+		
+		if( cmd.equals("ADD") ) {
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
+			newFrame = new JFrame();
+			newFrame.setTitle("Hinzufügen");
+			newFrame.add(controller.getRootComponent());
+			newFrame.pack();
+			newFrame.setLocationRelativeTo(parent);
+    		newFrame.setVisible(true);
+    		controller.setNewFrame(newFrame);
+		}	
 	}
 }

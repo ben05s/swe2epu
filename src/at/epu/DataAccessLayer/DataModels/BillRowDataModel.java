@@ -13,6 +13,6 @@ public abstract class BillRowDataModel extends BackofficeTableModel {
 				"Steuern",
 				"Betrag"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

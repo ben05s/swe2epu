@@ -1,5 +1,7 @@
 package at.epu.BusinessLayer;
 
+import java.sql.SQLException;
+
 import at.epu.DataAccessLayer.*;
 
 public class ApplicationManager {
@@ -18,8 +20,9 @@ public class ApplicationManager {
 	
 	/**
 	 * Setup code.
+	 * @throws SQLException 
 	 */
-	public void applicationStarted(String[] args) {
+	public void applicationStarted(String[] args) throws SQLException {
 		if(args.length > 0)
 		{
 			databaseManager.setDataSource(new DatabaseDataSource(args[0]));

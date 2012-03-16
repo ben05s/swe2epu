@@ -8,6 +8,6 @@ public abstract class InBillDataModel extends BackofficeTableModel {
 				"Buchungszeile",
 				"Kontakt"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }

@@ -8,6 +8,6 @@ public abstract class ProjectDataModel extends BackofficeTableModel {
 				"Angebot_ID",
 				"AusgRechnung_ID"};
 		
-		columnNames = columnNames_;
+		setColumnNames(columnNames_);
 	}
 }
