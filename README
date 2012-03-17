@@ -1,1 +1,9 @@
-java -cp ./lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:db/backofficedb --dbname.0 backofficedb
+connect to db
+java -cp ./lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:db/backofficedb --dbname.0 backofficedb 
+
+connect to Database Manager for editing/creating tables and data:
+java -cp ./lib/hsqldb.jar org.hsqldb.util.DatabaseManagerSwing
+
+Programm arguments for working db (db folder must be in working directory):
+connection to db and Database Manager must be closed when running the mainWindow
+db/backofficedb
