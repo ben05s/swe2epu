@@ -17,7 +17,16 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected ResultSet rs;
 	protected String sql;
 	protected String sql_count;
+	protected Connection dbHandle = null;
 	
+	public Connection getDbHandle() {
+		return dbHandle;
+	}
+
+	public void setDbHandle(Connection dbHandle) {
+		this.dbHandle = dbHandle;
+	}
+
 	public void closeConnection(Connection databaseHandle) {
 		if ( databaseHandle != null )
 		{
@@ -78,10 +87,29 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		this.data = data;
 	}
 	
-	public void deleteData(int rowindex) {
+	public void deleteData(int rowindex, String title) {
 		int row = this.data.length;
 		int col = this.columnNames.length;
 		int counter = 0;
+		if(dbHandle != null) {
+			try {
+				stm = dbHandle.createStatement();
+			} catch (SQLException e) {
+				System.err.println("Could not create Delete Statement");
+				closeConnection(dbHandle);
+			}
+			
+			sql = "DELETE FROM "+title+" WHERE ROWNUM = "+rowindex;
+			
+			try {
+				stm.executeUpdate(sql);
+			} catch (SQLException e) {
+				System.err.println("Error when executing the Delete Query");
+				e.printStackTrace();
+				closeConnection(dbHandle);
+			}
+		}
+		
 		Object[][] newData = new Object[row-1][col];
 
 		for(int i=0;i<row;i++) {
@@ -96,9 +124,29 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		fireTableDataChanged();
 	}
 	
-	public void saveData(Object[] data_) {
+	public void saveData(Object[] data_, String title) {
 		int col = this.columnNames.length;
 		int row = this.data.length;
+		
+		if(dbHandle != null) {
+			try {
+				stm = dbHandle.createStatement();
+			} catch (SQLException e) {
+				System.err.println("Could not create Save Statement");
+				closeConnection(dbHandle);
+			}
+			
+			sql = "INSERT INTO "+title+" VALUES("+data_[0].toString()+",\'"+data_[1].toString()+"\',\'"+
+					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\')";
+			try {
+				stm.executeUpdate(sql);
+			} catch (SQLException e1) {
+				System.err.println("Error when executing the Save Query");
+				e1.printStackTrace();
+				closeConnection(dbHandle);
+			}
+		}
+		
 		row++;
 		Object[][] newData = new Object[row][col];
 		for(int i=0;i<row;i++) {
@@ -115,9 +163,29 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		fireTableDataChanged();
 	}
 	
-	public void updateData(Object[] data_, int rowindex) {
+	public void updateData(Object[] data_, int rowindex, String title) {
+		if(dbHandle != null) {
+			try {
+				stm = dbHandle.createStatement();
+			} catch (SQLException e) {
+				System.err.println("Could not create Update Statement");
+				closeConnection(dbHandle);
+			}
+			
+			sql = "UPDATE "+title+" SET ID="+data_[0].toString()+",VORNAME=\'"+data_[1].toString()+"\',NACHNAME=\'"+
+					data_[2].toString()+"\',ADRESSE=\'"+data_[3].toString()+"\',EMAIL=\'"+data_[4].toString()+"\',TELEFON=\'"+
+					data_[5].toString()+"\' WHERE ROWNUM="+rowindex;
+			
+			try {
+				stm.executeUpdate(sql);
+			} catch (SQLException e) {
+				System.err.println("Error when executing the Update Query");
+				e.printStackTrace();
+				closeConnection(dbHandle);
+			}
+		}
+			
 		for(int i=0;i<this.columnNames.length;i++) {
-			System.out.println(this.columnNames.length+" rowindex"+ rowindex);
 			this.data[rowindex][i] = data_[i];
 		}
 		fireTableDataChanged();

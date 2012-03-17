@@ -16,8 +16,10 @@ public class SQLContactDataModel extends ContactDataModel {
 			closeConnection(databaseHandle);
 		}
 		
-		sql = "SELECT * FROM CONTACT";
-		sql_count = "SELECT COUNT(*) FROM CONTACT";
+		setDbHandle(databaseHandle);
+		
+		sql = "SELECT * FROM KONTAKTE";
+		sql_count = "SELECT COUNT(*) FROM KONTAKTE";
 		try {
 			rs = stm.executeQuery(sql_count);
 		} catch (SQLException e) {

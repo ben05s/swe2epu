@@ -44,7 +44,8 @@ public class BankAccountViewController extends ViewController implements ActionL
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
-		menuList.add(new JMenuItem("Rechnung Splitten"));
+		/*EDIT: NOT NEEDED ACCORIND TO SZACZEC
+		menuList.add(new JMenuItem("Rechnung Splitten"));*/
 		tab_title = "Bankkonto";
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
                 										databaseManager.getDataSource().getBankAccountDataModel());

@@ -119,29 +119,29 @@ public class AddEditViewController implements ActionListener{
 				data[i] = textList.get(i).getText();
 			}
 			if(title == "Kontakte") { 
-				if(cmd_.equals("ADD")) { databaseManager.getDataSource().getContactDataModel().saveData(data); } 
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getContactDataModel().updateData(data,rowindex);  } 
+				if(cmd_.equals("ADD")) { databaseManager.getDataSource().getContactDataModel().saveData(data,title); } 
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getContactDataModel().updateData(data,rowindex,title);  } 
 			}
 			if(title == "Kunden") { 
-				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getCustomerDataModel().saveData(data); }
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getCustomerDataModel().updateData(data,rowindex); }
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getCustomerDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getCustomerDataModel().updateData(data,rowindex,title); }
 			}
 			if(title == "Angebote") { 
-				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOfferDataModel().saveData(data); }
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOfferDataModel().updateData(data,rowindex); }
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOfferDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOfferDataModel().updateData(data,rowindex,title); }
 			}
 			if(title == "Projekte") { 
-				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getProjectDataModel().saveData(data); }
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getProjectDataModel().updateData(data,rowindex); }
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getProjectDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getProjectDataModel().updateData(data,rowindex,title); }
 			}
 			//TODO: distinguish between IN and OUT bill 
 			if(title == "Rechnungen") { 
-				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOutBillDataModel().saveData(data); }
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOutBillDataModel().updateData(data,rowindex); }
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOutBillDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOutBillDataModel().updateData(data,rowindex,title); }
 			}
 			if(title == "Bankkonto") { 
-				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getBankAccountDataModel().saveData(data); }
-				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getBankAccountDataModel().updateData(data,rowindex); }
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getBankAccountDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getBankAccountDataModel().updateData(data,rowindex,title); }
 			}
 			newFrame.dispose();
 			
