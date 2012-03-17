@@ -98,9 +98,9 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				System.err.println("Could not create Delete Statement");
 				closeConnection(dbHandle);
 			}
-			
+			rowindex++;
 			sql = "DELETE FROM "+title+" WHERE ROWNUM = "+rowindex;
-			
+			rowindex--;
 			try {
 				stm.executeUpdate(sql);
 			} catch (SQLException e) {
@@ -171,11 +171,11 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				System.err.println("Could not create Update Statement");
 				closeConnection(dbHandle);
 			}
-			
+			rowindex++;
 			sql = "UPDATE "+title+" SET ID="+data_[0].toString()+",VORNAME=\'"+data_[1].toString()+"\',NACHNAME=\'"+
 					data_[2].toString()+"\',ADRESSE=\'"+data_[3].toString()+"\',EMAIL=\'"+data_[4].toString()+"\',TELEFON=\'"+
 					data_[5].toString()+"\' WHERE ROWNUM="+rowindex;
-			
+			rowindex--;
 			try {
 				stm.executeUpdate(sql);
 			} catch (SQLException e) {
