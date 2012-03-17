@@ -5,7 +5,8 @@ public abstract class OfferDataModel extends BackofficeTableModel {
 	
 	public OfferDataModel() {
 		String[] columnNames_ = {"ID",
-				"Kunde_ID",
+				"Titel",
+				"Kunde",
                 "Summe",
                 "Dauer",
                 "Datum",

@@ -38,7 +38,7 @@ public class OfferViewController extends ViewController implements ActionListene
 		
 		buttonList.add(btnFind);
 		buttonList.add(btnAdd);
-		buttonList.add(new JButton("Jahresprognose der Angebote (PDF)"));
+		buttonList.add(new JButton("Jahresprognose der Angebote PDF"));
 
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		

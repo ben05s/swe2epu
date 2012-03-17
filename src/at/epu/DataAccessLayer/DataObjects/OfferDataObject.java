@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class OfferDataObject {
 	int id_;
+	String titel;
 	CustomerDataObject kunde_;
 	double summe_;
 	int dauer_; // in Tagen
@@ -20,6 +21,13 @@ public class OfferDataObject {
 	
 	public int getID() {
 		return id_;
+	}
+	public String getTitel() {
+		return titel;
+	}
+
+	public void setTitel(String titel) {
+		this.titel = titel;
 	}
 	
 	public void setKunde(CustomerDataObject kunde) {

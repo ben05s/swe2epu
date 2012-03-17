@@ -4,9 +4,7 @@ public class BillRowDataObject {
 	int id_;
 	OutBillDataObject ausgrechnung_;
 	OfferDataObject angebot_;
-	String status_;
 	String kommentar_;
-	int anzahl_;
 	double steuern_;
 	double betrag_;
 	
@@ -34,28 +32,12 @@ public class BillRowDataObject {
 		angebot_ = angebot;
 	}
 	
-	public String getStatus() {
-		return status_;
-	}
-	
-	public void setStatus(String status) {
-		status_ = status;
-	}
-	
 	public String getKommentar() {
 		return kommentar_;
 	}
 	
 	public void setKommentar(String kommentar) {
 		kommentar_ = kommentar;
-	}
-	
-	public int getAnzahl() {
-		return anzahl_;
-	}
-	
-	public void setAnzahl(int anzahl) {
-		anzahl_ = anzahl;
 	}
 	
 	public double getSteuern() {

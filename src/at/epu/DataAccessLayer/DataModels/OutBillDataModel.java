@@ -4,10 +4,11 @@ public abstract class OutBillDataModel extends BackofficeTableModel {
 	private static final long serialVersionUID = -2573224010608787797L;
 	
 	public OutBillDataModel() {
-		String [] columnNames_ = {"ID",
-				"Rechnungszeile_ID",
-				"Kunde_ID",
-				"Buchungszeile_ID"};
+		String [] columnNames_ = {"Ausgangsrechnung ID",
+				"Kunde",
+				"Anz Rechnungszeilen",
+				"Anz Buchungszeilen",
+				"Status"};
 		
 		setColumnNames(columnNames_);
 	}

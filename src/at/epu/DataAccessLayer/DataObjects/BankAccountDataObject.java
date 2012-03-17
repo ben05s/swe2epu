@@ -1,12 +1,32 @@
 package at.epu.DataAccessLayer.DataObjects;
 
+import java.util.ArrayList;
+import java.util.Date;
+/*
+ * | ID(PK) | EingRechnung | AusgRechnung | Betrag 
+ * | Umsatzsteuer | Buchungsdatum | Kategorie
+ */
 public class BankAccountDataObject {
 	int id_;
-	String kontonummer_;
-	String vorname_;
-	String nachname_;
-	String bank_;
-	int blz_;
+	ArrayList<InBillDataObject> eingrechnung_liste_;
+	ArrayList<OutBillDataObject> ausgrechnung_liste_;
+	double betrag_;
+	double umsatzsteuer_;
+	Date buchungsdatum_;
+	ArrayList<CategoryDataObject> kategorie_;
+	
+	public ArrayList<CategoryDataObject> getKategorie_() {
+		return kategorie_;
+	}
+	public void setKategorie_(ArrayList<CategoryDataObject> kategorie_) {
+		this.kategorie_ = kategorie_;
+	}
+	public double getUmsatzsteuer_() {
+		return umsatzsteuer_;
+	}
+	public void setUmsatzsteuer_(double umsatzsteuer_) {
+		this.umsatzsteuer_ = umsatzsteuer_;
+	}
 	
 	public int getId_() {
 		return id_;
@@ -14,34 +34,28 @@ public class BankAccountDataObject {
 	public void setId_(int id_) {
 		this.id_ = id_;
 	}
-	public String getKontonummer_() {
-		return kontonummer_;
+	public ArrayList<InBillDataObject> getEingrechnung_liste_() {
+		return eingrechnung_liste_;
 	}
-	public void setKontonummer_(String kontonummer_) {
-		this.kontonummer_ = kontonummer_;
+	public void setEingrechnung_liste_(ArrayList<InBillDataObject> eingrechnung_liste_) {
+		this.eingrechnung_liste_ = eingrechnung_liste_;
 	}
-	public String getVorname_() {
-		return vorname_;
+	public ArrayList<OutBillDataObject> getAusgrechnung_liste_() {
+		return ausgrechnung_liste_;
 	}
-	public void setVorname_(String vorname_) {
-		this.vorname_ = vorname_;
+	public void setAusgrechnung_liste_(ArrayList<OutBillDataObject> ausgrechnung_liste_) {
+		this.ausgrechnung_liste_ = ausgrechnung_liste_;
 	}
-	public String getNachname_() {
-		return nachname_;
+	public double getBetrag_() {
+		return betrag_;
 	}
-	public void setNachname_(String nachname_) {
-		this.nachname_ = nachname_;
+	public void setBetrag_(double betrag_) {
+		this.betrag_ = betrag_;
 	}
-	public String getBank_() {
-		return bank_;
+	public Date getBuchungsdatum_() {
+		return buchungsdatum_;
 	}
-	public void setBank_(String bank_) {
-		this.bank_ = bank_;
-	}
-	public int getBlz_() {
-		return blz_;
-	}
-	public void setBlz_(int blz_) {
-		this.blz_ = blz_;
+	public void setBuchungsdatum_(Date buchungsdatum_) {
+		this.buchungsdatum_ = buchungsdatum_;
 	}
 }

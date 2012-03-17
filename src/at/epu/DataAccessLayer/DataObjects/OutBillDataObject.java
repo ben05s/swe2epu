@@ -5,9 +5,18 @@ import java.util.ArrayList;
 public class OutBillDataObject {
 	int id_;
 	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
-	ArrayList<BookRowDataObject> buchungszeile_liste_ = new ArrayList<BookRowDataObject>();
+	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();
 	CustomerDataObject kunde_;
-	
+	String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getID() {
 		return id_;
 	}
@@ -29,7 +38,7 @@ public class OutBillDataObject {
 		rechnungszeile_liste_.addAll(rechnungszeile);
 	}
 	
-	public ArrayList<BookRowDataObject> getBuchungszeilen() {
+	public ArrayList<BankAccountDataObject> getBuchungszeilen() {
 		if(buchungszeile_liste_.size() == 0){
 			return null;
 		}
@@ -38,7 +47,7 @@ public class OutBillDataObject {
 		}
 	}
 	
-	public void setBuchungszeilen(ArrayList<BookRowDataObject> buchungszeile) {
+	public void setBuchungszeilen(ArrayList<BankAccountDataObject> buchungszeile) {
 		buchungszeile_liste_.addAll(buchungszeile);
 	}
 	

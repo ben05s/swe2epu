@@ -5,11 +5,11 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 	
 	public BankAccountDataModel() {
 		String [] columnNames_ = {"ID",
-				"Kontonummer",
-				"Vorname",
-				"Nachname",
-				"Bank",
-				"BLZ"};
+				"Buchungstext",
+				"Betrag",
+				"Umsatzsteuer",
+				"Buchungsdatum",
+				"Kategorie"};
 
 		setColumnNames(columnNames_);
 	}

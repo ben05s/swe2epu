@@ -10,10 +10,9 @@ public class MockProjectDataModel extends ProjectDataModel {
 	
 	public MockProjectDataModel() {
 		Object [][] data_ = {
-				{new Integer(1), new Integer(2), new Integer(1)},
-				{new Integer(1), new Integer(2), new Integer(2)},
-				{new Integer(2), new Integer(1), null},
-				{new Integer(3), new Integer(3), new Integer(3)}
+				{new Integer(1), "Admin Tool", "Admin billig A.", new Integer(1)},
+				{new Integer(2), "Gutes Projekt", "Gutes Projekt teuer A.", null},
+				{new Integer(3), "Nicht so gutes Projekt", "A003", new Integer(3)}
 		};
 		
 		data = data_;

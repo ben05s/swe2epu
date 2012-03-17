@@ -41,9 +41,10 @@ public class BillViewController extends ViewController implements ActionListener
 		buttonList.add(btnFind);
 		buttonList.add(btnAdd);
 		
-		buttonList.add(new JButton("PDF aller Rechnungen generieren"));
-		buttonList.add(new JButton("Rechnungsreport PDF ..."));
-		buttonList.add(new JButton("Ein- Ausgaben Report PDF ..."));
+		buttonList.add(new JButton("Eingangsrechnungen Scannen"));
+		buttonList.add(new JButton("Rechnungen generieren PDF"));
+		buttonList.add(new JButton("Rechnungsreport PDF"));
+		buttonList.add(new JButton("Ein- Ausgaben Report PDF"));
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		labelList.add(new JLabel("Offene Rechnungen: "));

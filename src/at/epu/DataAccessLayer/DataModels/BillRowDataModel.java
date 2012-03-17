@@ -5,11 +5,9 @@ public abstract class BillRowDataModel extends BackofficeTableModel {
 	
 	public BillRowDataModel() {
 		String [] columnNames_ = {"ID",
-				"AusgRechnung_ID",
-				"Angebot_ID",
-				"Status",
+				"Ausgangsrechnung ID",
+				"Angebot",
 				"Kommentar",
-				"Anzahl",
 				"Steuern",
 				"Betrag"};
 		

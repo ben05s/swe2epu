@@ -10,13 +10,13 @@ public class MockCustomerDataModel extends CustomerDataModel {
 	public MockCustomerDataModel() {
 		Object[][] data_ = {
 			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
-			     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", new Integer(1)},
+			     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", "Admin billig A."},
 			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
-				     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", new Integer(2)},
+				     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", "Gutes Projekt teuer A."},
 			    {new Integer(2), "Fritz", "DD", "Privat", 
 			     "Zeilengasse 143/22", "f.DD@gmail.com", "06761252042", null},
 			    {new Integer(3), "Heinz", "MrX", "Haus Gmbh",
-			     "Franzgasse 9/12", "x.x@chello.at", "066465352325", new Integer(3)},
+			     "Franzgasse 9/12", "x.x@chello.at", "066465352325", "A003"},
 			};
 		
 		data = data_;

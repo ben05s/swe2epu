@@ -6,27 +6,59 @@ import java.util.ArrayList;
  */
 public class InBillDataObject {
 	int id_;
+	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
+	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();
 	ContactDataObject kontakt_;
-	ArrayList<BookRowDataObject> bzeile_liste_;
-	
-	public int getId_() {
+	String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getID() {
 		return id_;
 	}
-	public void setId_(int id_) {
-		this.id_ = id_;
+	
+	public void setID(int id) {
+		id_ = id;
 	}
-	public ContactDataObject getKontakt_() {
+	
+	public ArrayList<BillRowDataObject> getRechnungszeilen() {
+		if(rechnungszeile_liste_.size() == 0){
+			return null;
+		}
+		else {
+			return rechnungszeile_liste_;
+		}
+	}
+	
+	public void setRechnungszeilen(ArrayList<BillRowDataObject> rechnungszeile) {
+		rechnungszeile_liste_.addAll(rechnungszeile);
+	}
+	
+	public ArrayList<BankAccountDataObject> getBuchungszeilen() {
+		if(buchungszeile_liste_.size() == 0){
+			return null;
+		}
+		else {
+			return buchungszeile_liste_;
+		}
+	}
+	
+	public void setBuchungszeilen(ArrayList<BankAccountDataObject> buchungszeile) {
+		buchungszeile_liste_.addAll(buchungszeile);
+	}
+	
+	public ContactDataObject getKontakt() {
 		return kontakt_;
 	}
-	public void setKontakt_(ContactDataObject kontakt_) {
-		this.kontakt_ = kontakt_;
-	}
-	public ArrayList<BookRowDataObject> getBzeile_liste_() {
-		return bzeile_liste_;
-	}
-	public void setBzeile_liste_(ArrayList<BookRowDataObject> bzeile_liste_) {
-		this.bzeile_liste_ = bzeile_liste_;
-	}
 	
-	
+	public void setKontakt(ContactDataObject kontakt) {
+		kontakt_ = kontakt;
+	}
 }
+

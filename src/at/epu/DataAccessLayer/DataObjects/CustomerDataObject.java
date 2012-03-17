@@ -6,6 +6,7 @@ public class CustomerDataObject {
 	int id_;
 	String vorname_;
 	String nachname_;
+	String adresse_;
 	String unternehmen_;
 	String email_;
 	String telefon_;
@@ -66,6 +67,14 @@ public class CustomerDataObject {
 		else {
 			return angebot_liste_;
 		}
+	}
+	
+	public String getAdresse_() {
+		return adresse_;
+	}
+
+	public void setAdresse_(String adresse_) {
+		this.adresse_ = adresse_;
 	}
 	
 	public void setAngebot(ArrayList<OfferDataObject> angebot_liste) {

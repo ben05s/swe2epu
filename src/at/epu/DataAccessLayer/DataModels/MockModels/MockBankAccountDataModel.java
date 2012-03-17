@@ -1,20 +1,21 @@
 package at.epu.DataAccessLayer.DataModels.MockModels;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import at.epu.DataAccessLayer.DataModels.BankAccountDataModel;
 /*
- * ID | Kontonummer | Vorname | Nachname | Bank | BLZ
+ * ID(PK) | Buchungstext |
+ * | Betrag | Umsatzsteuer | Buchungsdatum | Kategorie(FK)
  */
 public class MockBankAccountDataModel extends BankAccountDataModel {
 	private static final long serialVersionUID = -1513528315959701530L;
 	
 	public MockBankAccountDataModel() {
 		Object [][] data_ = {
-				{new Integer(1), "12029521420", "Fritz", "Witz", "Volksbank",
-					new Integer(1400)},
-				{new Integer(2), "474433059332", "Otto", "Schmitt", "Erste Bank",
-					new Integer(22000)},
-				{new Integer(3), "464020340897", "Harald", "Heinz", "Bawag",
-					new Integer(43000)},
+			{new Integer(1), "Ausgangsrechnung ID 1", new Double(34000.00+100050.00),new Double(26810.00), 
+			 new SimpleDateFormat("dd.MM.yyyy").format(new Date()), "Einnahme"},
+			{new Integer(2), "Ausgangsrechnung ID 2", new Double(1252.00+1003.00),new Double(45100.00), 
+			 new SimpleDateFormat("dd.MM.yyyy").format(new Date()), "Einnahme"}
 		};
 
 		data = data_;

@@ -12,11 +12,11 @@ public class MockOfferDataModel extends OfferDataModel {
 	
 	public MockOfferDataModel() {		
 		Object[][] data_ = {
-			    {new Integer(1), new Integer(1), new Double(20000.00), new Integer(365),
+			    {new Integer(1), "Admin billig A.", "Hur", new Double(20000.00), new Integer(365),
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.55)},
-			    {new Integer(2), new Integer(1), new Double(150000.00), new Integer(180),
+			    {new Integer(2), "Gutes Projekt teuer A.", "Hur", new Double(150000.00), new Integer(180),
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.45)},
-			    {new Integer(3), new Integer(3), new Double(50000.00), new Integer(85), 
+			    {new Integer(3), "A003", "MrX", new Double(50000.00), new Integer(85), 
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.80)},
 			};
 		

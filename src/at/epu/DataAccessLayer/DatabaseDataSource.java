@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLBankAccountDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLBillRowDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLBookRowDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLCategoryDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLContactDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLCustomerDataModel;
@@ -37,7 +36,6 @@ public class DatabaseDataSource extends DataSource {
 		bankaccountModel = new SQLBankAccountDataModel();
 		outbillModel = new SQLOutBillDataModel();
 		billrowModel = new SQLBillRowDataModel();
-		bookrowModel = new SQLBookRowDataModel();
 		categoryModel = new SQLCategoryDataModel();
 		inbillModel = new SQLInBillDataModel();
 	}

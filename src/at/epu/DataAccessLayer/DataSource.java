@@ -10,7 +10,6 @@ public abstract class DataSource {
 	BankAccountDataModel bankaccountModel;
 	OutBillDataModel outbillModel;
 	BillRowDataModel billrowModel;
-	BookRowDataModel bookrowModel;
 	CategoryDataModel categoryModel;
 	InBillDataModel inbillModel;
 	
@@ -48,12 +47,7 @@ public abstract class DataSource {
 	public BillRowDataModel getBillRowDataModel() {
 		return billrowModel;
 	}
-
 	
-	public BookRowDataModel getBookRowDataModel() {
-		return bookrowModel;
-	}
-
 	
 	public CategoryDataModel getCategoryDataModel() {
 		return categoryModel;

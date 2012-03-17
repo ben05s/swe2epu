@@ -11,7 +11,6 @@ public class MockDataSource extends DataSource {
 		bankaccountModel = new MockBankAccountDataModel();
 		outbillModel = new MockOutBillDataModel();
 		billrowModel = new MockBillRowDataModel();
-		bookrowModel = new MockBookRowDataModel();
 		categoryModel = new MockCategoryDataModel();
 		inbillModel = new MockInBillDataModel();
 	}

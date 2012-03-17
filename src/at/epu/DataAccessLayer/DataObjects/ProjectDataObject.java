@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class ProjectDataObject {
 	int id_;
+	String titel;
 	int angebot_id_;
 	ArrayList<OutBillDataObject> ausgrechnung_liste_ = new ArrayList<OutBillDataObject>();
 	
@@ -24,6 +25,12 @@ public class ProjectDataObject {
 	}
 	public ArrayList<OutBillDataObject> getAusgrechnung_liste_() {
 		return ausgrechnung_liste_;
+	}
+	public String getTitel() {
+		return titel;
+	}
+	public void setTitel(String titel) {
+		this.titel = titel;
 	}
 	public void setAusgrechnung_liste_(ArrayList<OutBillDataObject> ausgrechnung_liste_) {
 		this.ausgrechnung_liste_.addAll(ausgrechnung_liste_);
