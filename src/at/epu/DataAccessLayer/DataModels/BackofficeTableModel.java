@@ -1,5 +1,10 @@
 package at.epu.DataAccessLayer.DataModels;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.swing.table.DefaultTableModel;
 
 public abstract class BackofficeTableModel extends DefaultTableModel implements FilterableDataModel {
@@ -7,6 +12,23 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 
 	protected String[] columnNames 	= null;
 	protected Object[][] data 		= null;
+	
+	protected Statement stm;
+	protected ResultSet rs;
+	protected String sql;
+	protected String sql_count;
+	
+	public void closeConnection(Connection databaseHandle) {
+		if ( databaseHandle != null )
+		{
+			try {
+				databaseHandle.close();
+			} catch ( SQLException f ) {
+				f.printStackTrace();
+			}
+		}
+		System.exit(0);
+	}
 	
 	@Override
 	public String getColumnName(int column) {
