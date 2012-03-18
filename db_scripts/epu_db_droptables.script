@@ -1,0 +1,14 @@
+DROP TABLE kontakte;
+DROP TABLE kunden;
+DROP TABLE angebote;
+DROP TABLE angebote_mapping;
+DROP TABLE ausgangsrechnungen_mapping;
+DROP TABLE projekte;
+DROP TABLE rzeilen_mapping;
+DROP TABLE bzeilen_mapping;
+DROP TABLE ausgangsrechnungen;
+DROP TABLE eingangsrechnungen;
+DROP TABLE rechnungszeilen;
+DROP TABLE kategorien;
+DROP TABLE kat_mapping;
+DROP TABLE buchungszeilen;

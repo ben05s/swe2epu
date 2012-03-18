@@ -1,0 +1,107 @@
+CREATE TABLE kontakte 
+	(id INTEGER,
+	vorname VARCHAR(50),
+	nachname VARCHAR(50),
+	adresse VARCHAR(50),
+	email VARCHAR(100),
+	telefon varchar(50),
+	PRIMARY KEY(id));
+		
+CREATE TABLE kunden
+	(id INTEGER,
+	vorname VARCHAR(50),
+	nachname VARCHAR(50),
+	unternehmen VARCHAR(50),
+	adresse VARCHAR(50),
+	email VARCHAR(100),
+	telefon VARCHAR(50),
+	angebot_mapping_id INTEGER,
+	PRIMARY KEY(id));
+	
+--ignoriere anforderung das mehrere angebote in ein projekt münden können
+CREATE TABLE angebote
+	(id INTEGER,
+	titel VARCHAR(50) UNIQUE,
+	kunde_id INTEGER,
+	summe DECIMAL(20,2),
+	dauer INTEGER,
+	datum VARCHAR(50),	--startdatum
+	chance DECIMAL(20,2),
+	PRIMARY KEY(id));
+	
+CREATE TABLE angebote_mapping
+	(id INTEGER,
+	angebot_id INTEGER,
+	PRIMARY KEY(id,angebot_id));
+
+CREATE TABLE ausgangsrechnungen_mapping
+	(id INTEGER,
+	ausgangsrechnung_id INTEGER,
+	PRIMARY KEY(id,ausgangsrechnung_id));
+	
+CREATE TABLE projekte
+	(id INTEGER,
+	titel VARCHAR(50) UNIQUE,
+	angebot_id INTEGER,
+	ausgr_mapping_id INTEGER, --fraglich ob funktioniert weil wert null sein kann
+	zeit VARCHAR(50),
+	PRIMARY KEY(id));
+
+CREATE TABLE rzeilen_mapping
+	(id INTEGER,
+	rechnungszeile_id INTEGER,
+	PRIMARY KEY(id,rechnungszeile_id));
+	
+CREATE TABLE bzeilen_mapping
+	(id INTEGER,
+	buchungszeile_id INTEGER,
+	PRIMARY KEY(id,buchungszeile_id));
+	
+CREATE TABLE ausgangsrechnungen
+	(id INTEGER,
+	kunde_id INTEGER,
+	rzeile_mapping_id INTEGER,
+	bzeile_mapping_id INTEGER,
+	status VARCHAR(50),
+	PRIMARY KEY(id));
+
+--fraglich welche zusätzlichen daten für eingrechnung bennötigt werden bzw woher die daten kommen sollen(scannen?) -> fragen!
+CREATE TABLE eingangsrechnungen
+	(id INTEGER,
+	kontakt_id INTEGER,
+	rzeile_mapping_id INTEGER,
+	bzeile_mapping_id INTEGER,
+	status VARCHAR(50),
+	PRIMARY KEY(id));
+	
+CREATE TABLE rechnungszeilen
+	(id INTEGER,
+	ausgangsrechnung_id INTEGER,
+	angebot_id INTEGER,
+	kommentar VARCHAR(100),
+	steuern DECIMAL(20,2),
+	betrag DECIMAL(20,2),
+	PRIMARY KEY(id));
+	
+CREATE TABLE kategorien
+	(id INTEGER,
+	name VARCHAR(50),
+	PRIMARY KEY(id));
+
+CREATE TABLE kat_mapping
+	(id INTEGER,
+	kategorie_id INTEGER,
+	PRIMARY KEY(id,kategorie_id));
+	
+--eine buchungszeile kann entweder mit EINER eingangs oder EINER ausgangsrechnung verknüpft werden
+--ignoriere anforderung das buchungszeile mit ein oder MEHREREN Ein/AusgRechnungen verknüpft werden KANN (aber nicht muss)
+CREATE TABLE buchungszeilen
+	(id INTEGER,
+	eingangsrechnung_id INTEGER, --no fk because can be null
+	ausgangsrechnung_id INTEGER, --no fk because can be null
+	betrag DECIMAL(20,2),
+	umsatzsteuer DECIMAL(20,2),
+	buchungsdatum VARCHAR(50),
+	kat_mapping_id INTEGER,
+	PRIMARY KEY(id));
+	

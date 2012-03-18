@@ -3,6 +3,17 @@ java -cp ./lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:db/backoffi
 
 connect to Database Manager for editing/creating tables and data:
 java -cp ./lib/hsqldb.jar org.hsqldb.util.DatabaseManagerSwing
+	connect settings: Setting Name: backofficedb
+					  Type: HSQL Database Engine In-Memory
+					  Driver: org.hsqldb.jdbcDriver
+					  URL: jdbc:hsqldb:file:<<path to "backofficedb">>
+					  User: SA
+					  Password: <<leer>>
+
+how to create database for EPU Backoffice App:
+	run epu_db_tabellen.script
+	run epu_db_constraints.script 	(note: some constraints are ignored because of constraint violation. maybe we have to fix that)
+	run epu_db_daten.script
 
 Programm arguments for working db (db folder must be in working directory):
 connection to db and Database Manager must be closed when running the mainWindow

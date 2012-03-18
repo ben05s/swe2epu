@@ -1,0 +1,54 @@
+--not used because sql throws error because angebote_mapping(id) is not unique in mapping table
+--ALTER TABLE kunden ADD CONSTRAINT fk_kunden_amapping 
+--FOREIGN KEY(angebot_mapping_id) REFERENCES angebote_mapping(id);
+
+ALTER TABLE angebote ADD CONSTRAINT fk_angebote_kunden
+FOREIGN KEY(kunde_id) REFERENCES kunden(id);
+	
+ALTER TABLE angebote_mapping ADD CONSTRAINT fk_amapping_angebote
+FOREIGN KEY(angebot_id) REFERENCES angebote(id);
+	
+ALTER TABLE ausgangsrechnungen_mapping ADD CONSTRAINT fk_ausgrmapping_ausgrechnung
+FOREIGN KEY(ausgangsrechnung_id) REFERENCES ausgangsrechnungen(id);
+	
+--ALTER TABLE projekte ADD CONSTRAINT fk_projekte_ausgrmapping
+--FOREIGN KEY(ausgr_mapping_id) REFERENCES ausgangsrechnungen_mapping(id);
+
+ALTER TABLE projekte ADD CONSTRAINT fk_projekte_angebote
+FOREIGN KEY(angebot_id) REFERENCES angebote(id);
+
+ALTER TABLE rzeilen_mapping ADD CONSTRAINT fk_rzeilenmapping_rzeile
+FOREIGN KEY(rechnungszeile_id) REFERENCES rechnungszeilen(id);
+
+ALTER TABLE bzeilen_mapping ADD CONSTRAINT fk_bzeilenmapping_bzeile
+FOREIGN KEY(buchungszeile_id) REFERENCES buchungszeilen(id);
+
+ALTER TABLE ausgangsrechnungen ADD CONSTRAINT fk_ausgr_kunde
+FOREIGN KEY(kunde_id) REFERENCES kunden(id);
+
+--ALTER TABLE ausgangsrechnungen ADD CONSTRAINT fk_ausgr_rzeilenmapping	
+--FOREIGN KEY(rzeile_mapping_id) REFERENCES rzeilen_mapping(id);
+
+--ALTER TABLE ausgangsrechnungen ADD CONSTRAINT fk_ausgr_bzeilenmapping
+--FOREIGN KEY(bzeile_mapping_id) REFERENCES bzeilen_mapping(id);
+
+ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_kontakt
+FOREIGN KEY(kontakt_id) REFERENCES kontakte(id);
+
+--ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_rzeilenmapping
+--FOREIGN KEY(rzeile_mapping_id) REFERENCES rzeilen_mapping(id);
+
+--ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_bzeilenmapping
+--FOREIGN KEY(bzeile_mapping_id) REFERENCES bzeilen_mapping(id);
+
+ALTER TABLE rechnungszeilen ADD CONSTRAINT fk_rzeilen_ausgrechnung
+FOREIGN KEY(ausgangsrechnung_id) REFERENCES ausgangsrechnungen(id);
+
+ALTER TABLE rechnungszeilen ADD CONSTRAINT fk_rzeilen_angebote
+FOREIGN KEY(angebot_id) REFERENCES angebote(id);
+	
+ALTER TABLE kat_mapping ADD CONSTRAINT fk_katmapping_kategorie
+FOREIGN KEY(kategorie_id) REFERENCES kategorien(id);
+
+--ALTER TABLE buchungszeilen ADD CONSTRAINT fk_bzeilen_katmapping
+--FOREIGN KEY(kat_mapping_id) REFERENCES kat_mapping(id);
