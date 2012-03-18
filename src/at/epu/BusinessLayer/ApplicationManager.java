@@ -20,9 +20,9 @@ public class ApplicationManager {
 	
 	/**
 	 * Setup code.
-	 * @throws SQLException 
+	 * @throws Exception 
 	 */
-	public void applicationStarted(String[] args) throws SQLException {
+	public void applicationStarted(String[] args) throws Exception {
 		if(args.length > 0)
 		{
 			databaseManager.setDataSource(new DatabaseDataSource(args[0]));

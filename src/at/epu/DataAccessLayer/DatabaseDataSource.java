@@ -17,7 +17,7 @@ import at.epu.DataAccessLayer.DataModels.SQLModels.SQLProjectDataModel;
 public class DatabaseDataSource extends DataSource {
 	Connection databaseHandle = null;
 	
-	public DatabaseDataSource(String databaseName) {
+	public DatabaseDataSource(String databaseName) throws Exception {
 		
 	
 		String db_url = "jdbc:hsqldb:file:" + databaseName;
@@ -30,8 +30,8 @@ public class DatabaseDataSource extends DataSource {
 		} 
 		
 		contactModel = new SQLContactDataModel(databaseHandle);
-		customerModel = new SQLCustomerDataModel();
-		offerModel = new SQLOfferDataModel();
+		customerModel = new SQLCustomerDataModel(databaseHandle);
+		offerModel = new SQLOfferDataModel(databaseHandle);
 		projectModel = new SQLProjectDataModel();
 		bankaccountModel = new SQLBankAccountDataModel();
 		outbillModel = new SQLOutBillDataModel();

@@ -10,9 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -106,8 +109,20 @@ public class GenericSplitTableView extends JPanel {
 			gbc_label.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(label, gbc_label);
 		}
-		
-		table.addMouseListener(new MouseAdapter() {
+		/*
+		final JComboBox comboBox = new JComboBox();
+        final Object[] ob =
+        	{ "Musiker 1", "Musiker 2", "Musiker 3", "Musiker 4",
+        	"Musiker 5" };
+        final DefaultComboBoxModel comboModel = (DefaultComboBoxModel) comboBox.getModel();
+        comboModel.removeAllElements();
+        for (Object o : ob) {
+        	comboModel.addElement(o);
+        }
+        comboModel.setSelectedItem(ob[0]);
+		panel.add(comboBox);
+        */
+        table.addMouseListener(new MouseAdapter() {
 	        @Override
 	        public void mouseReleased(MouseEvent e) {
 	            int r = table.rowAtPoint(e.getPoint());

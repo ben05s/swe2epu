@@ -24,10 +24,10 @@ public class MainWindow {
 
 	/**
 	 * Launch the application.
-	 * @throws SQLException 
+	 * @throws Exception 
 	 * 
 	 */
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		appManager.applicationStarted(args);
 		
