@@ -17,6 +17,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
 			closeConnection(databaseHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		setDbHandle(databaseHandle);
@@ -28,6 +30,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 		} catch (SQLException e) {
 			System.err.println("Error when executing the Query");
 			closeConnection(databaseHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		int x = 0;
@@ -36,9 +40,11 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 			while(rs.next()) {
 				rowCount = rs.getInt(1);
 			}
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			System.err.println("Error when fetching the rowcount");
 			closeConnection(databaseHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		try {
@@ -46,6 +52,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 		} catch (SQLException e) {
 			System.err.println("Error when executing the Query");
 			closeConnection(databaseHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 	
@@ -61,6 +69,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 						} catch (SQLException e) {			
 							System.err.println("Error when fetching data from resultSet");
 							closeConnection(databaseHandle);
+							e.printStackTrace();
+							System.exit(1);
 						}
 					}
 				}
@@ -69,6 +79,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from resultSet");
 			closeConnection(databaseHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 
 		setData(data_);
@@ -81,9 +93,10 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 
 		try {
 			sub_stm = dbHandle.createStatement();
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			System.err.println("Error on creating sub statement");
-			e1.printStackTrace();
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		String sub_sql = "SELECT c.name FROM BUCHUNGSZEILEN a, KAT_MAPPING b, KATEGORIEN c " +
@@ -95,8 +108,9 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 			sub_rs = sub_stm.executeQuery(sub_sql);
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
-			e.printStackTrace();
 			closeConnection(dbHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		try {
@@ -106,11 +120,15 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
 					closeConnection(dbHandle);
+					e.printStackTrace();
+					System.exit(1);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
 			closeConnection(dbHandle);
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		return kategorie;
