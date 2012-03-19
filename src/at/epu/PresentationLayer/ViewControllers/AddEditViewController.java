@@ -191,6 +191,17 @@ public class AddEditViewController implements ActionListener{
 			newFrame.dispose();
 			
 		}
+
+		if(cmd.equals("CHOOSE1")) {
+			/*AddEditChooserViewController controller = new AddEditViewChooserController(title, cmd, rowindex, parent, indexChoosable);
+			newFrame = new JFrame();
+			newFrame.setTitle("Editieren");
+			newFrame.add(controller.getRootComponent());
+			newFrame.pack();
+			newFrame.setLocationRelativeTo(parent);
+    		newFrame.setVisible(true);
+    		controller.setNewFrame(newFrame);*/
+		}
 		
 		if(cmd.equals("CANCEL")) {
 			newFrame.dispose();
