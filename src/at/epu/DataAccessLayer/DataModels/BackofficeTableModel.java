@@ -14,9 +14,12 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected String[] columnNames 	= null;
 	protected String[] addEditColNames = null;
 	protected Object[][] data 		= null;
+	protected ArrayList<String> choosenData = new ArrayList<String>();
 	
 	protected Statement stm;
+	protected Statement sub_stm;
 	protected ResultSet rs;
+	protected ResultSet sub_rs;
 	protected String sql;
 	protected String sql_count;
 	protected Connection dbHandle = null;
@@ -118,6 +121,14 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		return addEditData;
 	}
 	
+	public void addStringArrayListToData(ArrayList<String> list, int row, int col) {
+		this.data[row][col] = list;
+	}
+	
+	public void addIntegerArrayListToData(ArrayList<Integer> list, int row, int col) {
+		this.data[row][col] = list;
+	}
+	
 	public void deleteData(int rowindex, String title) {
 		int row = this.data.length;
 		int col = this.columnNames.length;
@@ -155,6 +166,102 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		fireTableDataChanged();
 	}
 	
+	public ArrayList<String> getChoosenData() {
+		return this.choosenData;
+	}
+	
+	public void resetChoosenData() {
+		this.choosenData = new ArrayList<String>();
+	}
+	
+	public void addChoosenData(String data_) {
+		this.choosenData.add(data_);
+	}
+	
+	public void removeChoosenData(String data_) {
+		for(int i=0;i<this.choosenData.size();i++) {
+			if(this.choosenData.get(i).equals(data_)) {
+				this.choosenData.remove(i);
+			}
+		}
+	}
+	public int getNextIdForTable(String title) {
+		int next_id = 0;
+		sql = "SELECT MAX(id) FROM "+title;
+		
+		try {
+			rs = stm.executeQuery(sql);
+		} catch (SQLException e1) {
+			System.err.println("Error when executing the Save Query");
+			e1.printStackTrace();
+			closeConnection(dbHandle);
+		}
+		
+		try {
+			rs.next();
+			next_id = rs.getInt(1) + 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return next_id;
+	}
+	
+	public void insertDataIntoMappingTable(ArrayList<Integer> ids_, String table_, int id_) {
+		for(int i=0;i<this.choosenData.size();i++) {
+			sql = "INSERT INTO "+table_+" VALUES("+id_+", "+ids_.get(i)+")";
+			
+			try {
+				stm.executeUpdate(sql);
+			} catch (SQLException e1) {
+				System.err.println("Error when executing the Save Query");
+				e1.printStackTrace();
+				closeConnection(dbHandle);
+			}
+		}
+	}
+	
+	public void insertDataIntoKontakte(Object[] data_, String title) {
+		int id_ = getNextIdForTable(title);
+		
+		sql = "INSERT INTO "+title+" VALUES("+id_+",\'"+data_[0].toString()+"\',\'"+
+				data_[1].toString()+"\',\'"+data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\')";
+		
+		try {
+			stm.executeUpdate(sql);
+		} catch (SQLException e1) {
+			System.err.println("Error when executing the Save Query");
+			e1.printStackTrace();
+			closeConnection(dbHandle);
+		}
+	}
+	
+	public void insertDataIntoKunden(Object[] data_, String table) {
+		int id = getNextIdForTable(table);
+		
+		//enter this if container only if some mapping has to be done
+		if(this.choosenData.size() != 0) { 
+			String mapping_table ="ANGEBOTE_MAPPING";
+			int mapping_id = getNextIdForTable(mapping_table);
+			
+			insertDataIntoMappingTable(getIdsForMapping("ANGEBOTE"), mapping_table, mapping_id);
+			
+			sql = "INSERT INTO KUNDEN VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
+					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\',"+mapping_id+")";
+		} else {
+			sql = "INSERT INTO KUNDEN VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
+					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\',"+null+")";
+		}
+		
+		try {
+			stm.executeUpdate(sql);
+		} catch (SQLException e1) {
+			System.err.println("Error when executing the Save Query");
+			e1.printStackTrace();
+			closeConnection(dbHandle);
+		}
+	}
+	
 	public void saveData(Object[] data_, String title) {
 		int col = this.columnNames.length;
 		int row = this.data.length;
@@ -169,44 +276,22 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				closeConnection(dbHandle);
 			}
 			
-			sql = "SELECT MAX(id) FROM "+title;
-			
-			try {
-				rs = stm.executeQuery(sql);
-			} catch (SQLException e1) {
-				System.err.println("Error when executing the Save Query");
-				e1.printStackTrace();
-				closeConnection(dbHandle);
-			}
-			
-			try {
-				rs.next();
-				id = rs.getInt(1) + 1;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			if(title.equals("Kontakte")) {
-				sql = "INSERT INTO "+title+" VALUES("+id+",\'"+data_[0].toString()+"\',\'"+
-						data_[1].toString()+"\',\'"+data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\')";
+				missingData[0] = getNextIdForTable(title);
+				insertDataIntoKontakte(data_, title);
 			}
 			if(title.equals("Kunden")) {
-				sql = "INSERT INTO "+title+" VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
-						data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data[5].toString()+"\')";
+				missingData[0] = getNextIdForTable(title);
+				insertDataIntoKunden(data_, title);
 			}
-			
-			try {
-				stm.executeUpdate(sql);
-			} catch (SQLException e1) {
-				System.err.println("Error when executing the Save Query");
-				e1.printStackTrace();
-				closeConnection(dbHandle);
-			}
-		} 
-		missingData[0] = id;
+		} else {
+			missingData[0] = id;
+		}
+		
 		int insertCol = 0;
 		row++;
+		//fill last element with arrayList of CheckBoxes
+		
 		Object[][] newData = new Object[row][col];
 		for(int i=0;i<row;i++) {
 			for(int x=0;x<col;x++) {
@@ -215,6 +300,9 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				}
 				//insert the new row
 				if(i == row-1) {
+					if(title.equals("Kunden")) {
+						data_[data_.length-1] = getChoosenData();
+					}
 					newData[i][x] = data_[x-insertCol];
 					for(int z=0;z<this.missingCols.size();z++) {
 						if(x == this.missingCols.get(z)) {
@@ -228,6 +316,47 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		}
 		setData(newData);
 		fireTableDataChanged();
+		resetChoosenData();
+	}
+	/*
+	 * the titles for desired ids must already be in the choosenData List
+	 */
+	public ArrayList<Integer> getIdsForMapping(String table) {
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		try {
+			sub_stm = dbHandle.createStatement();
+		} catch (SQLException e1) {
+			System.err.println("Error on creating sub statement");
+			e1.printStackTrace();
+		}
+		for(int i=0;i<this.choosenData.size();i++) {
+			String sub_sql = "SELECT id FROM "+table+" " +
+				"WHERE titel = \'"+this.choosenData.get(i)+"\'";
+		
+			try {
+				sub_rs = sub_stm.executeQuery(sub_sql);
+			} catch(SQLException e) {
+				System.err.println("Error when executing Angebot Query");
+				e.printStackTrace();
+				closeConnection(dbHandle);
+			}
+			
+			try {
+				while(sub_rs.next()) {
+					try {
+						ids.add(sub_rs.getInt(1));
+					} catch (SQLException e) {			
+						System.err.println("Error when fetching data from Angebot title resultSet");
+						closeConnection(dbHandle);
+					}
+				}
+			} catch (SQLException e) {
+				System.err.println("Error on next fkt from Angebot resultSet");
+				closeConnection(dbHandle);
+			}
+		}
+		
+		return ids;
 	}
 	
 	public void updateData(Object[] data_, int rowindex, String title) {
@@ -252,7 +381,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			}
 		}
 			
-		for(int i=0;i<this.columnNames.length;i++) {
+		for(int i=0;i<this.addEditColNames.length;i++) {
 			this.data[rowindex][i] = data_[i];
 		}
 		fireTableDataChanged();

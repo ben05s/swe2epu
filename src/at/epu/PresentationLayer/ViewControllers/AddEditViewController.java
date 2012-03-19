@@ -22,6 +22,7 @@ public class AddEditViewController implements ActionListener{
 	String[] columnNames = null;
 	JPanel rootComponent = new JPanel();
 	JFrame newFrame;
+	JFrame chooseFrame;
 	String cmd_;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
 	ArrayList<JTextField> textList;
@@ -154,11 +155,26 @@ public class AddEditViewController implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
 		
+		if(cmd.equals("CHOOSE1")) {
+			chooseFrame = new JFrame();
+			chooseFrame.setTitle("Auswählen");
+			AddEditChooserViewController controller = new AddEditChooserViewController(title, cmd_, rowindex, newFrame);
+			chooseFrame.add(controller.getRootComponent());
+			chooseFrame.pack();
+			chooseFrame.setLocationRelativeTo(parent);
+    		chooseFrame.setVisible(true);
+    		controller.setNewFrame(chooseFrame);
+		}
+		
 		if(cmd.equals("SAVE")) {
-			Object[] data = new Object[textList.size()];
+			Object[] data = new Object[this.columnNames.length];
 			
-			for(int i=0;i<textList.size();i++) {
-				data[i] = textList.get(i).getText();
+			for(int i=0;i<this.columnNames.length;i++) {
+				if(i<textList.size()) {
+					data[i] = textList.get(i).getText();
+				} else {
+					data[i] = "nothing"; //platzhalter für arraylist
+				}
 			}
 			if(title == "Kontakte") { 
 				if(cmd_.equals("ADD")) { databaseManager.getDataSource().getContactDataModel().saveData(data,title); } 
@@ -190,17 +206,6 @@ public class AddEditViewController implements ActionListener{
 			}
 			newFrame.dispose();
 			
-		}
-
-		if(cmd.equals("CHOOSE1")) {
-			/*AddEditChooserViewController controller = new AddEditViewChooserController(title, cmd, rowindex, parent, indexChoosable);
-			newFrame = new JFrame();
-			newFrame.setTitle("Editieren");
-			newFrame.add(controller.getRootComponent());
-			newFrame.pack();
-			newFrame.setLocationRelativeTo(parent);
-    		newFrame.setVisible(true);
-    		controller.setNewFrame(newFrame);*/
 		}
 		
 		if(cmd.equals("CANCEL")) {
