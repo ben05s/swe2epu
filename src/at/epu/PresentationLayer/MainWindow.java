@@ -1,13 +1,9 @@
 package at.epu.PresentationLayer;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-
 import java.awt.BorderLayout;
-import java.sql.SQLException;
-
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.PresentationLayer.ViewControllers.BankAccountViewController;
 import at.epu.PresentationLayer.ViewControllers.BillViewController;

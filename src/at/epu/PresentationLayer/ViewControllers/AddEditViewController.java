@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericAddEditFormView;
-import at.epu.PresentationLayer.GenericSplitTableView;
 
 public class AddEditViewController implements ActionListener{
 	
@@ -58,6 +57,10 @@ public class AddEditViewController implements ActionListener{
 			columnNames = databaseManager.getDataSource().getBankAccountDataModel().getColumnNames();
 			data = databaseManager.getDataSource().getBankAccountDataModel().getData();
 		}
+		if(title == "Rechnungszeilen"){
+			columnNames = databaseManager.getDataSource().getBillRowDataModel().getColumnNames();
+			data = databaseManager.getDataSource().getBillRowDataModel().getData();
+		}
 		
 		cmd_ = action;
 		rowindex = rowindex_;
@@ -100,12 +103,9 @@ public class AddEditViewController implements ActionListener{
 			for(int i=0;i<columnNames.length;i++) {
 				textList.add(new JTextField("",20));
 			}
-		}
+		}	
 		
-		
-		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList);
-		
-		
+		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList);				
 	}
 	
 	@Override
@@ -142,6 +142,10 @@ public class AddEditViewController implements ActionListener{
 			if(title == "Bankkonto") { 
 				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getBankAccountDataModel().saveData(data,title); }
 				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getBankAccountDataModel().updateData(data,rowindex,title); }
+			}
+			if(title == "Rechnungszeilen") {
+				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getBillRowDataModel().saveData(data,title); }
+				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getBillRowDataModel().updateData(data,rowindex,title); }
 			}
 			newFrame.dispose();
 			

@@ -32,13 +32,12 @@ import javax.swing.table.TableColumn;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
+import at.epu.PresentationLayer.ViewControllers.DetailViewController;
 
 public class GenericSplitTableView extends JPanel {
 
-	/**
-	 * comment
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	private JTable table;
 	private JFrame newFrame;
 	DatabaseManager databaseManager;
@@ -175,7 +174,6 @@ public class GenericSplitTableView extends JPanel {
 		                			if(title == "Projekte"){
 		                				databaseManager.getDataSource().getProjectDataModel().deleteData(rowindex, title);
 		                			}
-		                			//TODO: distinguish between IN and OUT bill 
 		                			if(title == "Rechnungen"){
 		                				databaseManager.getDataSource().getOutBillDataModel().deleteData(rowindex, title);
 		                			}
@@ -189,14 +187,16 @@ public class GenericSplitTableView extends JPanel {
 	                	if(menu.getLabel() == "Details") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-			                		JFrame newFrame = new JFrame();
-			                		newFrame.setTitle("Rechnungs - Details");
-			                		JLabel note = new JLabel("Hier werden die Rechnungszeilen der Rechnung angezeigt");
-			                		newFrame.add(note);
-			                		newFrame.setBounds(300, 150, 300, 500);
-			                		newFrame.setVisible(true);
+		                			DetailViewController controller = new DetailViewController(rowindex, parent);
+		                			newFrame = new JFrame();
+		                			newFrame.setTitle("Details: Rechungszeilen");
+		                			newFrame.add(controller.getRootComponent());
+		                			newFrame.pack();
+		                			newFrame.setLocationRelativeTo(parent);
+		                    		newFrame.setVisible(true);
+		                    		controller.setNewFrame(newFrame);
 		                		}
-	                		}); 
+		                	});
 	                	}
 	                	//Ausgangsrechnung stellen(in Projekt Tab)
 	                	if(menu.getLabel() == "Ausgangsrechnung stellen") {

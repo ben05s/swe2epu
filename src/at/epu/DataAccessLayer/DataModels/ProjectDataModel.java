@@ -7,7 +7,7 @@ public abstract class ProjectDataModel extends BackofficeTableModel {
 		String [] columnNames_ = {"ID",
 				"Titel",
 				"Angebot",
-				"AusgRechnung"};
+				"Ausgangsrechnung ID"};
 		
 		setColumnNames(columnNames_);
 	}

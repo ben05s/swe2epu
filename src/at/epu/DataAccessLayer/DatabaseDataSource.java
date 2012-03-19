@@ -32,10 +32,10 @@ public class DatabaseDataSource extends DataSource {
 		contactModel = new SQLContactDataModel(databaseHandle);
 		customerModel = new SQLCustomerDataModel(databaseHandle);
 		offerModel = new SQLOfferDataModel(databaseHandle);
-		projectModel = new SQLProjectDataModel();
-		bankaccountModel = new SQLBankAccountDataModel();
-		outbillModel = new SQLOutBillDataModel();
-		billrowModel = new SQLBillRowDataModel();
+		projectModel = new SQLProjectDataModel(databaseHandle);
+		outbillModel = new SQLOutBillDataModel(databaseHandle);
+		bankaccountModel = new SQLBankAccountDataModel(databaseHandle);
+		billrowModel = new SQLBillRowDataModel(databaseHandle);
 		categoryModel = new SQLCategoryDataModel();
 		inbillModel = new SQLInBillDataModel();
 	}

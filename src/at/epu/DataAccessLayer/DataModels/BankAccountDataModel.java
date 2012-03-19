@@ -5,7 +5,8 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 	
 	public BankAccountDataModel() {
 		String [] columnNames_ = {"ID",
-				"Buchungstext",
+				"Eingangsrechnung ID",
+				"Ausgangsrechnung ID",
 				"Betrag",
 				"Umsatzsteuer",
 				"Buchungsdatum",
