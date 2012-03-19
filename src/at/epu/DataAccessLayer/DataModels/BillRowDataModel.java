@@ -12,5 +12,12 @@ public abstract class BillRowDataModel extends BackofficeTableModel {
 				"Betrag"};
 		
 		setColumnNames(columnNames_);
+		
+		String [] addEditColNames_ = {"Angebot",
+				"Kommentar",
+				"Steuern",
+				"Betrag"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }

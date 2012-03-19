@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,46 +27,47 @@ public class AddEditViewController implements ActionListener{
 	ArrayList<JTextField> textList;
 	JFrame parent;
 	String title;
+	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	public void setNewFrame(JFrame newFrame) {
 		this.newFrame = newFrame;
 	}
 
-	public AddEditViewController(String title, String action, int rowindex_, JFrame parent_) {
+	public AddEditViewController(String title, String action, int rowindex_, JFrame parent_, ArrayList<Integer> indexChoosable_) {
 		if(title == "Kontakte"){
-			columnNames = databaseManager.getDataSource().getContactDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getContactDataModel().getData();
+			columnNames = databaseManager.getDataSource().getContactDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getContactDataModel().getAddEditData();
 		}
 		if(title == "Kunden"){
-			columnNames = databaseManager.getDataSource().getCustomerDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getCustomerDataModel().getData();
+			columnNames = databaseManager.getDataSource().getCustomerDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
 		}
 		if(title == "Angebote"){
-			columnNames = databaseManager.getDataSource().getOfferDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getOfferDataModel().getData();
+			columnNames = databaseManager.getDataSource().getOfferDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getOfferDataModel().getAddEditData();
 		}
 		if(title == "Projekte"){
-			columnNames = databaseManager.getDataSource().getProjectDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getProjectDataModel().getData();
+			columnNames = databaseManager.getDataSource().getProjectDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getProjectDataModel().getAddEditData();
 		}
-		//TODO: distinguish between IN and OUT bill 
 		if(title == "Rechnungen"){
-			columnNames = databaseManager.getDataSource().getOutBillDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getOutBillDataModel().getData();
+			columnNames = databaseManager.getDataSource().getOutBillDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getOutBillDataModel().getAddEditData();
 		}
 		if(title == "Bankkonto"){
-			columnNames = databaseManager.getDataSource().getBankAccountDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getBankAccountDataModel().getData();
+			columnNames = databaseManager.getDataSource().getBankAccountDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getBankAccountDataModel().getAddEditData();
 		}
 		if(title == "Rechnungszeilen"){
-			columnNames = databaseManager.getDataSource().getBillRowDataModel().getColumnNames();
-			data = databaseManager.getDataSource().getBillRowDataModel().getData();
+			columnNames = databaseManager.getDataSource().getBillRowDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getBillRowDataModel().getAddEditData();
 		}
 		
 		cmd_ = action;
 		rowindex = rowindex_;
 		this.parent = parent_;
 		this.title = title;
+		this.indexChoosable = indexChoosable_;
 		
 		initialize();
 	}
@@ -74,15 +76,31 @@ public class AddEditViewController implements ActionListener{
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		JButton btnSave = new JButton("Speichern");
 		JButton btnCancel  = new JButton("Abbrechen");
- 
+		JButton btnChoose1 = new JButton("Auswählen");
+		JButton btnChoose2 = new JButton("Auswählen");
+		JButton btnChoose3 = new JButton("Auswählen");
+		
 		btnSave.setActionCommand("SAVE");
 		btnSave.addActionListener(this);
 		btnCancel.setActionCommand("CANCEL");
 		btnCancel.addActionListener(this);
+		//used for Kunden/Angebote/Projekte(Angebot)/Rechnungen/Rechnungszeilen(Angebot)/Bankkonto(Eingangsrechnung ID)
+		btnChoose1.setActionCommand("CHOOSE1");
+		btnChoose1.addActionListener(this);
+		//used for Projekte(Ausgangsrechnung ID)/Bankkonto(Ausgangsrechnung ID)
+		btnChoose2.setActionCommand("CHOOSE2");
+		btnChoose2.addActionListener(this);
+		//used for Bankkonto(Kategorie)
+		btnChoose3.setActionCommand("CHOOSE3");
+		btnChoose3.addActionListener(this);
 		
 		buttonList.add(btnSave);
 		buttonList.add(btnCancel);
+		buttonList.add(btnChoose1);
+		buttonList.add(btnChoose2);
+		buttonList.add(btnChoose3);
 
+		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		for(int i=0;i<columnNames.length;i++) {
 			labelList.add(new JLabel(columnNames[i], JLabel.TRAILING));
@@ -101,11 +119,35 @@ public class AddEditViewController implements ActionListener{
 		}
 		if(cmd_.equals("ADD")) {
 			for(int i=0;i<columnNames.length;i++) {
-				textList.add(new JTextField("",20));
+				//ignore Angebote label because there is a button to choose angebote
+				if(columnNames[i].equals("Angebote")) {
+					continue;
+				}
+				if(columnNames[i].equals("Kunde")) {
+					continue;
+				}
+				if(columnNames[i].equals("Angebot")) {
+					continue;
+				}
+				if(columnNames[i].equals("Ausgangsrechnung ID")) {
+					continue;
+				}
+				if(columnNames[i].equals("Eingangsrechnung ID")) {
+					continue;
+				}
+				if(columnNames[i].equals("Kategorie")) {
+					continue;
+				}
+				
+				if(columnNames[i].equals("Status")) {
+					textList.add(new JTextField("offen",20));
+				} else {
+					textList.add(new JTextField("",20));
+				}
 			}
 		}	
 		
-		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList);				
+		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList, indexChoosable);				
 	}
 	
 	@Override
@@ -134,7 +176,6 @@ public class AddEditViewController implements ActionListener{
 				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getProjectDataModel().saveData(data,title); }
 				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getProjectDataModel().updateData(data,rowindex,title); }
 			}
-			//TODO: distinguish between IN and OUT bill 
 			if(title == "Rechnungen") { 
 				if(cmd_.equals("ADD")) {databaseManager.getDataSource().getOutBillDataModel().saveData(data,title); }
 				if(cmd_.equals("EDIT")) { databaseManager.getDataSource().getOutBillDataModel().updateData(data,rowindex,title); }

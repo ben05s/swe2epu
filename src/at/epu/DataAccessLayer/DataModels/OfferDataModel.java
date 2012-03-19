@@ -13,5 +13,14 @@ public abstract class OfferDataModel extends BackofficeTableModel {
                 "Chance"};
 		
 		setColumnNames(columnNames_);
+		
+		String[] addEditColNames_ = {"Titel",
+				"Kunde",
+                "Summe",
+                "Dauer",
+                "Datum",
+                "Chance"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }

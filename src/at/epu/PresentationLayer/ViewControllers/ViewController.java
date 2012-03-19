@@ -1,6 +1,7 @@
 package at.epu.PresentationLayer.ViewControllers;
 
 import java.awt.Component;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -9,6 +10,7 @@ public class ViewController {
 	protected Component rootComponent;
 	protected String title;
 	protected Icon icon;
+	protected ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	public ViewController() {
 		initialize();

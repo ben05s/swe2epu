@@ -47,6 +47,9 @@ public class BankAccountViewController extends ViewController implements ActionL
 		/*EDIT: NOT NEEDED ACCORIND TO SZACZEC
 		menuList.add(new JMenuItem("Rechnung Splitten"));*/
 		tab_title = "Bankkonto";
+		indexChoosable.add(0);
+		indexChoosable.add(1);
+		indexChoosable.add(5);
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
                 										databaseManager.getDataSource().getBankAccountDataModel());
 		title = "Bankkonto";
@@ -62,7 +65,7 @@ public class BankAccountViewController extends ViewController implements ActionL
 		}
 		
 		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());

@@ -49,6 +49,8 @@ public class ProjectViewController extends ViewController implements ActionListe
 		menuList.add(new JMenuItem("Löschen"));
 		menuList.add(new JMenuItem("Ausgangsrechnung stellen"));
 		tab_title = "Projekte";
+		indexChoosable.add(1);
+		indexChoosable.add(2);
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
 													databaseManager.getDataSource().getProjectDataModel());
 		
@@ -65,7 +67,7 @@ public class ProjectViewController extends ViewController implements ActionListe
 		}
 		
 		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());

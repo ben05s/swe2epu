@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -37,6 +38,7 @@ public class GenericDetailTableView extends JPanel {
 	private JFrame newFrame;
 	DatabaseManager databaseManager;
 	String title = null;
+	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final JFrame parent, final DefaultTableModel tableModel) {
 		setBackground(SystemColor.control);
@@ -116,7 +118,7 @@ public class GenericDetailTableView extends JPanel {
 		                			title = "Rechnungen";
 		                			newFrame = new JFrame();
 		                			newFrame.setTitle("Editieren");
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame);
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame, indexChoosable);
 		                			newFrame.add(controller.getRootComponent());
 		                			newFrame.pack();
 		                			newFrame.setLocationRelativeTo(parent);

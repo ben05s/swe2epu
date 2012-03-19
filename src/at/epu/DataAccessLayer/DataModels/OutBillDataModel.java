@@ -11,5 +11,10 @@ public abstract class OutBillDataModel extends BackofficeTableModel {
 				"Status"};
 		
 		setColumnNames(columnNames_);
+		
+		String [] addEditColNames_ = {"Kunde",
+				"Status"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }

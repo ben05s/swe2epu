@@ -12,5 +12,13 @@ public abstract class ContactDataModel extends BackofficeTableModel {
                 "Telefon"};
 		
 		columnNames = columnNames_;
+		
+		String[] addEditColNames_ = {"Vorname",
+                "Nachname",
+                "Adresse",
+                "Email",
+                "Telefon"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }

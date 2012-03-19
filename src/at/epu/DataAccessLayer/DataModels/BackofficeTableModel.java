@@ -12,6 +12,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	private static final long serialVersionUID = 2110831280426094363L;
 
 	protected String[] columnNames 	= null;
+	protected String[] addEditColNames = null;
 	protected Object[][] data 		= null;
 	
 	protected Statement stm;
@@ -19,6 +20,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected String sql;
 	protected String sql_count;
 	protected Connection dbHandle = null;
+	protected ArrayList<Integer> missingCols = new ArrayList<Integer>();
 	
 	public Connection getDbHandle() {
 		return dbHandle;
@@ -38,6 +40,14 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			}
 		}
 		System.exit(0);
+	}
+	
+	public String[] getAddEditColNames() {
+		return addEditColNames;
+	}
+
+	public void setAddEditColNames(String[] addEditColNames) {
+		this.addEditColNames = addEditColNames;
 	}
 	
 	@Override
@@ -88,6 +98,26 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		this.data = data;
 	}
 	
+	public Object[][] getAddEditData() {		
+		int z=0;
+		Object[][] addEditData = new Object[this.data.length][this.addEditColNames.length];
+		for(int i=0;i<this.data.length;i++) {
+			for(int x=0;x<this.addEditColNames.length;x++) {
+				while(! this.addEditColNames[x].equals(this.columnNames[z])) {	
+					if(i == 0) {
+						missingCols.add(z);
+					}
+					z++;
+				}
+				addEditData[i][x] = this.data[i][z];
+				z++;
+			}
+			z=0;
+		}
+		
+		return addEditData;
+	}
+	
 	public void deleteData(int rowindex, String title) {
 		int row = this.data.length;
 		int col = this.columnNames.length;
@@ -128,6 +158,8 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	public void saveData(Object[] data_, String title) {
 		int col = this.columnNames.length;
 		int row = this.data.length;
+		int id = 0;
+		Object[] missingData = new Object[missingCols.size()];
 		
 		if(dbHandle != null) {
 			try {
@@ -137,8 +169,33 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				closeConnection(dbHandle);
 			}
 			
-			sql = "INSERT INTO "+title+" VALUES("+data_[0].toString()+",\'"+data_[1].toString()+"\',\'"+
-					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\')";
+			sql = "SELECT MAX(id) FROM "+title;
+			
+			try {
+				rs = stm.executeQuery(sql);
+			} catch (SQLException e1) {
+				System.err.println("Error when executing the Save Query");
+				e1.printStackTrace();
+				closeConnection(dbHandle);
+			}
+			
+			try {
+				rs.next();
+				id = rs.getInt(1) + 1;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(title.equals("Kontakte")) {
+				sql = "INSERT INTO "+title+" VALUES("+id+",\'"+data_[0].toString()+"\',\'"+
+						data_[1].toString()+"\',\'"+data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\')";
+			}
+			if(title.equals("Kunden")) {
+				sql = "INSERT INTO "+title+" VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
+						data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data[5].toString()+"\')";
+			}
+			
 			try {
 				stm.executeUpdate(sql);
 			} catch (SQLException e1) {
@@ -146,8 +203,9 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				e1.printStackTrace();
 				closeConnection(dbHandle);
 			}
-		}
-		
+		} 
+		missingData[0] = id;
+		int insertCol = 0;
 		row++;
 		Object[][] newData = new Object[row][col];
 		for(int i=0;i<row;i++) {
@@ -155,8 +213,16 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				if(i < row-1) {
 					newData[i][x] = this.data[i][x]; 
 				}
+				//insert the new row
 				if(i == row-1) {
-					newData[i][x] = data_[x];
+					newData[i][x] = data_[x-insertCol];
+					for(int z=0;z<this.missingCols.size();z++) {
+						if(x == this.missingCols.get(z)) {
+							newData[i][x] = missingData[z];
+							insertCol++;
+							break;
+						}
+					}
 				}
 			}
 		}

@@ -41,6 +41,7 @@ public class GenericSplitTableView extends JPanel {
 	private JTable table;
 	private JFrame newFrame;
 	DatabaseManager databaseManager;
+	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	/**
 	 * Create the panel.
@@ -147,7 +148,7 @@ public class GenericSplitTableView extends JPanel {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, parent);
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, parent, indexChoosable);
 		                			newFrame = new JFrame();
 		                			newFrame.setTitle("Editieren");
 		                			newFrame.add(controller.getRootComponent());

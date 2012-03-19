@@ -35,6 +35,7 @@ public class OfferViewController extends ViewController implements ActionListene
 		btnFind.addActionListener(this);
 		btnAdd.setActionCommand("ADD");
 		btnAdd.addActionListener(this);
+
 		
 		buttonList.add(btnFind);
 		buttonList.add(btnAdd);
@@ -46,6 +47,7 @@ public class OfferViewController extends ViewController implements ActionListene
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
 		tab_title = "Angebote";
+		indexChoosable.add(1);
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
 													databaseManager.getDataSource().getOfferDataModel());
 		
@@ -62,7 +64,7 @@ public class OfferViewController extends ViewController implements ActionListene
 		}
 		
 		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());

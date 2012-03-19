@@ -54,6 +54,7 @@ public class BillViewController extends ViewController implements ActionListener
 		menuList.add(new JMenuItem("Details"));
 		menuList.add(new JMenuItem("Löschen"));
 		tab_title = "Rechnungen";
+		indexChoosable.add(0);
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
                 									databaseManager.getDataSource().getOutBillDataModel());
 		
@@ -70,7 +71,7 @@ public class BillViewController extends ViewController implements ActionListener
 		}
 		
 		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent);
+			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen");
 			newFrame.add(controller.getRootComponent());

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import at.epu.DataAccessLayer.DataModels.OfferDataModel;
 
@@ -78,7 +77,7 @@ public class SQLOfferDataModel extends OfferDataModel {
 		String kunde = "";
 		Statement sub_stm = null;
 		ResultSet sub_rs = null;
-		int x = 0;
+
 		try {
 			sub_stm = dbHandle.createStatement();
 		} catch (SQLException e1) {

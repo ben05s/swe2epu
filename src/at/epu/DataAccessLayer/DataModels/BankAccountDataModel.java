@@ -13,5 +13,14 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 				"Kategorie"};
 
 		setColumnNames(columnNames_);
+		
+		String [] addEditColNames_ = {"Eingangsrechnung ID",
+				"Ausgangsrechnung ID",
+				"Betrag",
+				"Umsatzsteuer",
+				"Buchungsdatum",
+				"Kategorie"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }

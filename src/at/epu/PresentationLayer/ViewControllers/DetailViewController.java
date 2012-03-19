@@ -20,6 +20,7 @@ public class DetailViewController implements ActionListener{
 	JFrame parent;	
 	Object[][] data = null;
 	String[] columnNames = null;
+	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	public DetailViewController(int rowindex_, JFrame parent_) {
 		columnNames = databaseManager.getDataSource().getBillRowDataModel().getColumnNames();
@@ -51,7 +52,7 @@ public class DetailViewController implements ActionListener{
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
-		
+		indexChoosable.add(0);
 		rootComponent = new GenericDetailTableView(buttonList, menuList, parent, databaseManager.getDataSource().getBillRowDataModel());	
 	}
 	
@@ -71,7 +72,7 @@ public class DetailViewController implements ActionListener{
 			String title = "Rechnungszeilen";
 			newFrame = new JFrame();
 			newFrame.setTitle("Hinzufügen");
-			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame);
+			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame, indexChoosable);
 			newFrame.add(controller.getRootComponent());
 			newFrame.pack();
 			newFrame.setLocationRelativeTo(parent);

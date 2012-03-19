@@ -78,7 +78,7 @@ public class SQLCustomerDataModel extends CustomerDataModel {
 		ArrayList<String> angebote = new ArrayList<String>();
 		Statement sub_stm = null;
 		ResultSet sub_rs = null;
-		int x = 0;
+
 		try {
 			sub_stm = dbHandle.createStatement();
 		} catch (SQLException e1) {

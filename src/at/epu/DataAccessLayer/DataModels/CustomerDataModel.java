@@ -14,5 +14,15 @@ public abstract class CustomerDataModel extends BackofficeTableModel {
                 "Angebote"};
 		
 		setColumnNames(columnNames_);
+		
+		String[] addEditColNames_ = {"Vorname",
+				"Nachname",
+				"Unternehmen",
+				"Adresse",
+				"Email",
+				"Telefon",
+				"Angebote"};
+		
+		setAddEditColNames(addEditColNames_);
 	}
 }
