@@ -18,4 +18,3 @@ how to create database for EPU Backoffice App:
 Programm arguments for working db (db folder must be in working directory):
 connection to db and Database Manager must be closed when running the mainWindow
 ../db/backofficedb
-test
