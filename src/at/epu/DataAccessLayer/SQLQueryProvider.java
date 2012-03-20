@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.text.html.MinimalHTMLWriter;
 
 import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
