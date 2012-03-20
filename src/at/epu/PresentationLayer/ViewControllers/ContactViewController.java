@@ -8,44 +8,26 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
+import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
+import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 
-public class ContactViewController extends ViewController implements ActionListener {	
-	JPanel panel = new JPanel();
-	private JFrame newFrame;
-	private JFrame parent;
-	private String tab_title;
-	private JTable table;
-	
-	public JTable getTable() {
-		return table;
-	}
-	public void setTable(JTable table) {
-		this.table = table;
-	}
+public class ContactViewController extends ViewController implements ActionListener {
 	public ContactViewController(JFrame mainWindow) {
-		parent = mainWindow;
+		super(mainWindow);
 	}
+	
 	@Override
 	void initialize() {
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
-		ArrayList<JButton> buttonList = new ArrayList<JButton>();
-		JButton btnFind = new JButton("Finden");
-		JButton btnAdd  = new JButton("Hinzufügen");
+		registerActionHandler(new FilterActionHandler(this));
+		registerActionHandler(new AddActionHandler(this));
 		
-		btnFind.setActionCommand("FILTER");
-		btnFind.addActionListener(this);
-		btnAdd.setActionCommand("ADD");
-		btnAdd.addActionListener(this);
-		
-		buttonList.add(btnFind);
-		buttonList.add(btnAdd);
+		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
@@ -55,32 +37,15 @@ public class ContactViewController extends ViewController implements ActionListe
 		
 		JMenuItem popDelete = new JMenuItem("Löschen");
 		menuList.add(popDelete);
-		tab_title = "Kontakte";
-		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
-					                              databaseManager.getDataSource().getContactDataModel());
 		
 		title = "Kontakte";
+		
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
+					                              databaseManager.getDataSource().getContactDataModel());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		String cmd = event.getActionCommand();
-		
-		if( cmd.equals("FILTER") ) {
-			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-			
-			databaseManager.getDataSource().getContactDataModel().filterDataModel("Kathy");
-		}
-		
-		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
-			newFrame = new JFrame();
-			newFrame.setTitle("Hinzufügen");
-			newFrame.add(controller.getRootComponent());
-			newFrame.pack();
-			newFrame.setLocationRelativeTo(parent);
-    		newFrame.setVisible(true);
-    		controller.setNewFrame(newFrame);
-		}	
+		super.actionPerformed(event);
 	}
 }

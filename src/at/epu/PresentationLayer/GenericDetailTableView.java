@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -35,12 +34,11 @@ public class GenericDetailTableView extends JPanel {
 	private static final long serialVersionUID = -2369098626177028829L;
 	
 	private JTable table;
-	private JFrame newFrame;
 	DatabaseManager databaseManager;
 	String title = null;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
-	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final JFrame parent, final DefaultTableModel tableModel) {
+	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final DefaultTableModel tableModel) {
 		setBackground(SystemColor.control);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -115,15 +113,10 @@ public class GenericDetailTableView extends JPanel {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
-		                			title = "Rechnungen";
-		                			newFrame = new JFrame();
-		                			newFrame.setTitle("Editieren");
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame, indexChoosable);
-		                			newFrame.add(controller.getRootComponent());
-		                			newFrame.pack();
-		                			newFrame.setLocationRelativeTo(parent);
-		                    		newFrame.setVisible(true);
-		                    		controller.setNewFrame(newFrame);
+
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+		                			
+		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});
 	                	}
@@ -180,5 +173,4 @@ public class GenericDetailTableView extends JPanel {
 	    // Set the width
 	    col.setPreferredWidth(width);
 	}
-
 }

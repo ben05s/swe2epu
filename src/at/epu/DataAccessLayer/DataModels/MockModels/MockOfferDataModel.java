@@ -20,6 +20,6 @@ public class MockOfferDataModel extends OfferDataModel {
 			     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.80)},
 			};
 		
-		data = data_;
+		setData(data_);
 	}
 }

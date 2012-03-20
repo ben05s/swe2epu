@@ -11,9 +11,10 @@ import javax.swing.table.DefaultTableModel;
 public abstract class BackofficeTableModel extends DefaultTableModel implements FilterableDataModel {
 	private static final long serialVersionUID = 2110831280426094363L;
 
-	protected String[] columnNames 	= null;
-	protected String[] addEditColNames = null;
-	protected Object[][] data 		= null;
+	protected String[] columnNames 		= null;
+	protected String[] addEditColNames  = null;
+	protected Object[][] data 			= null;
+	protected Object[][] presented_data = null;
 	protected ArrayList<String> choosenData = new ArrayList<String>();
 	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
 	
@@ -66,9 +67,9 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	
 	@Override
 	public int getRowCount() {
-		if(data != null)
+		if(presented_data != null)
 		{
-			return data.length;
+			return presented_data.length;
 		}
 		else
 		{
@@ -78,11 +79,16 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+		return presented_data[rowIndex][columnIndex];
 	}
 	
 	public void filterDataModel(String filterString) {
-		data = DataFilterProvider.filterDataModel(filterString, data);
+		if(filterString.isEmpty()) {
+			presented_data = data;
+		} else {
+			presented_data = DataFilterProvider.filterDataModel(filterString, data);
+		}
+		
 		fireTableDataChanged();
 	}
 
@@ -99,6 +105,10 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	}
 
 	public void setData(Object[][] data) {
+		if(presented_data == null) {
+			presented_data = data;
+		}
+		
 		this.data = data;
 	}
 	

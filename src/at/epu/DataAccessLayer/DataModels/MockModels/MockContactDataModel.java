@@ -18,6 +18,6 @@ public class MockContactDataModel extends ContactDataModel {
 			     "Hufoasdgasse 89/12", "asgdgs.s@chello.at", "06646342325"}
 			};
 		
-		data = data_;
+		setData(data_);
 	}
 }

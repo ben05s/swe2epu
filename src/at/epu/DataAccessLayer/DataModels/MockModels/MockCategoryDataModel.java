@@ -14,6 +14,6 @@ public class MockCategoryDataModel extends CategoryDataModel{
 			    {new Integer(3), "Steuer"}
 			};
 		
-		data = data_;
+		setData(data_);
 	}
 }

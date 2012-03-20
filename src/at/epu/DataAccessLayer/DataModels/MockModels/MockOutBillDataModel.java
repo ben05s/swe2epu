@@ -13,6 +13,6 @@ public class MockOutBillDataModel extends OutBillDataModel {
 				{new Integer(2), "Hur", new Integer(2), new Integer(1), "bezahlt"}
 		};
 		
-		data = data_;
+		setData(data_);
 	}
 }

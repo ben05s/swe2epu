@@ -12,10 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -25,12 +22,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 import at.epu.PresentationLayer.ViewControllers.DetailViewController;
 
@@ -38,16 +34,17 @@ public class GenericSplitTableView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
+	private BackofficeTableModel model;
 	private JTable table;
-	private JFrame newFrame;
 	DatabaseManager databaseManager;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	/**
 	 * Create the panel.
 	 */
-	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final JFrame parent, final DefaultTableModel tableModel) {
+	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final BackofficeTableModel tableModel) {
 		setBackground(SystemColor.control);
+		setModel(tableModel);
 	
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -136,39 +133,16 @@ public class GenericSplitTableView extends JPanel {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, parent, indexChoosable);
-		                			newFrame = new JFrame();
-		                			newFrame.setTitle("Editieren");
-		                			newFrame.add(controller.getRootComponent());
-		                			newFrame.pack();
-		                			newFrame.setLocationRelativeTo(parent);
-		                    		newFrame.setVisible(true);
-		                    		controller.setNewFrame(newFrame);
+		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+		                			
+		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});
 	                	}
 	                	if(menu.getLabel() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-		                			if(title == "Kontakte"){
-		                				databaseManager.getDataSource().getContactDataModel().deleteData(rowindex, title);
-		                			}
-		                			if(title == "Kunden"){
-		                				databaseManager.getDataSource().getCustomerDataModel().deleteData(rowindex, title);
-		                			}
-		                			if(title == "Angebote"){
-		                				databaseManager.getDataSource().getOfferDataModel().deleteData(rowindex, title);
-		                			}
-		                			if(title == "Projekte"){
-		                				databaseManager.getDataSource().getProjectDataModel().deleteData(rowindex, title);
-		                			}
-		                			if(title == "Rechnungen"){
-		                				databaseManager.getDataSource().getOutBillDataModel().deleteData(rowindex, title);
-		                			}
-		                			if(title == "Bankkonto"){
-		                				databaseManager.getDataSource().getBankAccountDataModel().deleteData(rowindex, title);
-		                			}
+		                			ApplicationManager.getInstance().getActiveTableModel().deleteData(rowindex, title);
 		                		}
 	                		}); 
 	                	}
@@ -176,14 +150,9 @@ public class GenericSplitTableView extends JPanel {
 	                	if(menu.getLabel() == "Details") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			DetailViewController controller = new DetailViewController(rowindex, parent);
-		                			newFrame = new JFrame();
-		                			newFrame.setTitle("Details: Rechungszeilen");
-		                			newFrame.add(controller.getRootComponent());
-		                			newFrame.pack();
-		                			newFrame.setLocationRelativeTo(parent);
-		                    		newFrame.setVisible(true);
-		                    		controller.setNewFrame(newFrame);
+		                			DetailViewController controller = new DetailViewController(rowindex);
+		                			
+		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});
 	                	}
@@ -257,5 +226,14 @@ public class GenericSplitTableView extends JPanel {
 	
 	    // Set the width
 	    col.setPreferredWidth(width);
+	}
+	
+
+	public BackofficeTableModel getModel() {
+		return model;
+	}
+
+	public void setModel(BackofficeTableModel model) {
+		this.model = model;
 	}
 }

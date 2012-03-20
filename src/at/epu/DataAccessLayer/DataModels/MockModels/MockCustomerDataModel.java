@@ -19,6 +19,6 @@ public class MockCustomerDataModel extends CustomerDataModel {
 			     "Franzgasse 9/12", "x.x@chello.at", "066465352325", "A003"},
 			};
 		
-		data = data_;
+		setData(data_);
 	}
 }

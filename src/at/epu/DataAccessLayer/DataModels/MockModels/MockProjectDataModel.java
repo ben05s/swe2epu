@@ -15,6 +15,6 @@ public class MockProjectDataModel extends ProjectDataModel {
 				{new Integer(3), "Nicht so gutes Projekt", "A003", new Integer(3)}
 		};
 		
-		data = data_;
+		setData(data_);
 	}
 }

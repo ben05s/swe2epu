@@ -21,6 +21,6 @@ public class MockBillRowDataModel extends BillRowDataModel{
 					new Double(100.00), new Double(100050.00)}
 		};
 
-		data = data_;
+		setData(data_);
 	}
 }

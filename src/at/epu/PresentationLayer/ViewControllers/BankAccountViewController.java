@@ -12,32 +12,24 @@ import javax.swing.JMenuItem;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
+import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
+import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 
 public class BankAccountViewController extends ViewController implements ActionListener{
-	
-	private JFrame parent;
-	private String tab_title;
-	private JFrame newFrame;
-	
 	public BankAccountViewController(JFrame mainWindow) {
-		parent = mainWindow;
+		super(mainWindow);
 	}
 	
 	@Override
 	void initialize() {
+		title = "Bankkonto";
+		
 		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
-		ArrayList<JButton> buttonList = new ArrayList<JButton>();
-		JButton btnFind = new JButton("Finden");
-		JButton btnAdd  = new JButton("Hinzufügen");
+		registerActionHandler(new FilterActionHandler(this));
+		registerActionHandler(new AddActionHandler(this));
 		
-		btnFind.setActionCommand("FILTER");
-		btnFind.addActionListener(this);
-		btnAdd.setActionCommand("ADD");
-		btnAdd.addActionListener(this);
-		
-		buttonList.add(btnFind);
-		buttonList.add(btnAdd);
+		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
@@ -46,33 +38,17 @@ public class BankAccountViewController extends ViewController implements ActionL
 		menuList.add(new JMenuItem("Löschen"));
 		/*EDIT: NOT NEEDED ACCORIND TO SZACZEC
 		menuList.add(new JMenuItem("Rechnung Splitten"));*/
-		tab_title = "Bankkonto";
-		indexChoosable.add(0);
-		indexChoosable.add(1);
-		indexChoosable.add(5);
-		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, tab_title, parent,
+		
+		getIndexChoosable().add(0);
+		getIndexChoosable().add(1);
+		getIndexChoosable().add(5);
+		
+		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
                 										databaseManager.getDataSource().getBankAccountDataModel());
-		title = "Bankkonto";
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		String cmd = event.getActionCommand();
-		
-		if( cmd.equals("FILTER") ) {
-			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-
-		}
-		
-		if( cmd.equals("ADD") ) {
-			AddEditViewController controller = new AddEditViewController(this.getTitle(), cmd, 0, parent, indexChoosable);
-			newFrame = new JFrame();
-			newFrame.setTitle("Hinzufügen");
-			newFrame.add(controller.getRootComponent());
-			newFrame.pack();
-			newFrame.setLocationRelativeTo(parent);
-    		newFrame.setVisible(true);
-    		controller.setNewFrame(newFrame);
-		}
+		super.actionPerformed(event);
 	}
 }

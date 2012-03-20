@@ -13,6 +13,6 @@ public class MockInBillDataModel extends InBillDataModel{
 				{new Integer(2), "Black", new Integer(0), new Integer(0), "offen"}
 		};
 		
-		data = data_;
+		setData(data_);
 	}
 }

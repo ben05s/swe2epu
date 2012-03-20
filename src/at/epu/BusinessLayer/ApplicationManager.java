@@ -2,14 +2,22 @@ package at.epu.BusinessLayer;
 
 
 
+import javax.swing.JFrame;
+
 import at.epu.DataAccessLayer.*;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.GenericSplitTableView;
+import at.epu.PresentationLayer.MainWindow;
 
 public class ApplicationManager {
 	static ApplicationManager instance = null;
 	DatabaseManager databaseManager    = null;
+	DialogManager dialogManager 	   = null;
+	MainWindow mainWindow			   = null;
 	
 	private ApplicationManager() {
 		databaseManager = new DatabaseManager();
+		dialogManager = new DialogManager();
 	}
 	
 	public static synchronized ApplicationManager getInstance() {
@@ -22,7 +30,7 @@ public class ApplicationManager {
 	 * Setup code.
 	 * @throws Exception 
 	 */
-	public void applicationStarted(String[] args) throws Exception {
+	public void applicationStarted(String[] args) throws Exception {		
 		if(args.length > 0)
 		{
 			databaseManager.setDataSource(new DatabaseDataSource(args[0]));
@@ -42,5 +50,25 @@ public class ApplicationManager {
 	
 	public DatabaseManager getDatabaseManager() {
 		return databaseManager;
+	}
+	
+	public DialogManager getDialogManager() {
+		return dialogManager;
+	}
+	
+	public void setMainWindow(MainWindow mainWindow_) {
+		mainWindow = mainWindow_;
+	}
+	
+	public JFrame getMainFrame() {
+		return mainWindow.getMainFrame();
+	}
+	
+	public MainWindow getMainWindow() {
+		return mainWindow;
+	}
+	
+	public BackofficeTableModel getActiveTableModel() {
+		return ((GenericSplitTableView)getMainWindow().getActiveViewController().getRootComponent()).getModel();
 	}
 }

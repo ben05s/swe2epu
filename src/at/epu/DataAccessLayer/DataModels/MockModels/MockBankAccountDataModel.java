@@ -18,6 +18,6 @@ public class MockBankAccountDataModel extends BankAccountDataModel {
 			 new SimpleDateFormat("dd.MM.yyyy").format(new Date()), "Einnahme"}
 		};
 
-		data = data_;
+		setData(data_);
 	}
 }

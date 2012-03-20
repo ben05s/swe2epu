@@ -4,35 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericDetailTableView;
 
-public class DetailViewController implements ActionListener{
+public class DetailViewController extends ViewController implements ActionListener{
 
 	DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-	JPanel rootComponent = new JPanel();
-	JFrame newFrame;
 	int rowindex; 	
-	JFrame parent;	
-	Object[][] data = null;
-	String[] columnNames = null;
-	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
-	public DetailViewController(int rowindex_, JFrame parent_) {
-		columnNames = databaseManager.getDataSource().getBillRowDataModel().getColumnNames();
-		data = databaseManager.getDataSource().getBillRowDataModel().getData();
-		
+	public DetailViewController(int rowindex_) {
 		rowindex = rowindex_;
-		this.parent = parent_;
 		
-		initialize();
+		initialize_after();
 	}
 	
-	void initialize() {
+	void initialize_after() {
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		JButton btnSave = new JButton("Speichern");
 		JButton btnCancel  = new JButton("Abbrechen");
@@ -52,8 +40,10 @@ public class DetailViewController implements ActionListener{
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
+		
 		indexChoosable.add(0);
-		rootComponent = new GenericDetailTableView(buttonList, menuList, parent, databaseManager.getDataSource().getBillRowDataModel());	
+		
+		rootComponent = new GenericDetailTableView(buttonList, menuList, databaseManager.getDataSource().getBillRowDataModel());	
 	}
 	
 	@Override
@@ -61,31 +51,17 @@ public class DetailViewController implements ActionListener{
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
-			newFrame.dispose();
+			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}
 		
 		if(cmd.equals("CANCEL")) {
-			newFrame.dispose();
+			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}		
 		
 		if(cmd.equals("ADD")) {
-			String title = "Rechnungszeilen";
-			newFrame = new JFrame();
-			newFrame.setTitle("Hinzufügen");
-			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, newFrame, indexChoosable);
-			newFrame.add(controller.getRootComponent());
-			newFrame.pack();
-			newFrame.setLocationRelativeTo(parent);
-			newFrame.setVisible(true);
-			controller.setNewFrame(newFrame);
+			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+			
+			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		}
-	}
-	
-	public void setNewFrame(JFrame newFrame) {
-		this.newFrame = newFrame;
-	}
-	
-	public JPanel getRootComponent() {
-		return rootComponent;
 	}
 }

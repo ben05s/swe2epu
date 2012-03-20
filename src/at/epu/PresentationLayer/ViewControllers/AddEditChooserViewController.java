@@ -16,7 +16,7 @@ import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericChooserFormView;
 
-public class AddEditChooserViewController implements ActionListener {
+public class AddEditChooserViewController extends ViewController implements ActionListener {
 	
 	DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 	Object[][] data = null;
@@ -27,7 +27,6 @@ public class AddEditChooserViewController implements ActionListener {
 	ArrayList<JRadioButton> radioList;
 	String cmd_;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
-	JFrame parent;
 	String title;
 	ArrayList<String> preselectedItems = new ArrayList<String>();
 	
@@ -35,7 +34,7 @@ public class AddEditChooserViewController implements ActionListener {
 		this.chooseFrame = newFrame;
 	}
 	
-	public AddEditChooserViewController(String title, String action, int rowindex_, JFrame parent_) {
+	public AddEditChooserViewController(String title, String action, int rowindex_) {
 		if(title == "Kunden"){
 			data = databaseManager.getDataSource().getOfferDataModel().getData();
 			preselectedItems = databaseManager.getDataSource().getCustomerDataModel().getChoosenData();
@@ -59,13 +58,13 @@ public class AddEditChooserViewController implements ActionListener {
 		
 		this.cmd_ = action;
 		rowindex = rowindex_;
-		this.parent = parent_;
 		this.title = title;
 		
 		initialize();
 	}
 
-	private void initialize() {
+	@Override
+	public void initialize() {
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		JButton btnOk = new JButton("OK");
 		JButton btnDeselect  = new JButton("Deselect All");
@@ -79,7 +78,6 @@ public class AddEditChooserViewController implements ActionListener {
 		buttonList.add(btnDeselect);
 
 		boolean checked[] = new boolean[this.data.length];
-		int count = 0;
 		
 		checkList = new ArrayList<JCheckBox>();
 		if(cmd_.equals("EDIT")) {
@@ -182,9 +180,4 @@ public class AddEditChooserViewController implements ActionListener {
 			chooseFrame.dispose();
 		}
 	}
-	
-	public JPanel getRootComponent() {
-		return rootComponent;
-	}
-
 }

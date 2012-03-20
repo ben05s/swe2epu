@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.PresentationLayer.ViewControllers.BankAccountViewController;
 import at.epu.PresentationLayer.ViewControllers.BillViewController;
@@ -17,6 +19,7 @@ public class MainWindow {
 
 	JFrame frmBackoffice;
 	JTabbedPane tabbedPane;
+	ArrayList<ViewController> rootViewControllers = new ArrayList<ViewController>();
 
 	/**
 	 * Launch the application.
@@ -32,6 +35,7 @@ public class MainWindow {
 				try {
 					MainWindow window = new MainWindow();
 					window.frmBackoffice.setVisible(true);
+					ApplicationManager.getInstance().setMainWindow(window);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -75,6 +79,15 @@ public class MainWindow {
 	 */
 	public void addViewToMainControl(ViewController viewController)
 	{
+		rootViewControllers.add(viewController);
 		tabbedPane.addTab(viewController.getTitle(), viewController.getIcon(), viewController.getRootComponent());
+	}
+	
+	public JFrame getMainFrame() {
+		return frmBackoffice;
+	}
+	
+	public ViewController getActiveViewController() {
+		return rootViewControllers.get(tabbedPane.getSelectedIndex());
 	}
 }

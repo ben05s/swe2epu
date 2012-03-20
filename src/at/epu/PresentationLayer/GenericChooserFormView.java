@@ -3,9 +3,6 @@ package at.epu.PresentationLayer;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;

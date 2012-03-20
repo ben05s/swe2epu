@@ -21,7 +21,6 @@ public class GenericAddEditFormView extends JPanel{
 		JPanel springLayout = new JPanel(new SpringLayout());
 		
 		int numLabels = labels.size();
-		int numTexts = texte.size();
 		int index = 0;
 		int textcount = 0;
 		int defaultButtons = 2;
