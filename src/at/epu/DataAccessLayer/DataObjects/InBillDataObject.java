@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /*
  * ID | Kontakt | Buchungszeile
  */
-public class InBillDataObject {
+public class InBillDataObject extends DataObject {
 	int id_;
 	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
 	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();

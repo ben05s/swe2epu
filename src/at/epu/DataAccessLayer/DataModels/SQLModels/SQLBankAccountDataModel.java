@@ -6,13 +6,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import at.epu.DataAccessLayer.SQLQueryProvider;
 import at.epu.DataAccessLayer.DataModels.BankAccountDataModel;
 
 public class SQLBankAccountDataModel extends BankAccountDataModel {
 	private static final long serialVersionUID = -8371682062900518962L;
 	
 	public SQLBankAccountDataModel(Connection databaseHandle) throws Exception {
-		try {
+		SQLQueryProvider sqlProvider = new SQLQueryProvider();
+		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		
+		setData(data_);
+		
+		/*try {
 			stm = databaseHandle.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
@@ -83,7 +89,7 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 			System.exit(1);
 		}
 
-		setData(data_);
+		setData(data_);*/
 	}
 	
 	public ArrayList<String> getKategorieForBuchungszeilen(int id) {
@@ -108,7 +114,6 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 			sub_rs = sub_stm.executeQuery(sub_sql);
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
-			closeConnection(dbHandle);
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -119,14 +124,12 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 					kategorie.add(sub_rs.getString(1));
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
-					closeConnection(dbHandle);
 					e.printStackTrace();
 					System.exit(1);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
-			closeConnection(dbHandle);
 			e.printStackTrace();
 			System.exit(1);
 		}

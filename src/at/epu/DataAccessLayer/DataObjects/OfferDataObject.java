@@ -2,7 +2,7 @@ package at.epu.DataAccessLayer.DataObjects;
 
 import java.util.Date;
 
-public class OfferDataObject {
+public class OfferDataObject extends DataObject {
 	int id_;
 	String titel;
 	CustomerDataObject kunde_;

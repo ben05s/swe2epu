@@ -3,13 +3,19 @@ package at.epu.DataAccessLayer.DataModels.SQLModels;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import at.epu.DataAccessLayer.SQLQueryProvider;
 import at.epu.DataAccessLayer.DataModels.ContactDataModel;
 
 public class SQLContactDataModel extends ContactDataModel {
 	private static final long serialVersionUID = -4462317932452701225L;
 	
 	public SQLContactDataModel(Connection databaseHandle) {
-		try {
+		SQLQueryProvider sqlProvider = new SQLQueryProvider();
+		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		
+		setData(data_);
+		
+		/*try {
 			stm = databaseHandle.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
@@ -62,7 +68,6 @@ public class SQLContactDataModel extends ContactDataModel {
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from resultSet");
 			closeConnection(databaseHandle);
-		}
-		setData(data_);
+		}*/
 	}
 }

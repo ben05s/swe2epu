@@ -1,6 +1,6 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-public class BillRowDataObject {
+public class BillRowDataObject extends DataObject {
 	int id_;
 	OutBillDataObject ausgrechnung_;
 	OfferDataObject angebot_;

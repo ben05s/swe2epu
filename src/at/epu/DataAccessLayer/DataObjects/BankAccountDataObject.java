@@ -6,7 +6,7 @@ import java.util.Date;
  * | ID(PK) | EingRechnung | AusgRechnung | Betrag 
  * | Umsatzsteuer | Buchungsdatum | Kategorie
  */
-public class BankAccountDataObject {
+public class BankAccountDataObject extends DataObject {
 	int id_;
 	ArrayList<InBillDataObject> eingrechnung_liste_;
 	ArrayList<OutBillDataObject> ausgrechnung_liste_;

@@ -14,9 +14,7 @@ import at.epu.DataAccessLayer.DataModels.SQLModels.SQLOfferDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLOutBillDataModel;
 import at.epu.DataAccessLayer.DataModels.SQLModels.SQLProjectDataModel;
 
-public class DatabaseDataSource extends DataSource {
-	Connection databaseHandle = null;
-	
+public class DatabaseDataSource extends DataSource {	
 	public DatabaseDataSource(String databaseName) throws Exception {
 		
 	
@@ -24,10 +22,12 @@ public class DatabaseDataSource extends DataSource {
 		
 		try {
 			databaseHandle = DriverManager.getConnection(db_url, "SA", "");	
+			
 		} catch (SQLException e) {
 			System.err.println("Could not open connection to database at " + db_url);
 			System.exit(0);
 		} 
+		
 		
 		contactModel = new SQLContactDataModel(databaseHandle);
 		customerModel = new SQLCustomerDataModel(databaseHandle);

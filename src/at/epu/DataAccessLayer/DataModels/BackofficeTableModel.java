@@ -12,6 +12,13 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	private static final long serialVersionUID = 2110831280426094363L;
 
 	protected String[] columnNames 	= null;
+	protected String tableName = null;
+	protected String[] mappingTableName = null;
+	protected String[] foreignTableName = null;
+	protected String[] foreignKeyColumns = null;
+	protected String[] foreignTableColumns = null;
+	protected String[] foreignKeyFromMappingCol = null;
+	protected String[] desiredColFromForeignKey = null;
 	protected String[] addEditColNames = null;
 	protected Object[][] data 		= null;
 	protected ArrayList<String> choosenData = new ArrayList<String>();
@@ -25,26 +32,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected String sql_count;
 	protected Connection dbHandle = null;
 	protected ArrayList<Integer> missingCols = new ArrayList<Integer>();
-	
-	public Connection getDbHandle() {
-		return dbHandle;
-	}
 
-	public void setDbHandle(Connection dbHandle) {
-		this.dbHandle = dbHandle;
-	}
-
-	public void closeConnection(Connection databaseHandle) {
-		if ( databaseHandle != null )
-		{
-			try {
-				databaseHandle.close();
-			} catch ( SQLException f ) {
-				f.printStackTrace();
-			}
-		}
-		System.exit(0);
-	}
 	
 	public String[] getAddEditColNames() {
 		return addEditColNames;
@@ -57,6 +45,34 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	@Override
 	public String getColumnName(int column) {
 		return getColumnNames()[column];
+	}
+	
+	public String getTableName() {
+		return tableName;
+	}
+	
+	public String[] getMappingTableName() {
+		return mappingTableName;
+	}
+	
+	public String[] getForeignTableName() {
+		return foreignTableName;
+	}
+
+	public String[] getForeignColumns() {
+		return foreignKeyColumns;
+	}
+	
+	public String[] getForeignTableColumns() {
+		return foreignTableColumns;
+	}
+	
+	public String[] getForeignKeyNameFromMappingCol() {
+		return foreignKeyFromMappingCol;
+	}
+	
+	public String[] getDesiredColFromForeignKey() {
+		return desiredColFromForeignKey;
 	}
 	
 	@Override
@@ -139,7 +155,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				stm = dbHandle.createStatement();
 			} catch (SQLException e) {
 				System.err.println("Could not create Delete Statement");
-				closeConnection(dbHandle);
 			}
 			rowindex++;
 			sql = "DELETE FROM "+title+" WHERE ROWNUM = "+rowindex;
@@ -149,7 +164,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			} catch (SQLException e) {
 				System.err.println("Error when executing the Delete Query");
 				e.printStackTrace();
-				closeConnection(dbHandle);
 			}
 		}
 		
@@ -203,7 +217,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		} catch (SQLException e1) {
 			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -224,7 +237,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			} catch (SQLException e1) {
 				System.err.println("Error when executing the Save Query");
 				e1.printStackTrace();
-				closeConnection(dbHandle);
 			}
 		}
 	}
@@ -240,7 +252,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		} catch (SQLException e1) {
 			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
-			closeConnection(dbHandle);
 		}
 	}
 	
@@ -266,7 +277,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		} catch (SQLException e1) {
 			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
-			closeConnection(dbHandle);
 		}
 	}
 	
@@ -278,7 +288,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		} catch (SQLException e1) {
 			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -308,7 +317,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			} catch(SQLException e) {
 				System.err.println("Error when executing Angebot Query");
 				e.printStackTrace();
-				closeConnection(dbHandle);
 			}
 			
 			try {
@@ -317,12 +325,10 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 						id_ = sub_rs.getInt(1);
 					} catch (SQLException e) {			
 						System.err.println("Error when fetching data from Angebot title resultSet");
-						closeConnection(dbHandle);
 					}
 				}
 			} catch (SQLException e) {
 				System.err.println("Error on next fkt from Angebot resultSet");
-				closeConnection(dbHandle);
 			}
 			System.out.println(id_);
 		return id_;
@@ -362,7 +368,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		} catch (SQLException e1) {
 			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
-			closeConnection(dbHandle);
 		}
 	}
 	
@@ -372,12 +377,13 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		int id = 0;
 		Object[] missingData = new Object[missingCols.size()];
 		
+		//throw new NotImplementedException();
+		
 		if(dbHandle != null) {
 			try {
 				stm = dbHandle.createStatement();
 			} catch (SQLException e) {
 				System.err.println("Could not create Save Statement");
-				closeConnection(dbHandle);
 			}
 			
 			if(title.equals("Kontakte")) {
@@ -448,7 +454,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			} catch(SQLException e) {
 				System.err.println("Error when executing Angebot Query");
 				e.printStackTrace();
-				closeConnection(dbHandle);
 			}
 			
 			try {
@@ -457,12 +462,10 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 						ids.add(sub_rs.getInt(1));
 					} catch (SQLException e) {			
 						System.err.println("Error when fetching data from Angebot title resultSet");
-						closeConnection(dbHandle);
 					}
 				}
 			} catch (SQLException e) {
 				System.err.println("Error on next fkt from Angebot resultSet");
-				closeConnection(dbHandle);
 			}
 		}
 		
@@ -475,7 +478,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				stm = dbHandle.createStatement();
 			} catch (SQLException e) {
 				System.err.println("Could not create Update Statement");
-				closeConnection(dbHandle);
 			}
 			rowindex++;
 			sql = "UPDATE "+title+" SET ID="+data_[0].toString()+",VORNAME=\'"+data_[1].toString()+"\',NACHNAME=\'"+
@@ -487,7 +489,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			} catch (SQLException e) {
 				System.err.println("Error when executing the Update Query");
 				e.printStackTrace();
-				closeConnection(dbHandle);
 			}
 		}
 			

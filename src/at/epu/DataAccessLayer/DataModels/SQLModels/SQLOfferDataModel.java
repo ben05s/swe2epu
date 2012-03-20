@@ -5,13 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import at.epu.DataAccessLayer.SQLQueryProvider;
 import at.epu.DataAccessLayer.DataModels.OfferDataModel;
 
 public class SQLOfferDataModel extends OfferDataModel {
 	private static final long serialVersionUID = 3836902474382893474L;
 	
 	public SQLOfferDataModel(Connection databaseHandle) throws Exception {
-		try {
+		SQLQueryProvider sqlProvider = new SQLQueryProvider();
+		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		
+		setData(data_);
+		
+		/*try {
 			stm = databaseHandle.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
@@ -70,7 +76,7 @@ public class SQLOfferDataModel extends OfferDataModel {
 			closeConnection(databaseHandle);
 		}
 
-		setData(data_);
+		setData(data_);*/
 	}
 	
 	public String getKundeForAngebot(int id) {
@@ -94,7 +100,6 @@ public class SQLOfferDataModel extends OfferDataModel {
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
 			e.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -103,12 +108,10 @@ public class SQLOfferDataModel extends OfferDataModel {
 					kunde = sub_rs.getString(1);
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
-					closeConnection(dbHandle);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
-			closeConnection(dbHandle);
 		}
 		
 		return kunde;
