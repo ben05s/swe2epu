@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /*
  * ID(PK) | Angebot_ID(FK) | AusgRechnung_Liste(FK/PK)
  */
-public class ProjectDataObject {
+public class ProjectDataObject extends DataObject {
 	int id_;
 	String titel;
 	int angebot_id_;

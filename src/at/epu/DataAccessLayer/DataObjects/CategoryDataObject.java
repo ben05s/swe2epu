@@ -1,6 +1,6 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-public class CategoryDataObject {
+public class CategoryDataObject extends DataObject {
 	int id_;
 	String name_;
 	

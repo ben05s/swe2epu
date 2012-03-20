@@ -2,7 +2,7 @@ package at.epu.DataAccessLayer.DataObjects;
 
 import java.util.ArrayList;
 
-public class CustomerDataObject {
+public class CustomerDataObject extends DataObject {
 	int id_;
 	String vorname_;
 	String nachname_;

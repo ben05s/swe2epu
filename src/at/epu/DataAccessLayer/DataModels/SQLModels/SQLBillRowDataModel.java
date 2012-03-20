@@ -5,13 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import at.epu.DataAccessLayer.SQLQueryProvider;
 import at.epu.DataAccessLayer.DataModels.BillRowDataModel;
 
 public class SQLBillRowDataModel extends BillRowDataModel {
 	private static final long serialVersionUID = 1259019063593769044L;
 	
 	public SQLBillRowDataModel(Connection databaseHandle) throws Exception {
-		try {
+		SQLQueryProvider sqlProvider = new SQLQueryProvider();
+		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		
+		setData(data_);
+		
+		/*try {
 			stm = databaseHandle.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
@@ -70,7 +76,7 @@ public class SQLBillRowDataModel extends BillRowDataModel {
 			closeConnection(databaseHandle);
 		}
 
-		setData(data_);
+		setData(data_);*/
 	}
 	
 	public String getAngebotForRechnungszeilen(int id) {
@@ -94,7 +100,6 @@ public class SQLBillRowDataModel extends BillRowDataModel {
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
 			e.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -103,12 +108,10 @@ public class SQLBillRowDataModel extends BillRowDataModel {
 					angebot = sub_rs.getString(1);
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
-					closeConnection(dbHandle);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
-			closeConnection(dbHandle);
 		}
 		
 		return angebot;

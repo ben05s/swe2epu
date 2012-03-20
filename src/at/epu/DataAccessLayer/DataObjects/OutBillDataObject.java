@@ -2,7 +2,7 @@ package at.epu.DataAccessLayer.DataObjects;
 
 import java.util.ArrayList;
 
-public class OutBillDataObject {
+public class OutBillDataObject extends DataObject {
 	int id_;
 	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
 	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();

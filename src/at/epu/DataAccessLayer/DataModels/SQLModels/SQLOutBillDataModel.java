@@ -5,13 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import at.epu.DataAccessLayer.SQLQueryProvider;
 import at.epu.DataAccessLayer.DataModels.OutBillDataModel;
 
 public class SQLOutBillDataModel extends OutBillDataModel {
 	private static final long serialVersionUID = -2612819716366533584L;
 	
 	public SQLOutBillDataModel(Connection databaseHandle) throws Exception {
-		try {
+		SQLQueryProvider sqlProvider = new SQLQueryProvider();
+		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		
+		setData(data_);
+		
+		/*try {
 			stm = databaseHandle.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Could not create Statement");
@@ -115,7 +121,7 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 			closeConnection(dbHandle);
 		}
 		
-		return kunde;
+		return kunde;*/
 	}
 	
 	public int getRzeileCountForAusgangsrechnung(int id) {
@@ -140,7 +146,6 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
 			e.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -149,12 +154,10 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 					count = sub_rs.getInt(1);
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
-					closeConnection(dbHandle);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
-			closeConnection(dbHandle);
 		}
 		
 		return count;
@@ -182,7 +185,6 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 		} catch(SQLException e) {
 			System.err.println("Error when executing Angebot Query");
 			e.printStackTrace();
-			closeConnection(dbHandle);
 		}
 		
 		try {
@@ -191,12 +193,10 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 					count = sub_rs.getInt(1);
 				} catch (SQLException e) {			
 					System.err.println("Error when fetching data from Angebot title resultSet");
-					closeConnection(dbHandle);
 				}
 			}
 		} catch (SQLException e) {
 			System.err.println("Error on next fkt from Angebot resultSet");
-			closeConnection(dbHandle);
 		}
 		
 		return count;

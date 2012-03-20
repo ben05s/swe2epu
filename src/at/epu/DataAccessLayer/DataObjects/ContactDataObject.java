@@ -1,6 +1,6 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-public class ContactDataObject {
+public class ContactDataObject extends DataObject {
 	int id_;
 	String vorname_;
 	String nachname_;
