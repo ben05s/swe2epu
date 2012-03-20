@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -37,10 +38,11 @@ public class AddEditChooserViewController implements ActionListener {
 	public AddEditChooserViewController(String title, String action, int rowindex_, JFrame parent_) {
 		if(title == "Kunden"){
 			data = databaseManager.getDataSource().getOfferDataModel().getData();
+			preselectedItems = databaseManager.getDataSource().getCustomerDataModel().getChoosenData();
 		}
 		if(title == "Angebote"){
-			data = databaseManager.getDataSource().getOfferDataModel().getAddEditData();
-			preselectedItems = databaseManager.getDataSource().getCustomerDataModel().getChoosenData();
+			data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
+			preselectedItems = databaseManager.getDataSource().getOfferDataModel().getChoosenData();
 		}
 		if(title == "Projekte"){
 			data = databaseManager.getDataSource().getProjectDataModel().getAddEditData();
@@ -76,6 +78,8 @@ public class AddEditChooserViewController implements ActionListener {
 		buttonList.add(btnOk);
 		buttonList.add(btnDeselect);
 
+		boolean checked[] = new boolean[this.data.length];
+		int count = 0;
 		
 		checkList = new ArrayList<JCheckBox>();
 		if(cmd_.equals("EDIT")) {
@@ -86,22 +90,63 @@ public class AddEditChooserViewController implements ActionListener {
 		if(cmd_.equals("ADD")) {
 			for(int i=0;i<this.data.length;i++) {
 				JCheckBox box;
-				if(preselectedItems.isEmpty()) {
-					box = new JCheckBox(this.data[i][1].toString(), false);
-				} else {
-					if(preselectedItems.get(i).equals(this.data[i][1].toString())) {
-						box = new JCheckBox(this.data[i][1].toString(), true);
-					} else {
-						box = new JCheckBox(this.data[i][1].toString(), false);
+				if(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().isEmpty()) {
+					checked[i] = false;
+				} /*else {
+					checked[i] = false;
+					System.out.println(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().size());
+					for(int x=0;x<this.data.length;x++) {
+						for(int z=count;z<databaseManager.getDataSource().getCustomerDataModel().getChoosenData().size();z++) {
+							if(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().get(z).equals(this.data[x][1].toString())) {
+								checked[i] = true;
+								count++;
+								break;
+							}
+						}
 					}
-				}
+				}*/
+				box = new JCheckBox(this.data[i][1].toString(), checked[i]);
 				box.setActionCommand("CHECKBOX"+i);
 				box.addActionListener(this);
 				checkList.add(box);
 			}
+		}
+			
+		radioList = new ArrayList<JRadioButton>();
+		ButtonGroup group = new ButtonGroup();
+		
+		if(cmd_.equals("EDIT")) {
+			for(int i=0;i<data.length;i++) {
+				//checkList.add(new JCheckBox(this.data[i][1].toString(), false));
+			}
+		}
+		if(cmd_.equals("ADD")) {
+			for(int i=0;i<this.data.length;i++) {
+				JRadioButton box;
+				if(databaseManager.getDataSource().getOfferDataModel().getChoosenData().isEmpty()) {
+					checked[i] = false;
+				} /*else {
+					checked[i] = false;
+					System.out.println(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().size());
+					for(int x=0;x<this.data.length;x++) {
+						for(int z=count;z<databaseManager.getDataSource().getCustomerDataModel().getChoosenData().size();z++) {
+							if(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().get(z).equals(this.data[x][1].toString())) {
+								checked[i] = true;
+								count++;
+								break;
+							}
+						}
+					}
+				}*/
+				box = new JRadioButton(this.data[i][1].toString(), checked[i]);
+				group.add(box);
+				box.setActionCommand("CHECKBOX"+i);
+				box.addActionListener(this);
+				radioList.add(box);
+			}
 		}	
 		
-		rootComponent = new GenericChooserFormView(buttonList, checkList, radioList);	
+		rootComponent = new GenericChooserFormView(buttonList, checkList, radioList, title);	
 	}
 
 	@Override
@@ -116,10 +161,18 @@ public class AddEditChooserViewController implements ActionListener {
 						if(cmd_.equals("ADD")) { databaseManager.getDataSource().getCustomerDataModel().addChoosenData(this.data[i][1].toString()); }
 						if(cmd_.equals("EDIT")) { }
 					}
+					if(title == "Angebote") { 
+						if(cmd_.equals("ADD")) { databaseManager.getDataSource().getOfferDataModel().addChoosenData(this.data[i][1].toString()); }
+						if(cmd_.equals("EDIT")) { }
+					}
 				}
 				if(! ab.getModel().isSelected()) {
 					if(title == "Kunden") { 
 						if(cmd_.equals("ADD")) { databaseManager.getDataSource().getCustomerDataModel().removeChoosenData(this.data[i][1].toString()); }
+						if(cmd_.equals("EDIT")) { }
+					}
+					if(title == "Angebote") { 
+						if(cmd_.equals("ADD")) { databaseManager.getDataSource().getOfferDataModel().removeChoosenData(this.data[i][1].toString()); }
 						if(cmd_.equals("EDIT")) { }
 					}
 				}

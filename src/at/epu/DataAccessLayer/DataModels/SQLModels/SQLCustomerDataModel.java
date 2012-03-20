@@ -115,4 +115,8 @@ public class SQLCustomerDataModel extends CustomerDataModel {
 		
 		return angebote;
 	}
+	/*
+	void insert(){
+		SQLQueryProvider.insertInto(this);
+		}*/
 }

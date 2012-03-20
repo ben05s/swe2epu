@@ -17,7 +17,8 @@ public class GenericChooserFormView extends JPanel {
 
 	private static final long serialVersionUID = -3094659823177438706L;
 	
-	public GenericChooserFormView(ArrayList<JButton> buttons, ArrayList<JCheckBox> checkList, ArrayList<JRadioButton> radioList) {
+	public GenericChooserFormView(ArrayList<JButton> buttons, ArrayList<JCheckBox> checkList, 
+									ArrayList<JRadioButton> radioList, String title) {
 		setBackground(SystemColor.control);
 		JPanel springLayout = new JPanel(new SpringLayout());
 		ArrayList<JLabel> labels = new ArrayList<JLabel>();
@@ -31,11 +32,18 @@ public class GenericChooserFormView extends JPanel {
 		int numPairs = checkList.size();
 		
 		//Create and populate the panel.
-		for (int i = 0; i < numPairs; i++) {
-			springLayout.add(checkList.get(i));
-			springLayout.add(labels.get(i));
+		if(title.equals("Kunden")) {
+			for (int i = 0; i < numPairs; i++) {
+				springLayout.add(checkList.get(i));
+				springLayout.add(labels.get(i));
+			}
 		}
-	
+		if(title.equals("Angebote")) {
+			for (int i = 0; i < numPairs; i++) {
+				springLayout.add(radioList.get(i));
+				springLayout.add(labels.get(i));
+			}
+		}
 		springLayout.add(buttons.get(0));
 		springLayout.add(buttons.get(1));
 		
