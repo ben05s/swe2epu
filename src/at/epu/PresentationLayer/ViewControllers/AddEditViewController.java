@@ -29,6 +29,7 @@ public class AddEditViewController implements ActionListener{
 	JFrame parent;
 	String title;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
+	ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
 	
 	public void setNewFrame(JFrame newFrame) {
 		this.newFrame = newFrame;
@@ -122,9 +123,13 @@ public class AddEditViewController implements ActionListener{
 			for(int i=0;i<columnNames.length;i++) {
 				//ignore Angebote label because there is a button to choose angebote
 				if(columnNames[i].equals("Angebote")) {
+					databaseManager.getDataSource().getCustomerDataModel().setChooseIndex(i);
+					chooseIndex = databaseManager.getDataSource().getCustomerDataModel().getChooseIndex();
 					continue;
 				}
 				if(columnNames[i].equals("Kunde")) {
+					databaseManager.getDataSource().getOfferDataModel().setChooseIndex(i);
+					chooseIndex = databaseManager.getDataSource().getOfferDataModel().getChooseIndex();
 					continue;
 				}
 				if(columnNames[i].equals("Angebot")) {
@@ -168,12 +173,16 @@ public class AddEditViewController implements ActionListener{
 		
 		if(cmd.equals("SAVE")) {
 			Object[] data = new Object[this.columnNames.length];
-			
+			int skip = 0;
 			for(int i=0;i<this.columnNames.length;i++) {
-				if(i<textList.size()) {
-					data[i] = textList.get(i).getText();
-				} else {
-					data[i] = "nothing"; //platzhalter für arraylist
+				for(int x=0;x<this.chooseIndex.size();x++) {
+					if(i == this.chooseIndex.get(x)) {
+						data[i] = "placeholder";
+						skip++;
+					}
+				}
+				if(data[i] == null) {
+					data[i] = textList.get(i-skip).getText();
 				}
 			}
 			if(title == "Kontakte") { 
