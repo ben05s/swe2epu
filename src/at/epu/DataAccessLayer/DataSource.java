@@ -13,7 +13,6 @@ public abstract class DataSource {
 	CategoryDataModel categoryModel;
 	InBillDataModel inbillModel;
 	
-	
 	public ContactDataModel getContactDataModel() {
 		return contactModel;
 	}
