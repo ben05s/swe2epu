@@ -22,6 +22,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected String[] addEditColNames = null;
 	protected Object[][] data 		= null;
 	protected Object[][] presented_data = null;
+	protected Object[][] addEditData = null;
 	protected ArrayList<String> choosenData = new ArrayList<String>();
 	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
 	

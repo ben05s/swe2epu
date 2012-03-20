@@ -62,8 +62,8 @@ public class AddEditViewController extends ViewController implements ActionListe
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		model = appManager.getActiveTableModel();	
 		
-		String[] columnNames = model.getColumnNames();
-		Object[][] data = model.getData();
+		String[] columnNames = model.getAddEditColNames();
+		Object[][] data = model.getAddEditData();
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		for(int i=0;i<columnNames.length;i++) {
