@@ -1,5 +1,7 @@
 package at.epu.DataAccessLayer.DataModels.MockModels;
 
+import at.epu.DataAccessLayer.MockDataProvider;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.DataAccessLayer.DataModels.CustomerDataModel;
 /*
  * ID | Vorname | Nachname | Unternehmen | Adresse | Email | Telefon | Angebote(FK/PK) 
@@ -20,5 +22,11 @@ public class MockCustomerDataModel extends CustomerDataModel {
 			};
 		
 		setData(data_);
+	}
+	
+	@Override
+	public void saveData(BackofficeTableModel model, Object[] data_){
+		mockProvider = new MockDataProvider();
+		mockProvider.saveData(model, data_);
 	}
 }

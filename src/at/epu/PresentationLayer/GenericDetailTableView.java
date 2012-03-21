@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
@@ -38,7 +39,7 @@ public class GenericDetailTableView extends JPanel {
 	String title = null;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
-	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final DefaultTableModel tableModel) {
+	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final TableModel tableModel) {
 		setBackground(SystemColor.control);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();

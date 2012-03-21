@@ -12,8 +12,8 @@ public class SQLOutBillDataModel extends OutBillDataModel {
 	private static final long serialVersionUID = -2612819716366533584L;
 	
 	public SQLOutBillDataModel(Connection databaseHandle) throws Exception {
-		SQLQueryProvider sqlProvider = new SQLQueryProvider();
-		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		sqlProvider = new SQLQueryProvider(databaseHandle);
+		Object[][] data_ = sqlProvider.selectAll(this);
 		
 		setData(data_);
 		

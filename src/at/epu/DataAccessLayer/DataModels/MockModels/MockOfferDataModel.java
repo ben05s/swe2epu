@@ -3,6 +3,8 @@ package at.epu.DataAccessLayer.DataModels.MockModels;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import at.epu.DataAccessLayer.MockDataProvider;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.DataAccessLayer.DataModels.OfferDataModel;
 /*
  *  ID | Kunde_ID | Summe | Dauer | Datum | Umsetzungs Chance
@@ -21,5 +23,11 @@ public class MockOfferDataModel extends OfferDataModel {
 			};
 		
 		setData(data_);
+	}
+	
+	@Override
+	public void saveData(BackofficeTableModel model, Object[] data_){
+		mockProvider = new MockDataProvider();
+		mockProvider.saveData(model, data_);
 	}
 }

@@ -13,8 +13,8 @@ public class SQLBankAccountDataModel extends BankAccountDataModel {
 	private static final long serialVersionUID = -8371682062900518962L;
 	
 	public SQLBankAccountDataModel(Connection databaseHandle) throws Exception {
-		SQLQueryProvider sqlProvider = new SQLQueryProvider();
-		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		sqlProvider = new SQLQueryProvider(databaseHandle);
+		Object[][] data_ = sqlProvider.selectAll(this);
 		
 		setData(data_);
 		

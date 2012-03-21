@@ -13,8 +13,8 @@ public class SQLProjectDataModel extends ProjectDataModel {
 	private static final long serialVersionUID = -6826087926269956822L;
 	
 	public SQLProjectDataModel(Connection databaseHandle) throws Exception {
-		SQLQueryProvider sqlProvider = new SQLQueryProvider();
-		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		sqlProvider = new SQLQueryProvider(databaseHandle);
+		Object[][] data_ = sqlProvider.selectAll(this);
 		
 		setData(data_);
 		

@@ -1,6 +1,6 @@
 package at.epu.DataAccessLayer;
 
-import java.lang.reflect.Field;
+//import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
-import at.epu.DataAccessLayer.DataObjects.DataObject;
+//import at.epu.DataAccessLayer.DataObjects.DataObject;
 
 
 public class SQLQueryProvider {
@@ -20,10 +20,12 @@ public class SQLQueryProvider {
 	String sql = new String();
 	String sql_count = new String();
 	
-	public Object[][] selectAll(BackofficeTableModel model, Connection dbHandle) {
-		Object[][] data_ = null;
-		
+	public SQLQueryProvider(Connection dbHandle) {
 		databaseHandle = dbHandle;
+	}
+	
+	public Object[][] selectAll(BackofficeTableModel model) {
+		Object[][] data_ = null;	
 		
 		try {
 			stm = databaseHandle.createStatement();
@@ -119,37 +121,69 @@ public class SQLQueryProvider {
 		return data;
 	}
 	
-	public void insert(BackofficeTableModel model, DataObject obj) throws SQLException {
-		Class<? extends DataObject> objClass = obj.getClass();
-		
-		Field[] fields = objClass.getFields();
+	public void saveData(BackofficeTableModel model, Object[] data_) throws SQLException {
+		int next_id = getNextIdForTable(model.getTableName());
 		
 		String valueString = new String();
-		
-		for(int i = 0; i < fields.length; i++) {
-			Object property = null;
-			
-			try {
-				property = fields[i].get(obj);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				throw new SQLException("Reflection failure.");
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				throw new SQLException("Reflection failure.");
-			}
-			
-			if(property.getClass() == String.class) {
-				valueString += "\'" + property.toString() + "\'";
-				
-				if(i != fields.length - 1) {
-					valueString += ",";
-				}
+		for(int i=0;i<data_.length;i++) {
+			valueString += "\'"+data_[i].toString()+"\'";
+			if(i != data_.length - 1) {
+				valueString += ",";
 			}
 		}
 		
-		String statement = "INSERT INTO " + model.getTableName() + " VALUES (" + valueString + ")";
+		String sql = "INSERT INTO " + model.getTableName() + " VALUES ("+next_id+"," +valueString+ ")";
 		
+		try {
+			stm = databaseHandle.createStatement();
+			stm.executeUpdate(sql);
+		} catch (SQLException e1) {
+			System.err.println("Error when executing the Save Query");
+			e1.printStackTrace();
+		}
+	}
+	
+	public int getNextIdForTable(String tableName) {
+		int next_id = 0;
+		sql = "SELECT MAX(id) FROM "+tableName;
 		
+		try {
+			stm = databaseHandle.createStatement();
+			rs = stm.executeQuery(sql);
+			rs.next();
+			next_id = rs.getInt(1) + 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return next_id;
 	}
 }
+
+
+/*Class<? extends DataObject> objClass = obj.getClass();
+
+Field[] fields = objClass.getFields();
+
+String valueString = new String();
+
+for(int i = 0; i < fields.length; i++) {
+	Object property = null;
+	
+	try {
+		property = fields[i].get(obj);
+	} catch (IllegalArgumentException e) {
+		e.printStackTrace();
+		throw new SQLException("Reflection failure.");
+	} catch (IllegalAccessException e) {
+		e.printStackTrace();
+		throw new SQLException("Reflection failure.");
+	}
+	
+	if(property.getClass() == String.class) {
+		valueString += "\'" + property.toString() + "\'";
+		
+		if(i != fields.length - 1) {
+			valueString += ",";
+		}
+	}
+}*/

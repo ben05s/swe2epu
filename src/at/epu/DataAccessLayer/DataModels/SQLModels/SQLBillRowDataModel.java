@@ -12,8 +12,8 @@ public class SQLBillRowDataModel extends BillRowDataModel {
 	private static final long serialVersionUID = 1259019063593769044L;
 	
 	public SQLBillRowDataModel(Connection databaseHandle) throws Exception {
-		SQLQueryProvider sqlProvider = new SQLQueryProvider();
-		Object[][] data_ = sqlProvider.selectAll(this, databaseHandle);
+		sqlProvider = new SQLQueryProvider(databaseHandle);
+		Object[][] data_ = sqlProvider.selectAll(this);
 		
 		setData(data_);
 		

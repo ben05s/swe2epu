@@ -23,15 +23,15 @@ public class AddEditViewController extends ViewController implements ActionListe
 	ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
 
 	public AddEditViewController(String title_, String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
-		cmd_ = action;
+		this.cmd_ = action;
 		rowindex = rowindex_;
 		title = title_;
 		indexChoosable = indexChoosable_;
 		
-		initialize_after();
+		initialize_addEdit();
 	}
 
-	public void initialize_after() {
+	public void initialize_addEdit() {
 		ArrayList<JButton> buttonList = new ArrayList<JButton>();
 		JButton btnSave = new JButton("Speichern");
 		JButton btnCancel  = new JButton("Abbrechen");
@@ -83,7 +83,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		}
 		if(cmd_.equals("ADD")) {
 			for(int i=0;i<columnNames.length;i++) {
-				//ignore Angebote label because there is a button to choose angebote
+				//ignore some label because there is a button to choose this data
 				if(columnNames[i].equals("Kategorie") || columnNames[i].equals("Eingangsrechnung ID") || 
 				   columnNames[i].equals("Ausgangsrechnung ID") || columnNames[i].equals("Angebot") ||
 				   columnNames[i].equals("Angebot") || columnNames[i].equals("Kunde") || 
@@ -106,13 +106,12 @@ public class AddEditViewController extends ViewController implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-		String[] columnNames = model.getColumnNames();
+		String[] columnNames = model.getAddEditColNames();
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		if(cmd.equals("CHOOSE1")) {
-			AddEditChooserViewController controller = new AddEditChooserViewController(title, cmd_, rowindex);
-			
-			appManager.getDialogManager().pushDialog(controller);
+			AddEditChooserViewController chooser = new AddEditChooserViewController(cmd_, rowindex);
+			appManager.getDialogManager().pushDialog(chooser);
 		}
 		
 		if(cmd.equals("SAVE")) {
@@ -131,7 +130,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 			}
 
 			if(cmd_.equals("ADD")) {
-				model.saveData(data,title); 
+				model.saveData(model, data); 
 			} 
 			if(cmd_.equals("EDIT")) { 
 				model.updateData(data,rowindex,title); 
