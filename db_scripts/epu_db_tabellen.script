@@ -59,6 +59,7 @@ CREATE TABLE bzeilen_mapping
 	
 CREATE TABLE ausgangsrechnungen
 	(id INTEGER,
+	rechnungskürzel VARCHAR(50),
 	kunde_id INTEGER,
 	rzeile_mapping_id INTEGER,
 	bzeile_mapping_id INTEGER,
@@ -68,6 +69,7 @@ CREATE TABLE ausgangsrechnungen
 --fraglich welche zusätzlichen daten für eingrechnung bennötigt werden bzw woher die daten kommen sollen(scannen?) -> fragen!
 CREATE TABLE eingangsrechnungen
 	(id INTEGER,
+	rechnungskürzel VARCHAR(50),
 	kontakt_id INTEGER,
 	rzeile_mapping_id INTEGER,
 	bzeile_mapping_id INTEGER,

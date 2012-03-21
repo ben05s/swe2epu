@@ -9,7 +9,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import at.epu.BusinessLayer.ApplicationManager;
@@ -23,24 +22,21 @@ public class AddEditChooserViewController extends ViewController implements Acti
 	BackofficeTableModel model = null;
 	Object[][] data = null;
 	String[] columnNames = null;
-	JPanel rootComponent = new JPanel();
 	JFrame chooseFrame;
 	ArrayList<JCheckBox> checkList;
 	ArrayList<JRadioButton> radioList;
-	String command = "leer";			//determines what command called the controller(Edit or Add)
+	String command;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
 	String title;
+	String chooseCommand;
 	ArrayList<String> preselectedItems = new ArrayList<String>();
 	
 	public void setNewFrame(JFrame newFrame) {
 		this.chooseFrame = newFrame;
 	}
 	
-	public void setActionCommand(String cmd) {
-		this.command=cmd;
-	}
 	
-	public AddEditChooserViewController(String cmd, int rowindex_) {
+	public AddEditChooserViewController(String chooseCommand, String cmd_, int rowindex_) {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		model = appManager.getActiveTableModel();
 		this.title = model.getTableName();
@@ -54,18 +50,41 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			preselectedItems = databaseManager.getDataSource().getOfferDataModel().getChoosenData();
 		}
 		if(this.title == "Projekte"){
-			data = databaseManager.getDataSource().getProjectDataModel().getAddEditData();
+			if(chooseCommand == "CHOOSE1") {
+				data = databaseManager.getDataSource().getOfferDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getProjectDataModel().getChoosenData();
+			}
+			if(chooseCommand == "CHOOSE2") {
+				data = databaseManager.getDataSource().getOutBillDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getProjectDataModel().getChoosenData();	
+			}
 		}
-		if(this.title == "Rechnungen"){
-			data = databaseManager.getDataSource().getOutBillDataModel().getAddEditData();
+		if(this.title == "Ausgangsrechnungen"){
+			if(model.isDetailTableView()) {
+				data = databaseManager.getDataSource().getOfferDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getBillRowDataModel().getChoosenData();
+			} else {
+				data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
+				preselectedItems = databaseManager.getDataSource().getOutBillDataModel().getChoosenData();
+			}
 		}
-		if(this.title == "Bankkonto"){
-			data = databaseManager.getDataSource().getBankAccountDataModel().getAddEditData();
+		if(this.title == "Buchungszeilen"){
+			if(chooseCommand == "CHOOSE1") {
+				data = databaseManager.getDataSource().getInBillDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();
+			}
+			if(chooseCommand == "CHOOSE2") {
+				data = databaseManager.getDataSource().getOutBillDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();	
+			}
+			if(chooseCommand == "CHOOSE3") {
+				data = databaseManager.getDataSource().getCategoryDataModel().getData();
+				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();	
+			}
 		}
-		if(this.title == "Rechnungszeilen"){
-			data = databaseManager.getDataSource().getBillRowDataModel().getAddEditData();
-		}
-		this.command = cmd;
+		
+		this.chooseCommand = chooseCommand;
+		this.command = cmd_;
 		rowindex = rowindex_;
 		
 		initialize_chooser();
@@ -95,7 +114,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 		if(command.equals("ADD")) {
 			for(int i=0;i<this.data.length;i++) {
 				JCheckBox box;
-				if(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().isEmpty()) {
+				if(model.getChoosenData().isEmpty()) {
 					checked[i] = false;
 				} /*else {
 					checked[i] = false;
@@ -128,7 +147,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 		if(command.equals("ADD")) {
 			for(int i=0;i<this.data.length;i++) {
 				JRadioButton box;
-				if(databaseManager.getDataSource().getOfferDataModel().getChoosenData().isEmpty()) {
+				if(model.getChoosenData().isEmpty()) {
 					checked[i] = false;
 				} /*else {
 					checked[i] = false;
@@ -151,11 +170,12 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			}
 		}	
 		
-		rootComponent = new GenericChooserFormView(buttonList, checkList, radioList, title);	
+		rootComponent = new GenericChooserFormView(buttonList, checkList, radioList, chooseCommand);	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
 		String cmd = event.getActionCommand();
 		
 		for(int i=0;i<this.data.length;i++) {
@@ -184,7 +204,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			}
 		}
 		if(cmd.equals("OK")) {
-			chooseFrame.dispose();
+			appManager.getDialogManager().popDialog();
 		}
 	}
 }

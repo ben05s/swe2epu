@@ -9,8 +9,8 @@ public class MockInBillDataModel extends InBillDataModel{
 	
 	public MockInBillDataModel() {
 		Object [][] data_ = {
-				{new Integer(1), "Smith", new Integer(0), new Integer(0), "offen"},
-				{new Integer(2), "Black", new Integer(0), new Integer(0), "offen"}
+				{new Integer(1), "InBill123", "Smith", new Integer(0), new Integer(0), "offen"},
+				{new Integer(2), "InBill932", "Black", new Integer(0), new Integer(0), "offen"}
 		};
 		
 		setData(data_);

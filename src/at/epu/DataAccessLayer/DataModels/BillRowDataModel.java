@@ -5,12 +5,12 @@ public abstract class BillRowDataModel extends BackofficeTableModel {
 	
 	public BillRowDataModel() {
 		tableName = "Rechnungszeilen";
-		String[] mappingTableName_ = {"-"};
-		String[] foreignTableName_ = {"Angebote"};
-		String[] foreignTableColumns_ = {"Angebot"};
-		String[] foreignKeyColumns_ = {"angebot_id"};
-		String[] foreignKeyFromMappingCol_ = {"-"};
-		String[] desiredColFromForeignKey_ = {"titel"};
+		String[] mappingTableName_ = {"-","-"};
+		String[] foreignTableName_ = {"Ausgangsrechnungen","Angebote"};
+		String[] foreignTableColumns_ = {"Ausgangsrechnung","Angebot"};
+		String[] foreignKeyColumns_ = {"ausgangsrechnung_id","angebot_id"};
+		String[] foreignKeyFromMappingCol_ = {"-","-"};
+		String[] desiredColFromForeignKey_ = {"rechnungskürzel","titel"};
 		
 		mappingTableName = mappingTableName_;
 		foreignTableName = foreignTableName_;
@@ -20,7 +20,7 @@ public abstract class BillRowDataModel extends BackofficeTableModel {
 		foreignTableColumns = foreignTableColumns_;
 		
 		String [] columnNames_ = {"ID",
-				"Ausgangsrechnung ID",
+				"Ausgangsrechnung",
 				"Angebot",
 				"Kommentar",
 				"Steuern",

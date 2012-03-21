@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericAddEditFormView;
 
@@ -18,6 +19,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 	JFrame chooseFrame;
 	String cmd_;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
+	String title;
 	ArrayList<JTextField> textList;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
@@ -25,7 +27,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 	public AddEditViewController(String title_, String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
 		this.cmd_ = action;
 		rowindex = rowindex_;
-		title = title_;
+		this.title = title_;
 		indexChoosable = indexChoosable_;
 		
 		initialize_addEdit();
@@ -60,10 +62,18 @@ public class AddEditViewController extends ViewController implements ActionListe
 		buttonList.add(btnChoose3);
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
+		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		model = appManager.getActiveTableModel();	
+		String[] columnNames = null;
+		Object[][] data = null;
 		
-		String[] columnNames = model.getAddEditColNames();
-		Object[][] data = model.getAddEditData();
+		if(model.isDetailTableView()) {
+			columnNames = databaseManager.getDataSource().getBillRowDataModel().getAddEditColNames();
+			data = databaseManager.getDataSource().getBillRowDataModel().getAddEditData();
+		} else {
+			columnNames = model.getAddEditColNames();
+			data = model.getAddEditData();
+		}
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		for(int i=0;i<columnNames.length;i++) {
@@ -110,8 +120,15 @@ public class AddEditViewController extends ViewController implements ActionListe
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		if(cmd.equals("CHOOSE1")) {
-			AddEditChooserViewController chooser = new AddEditChooserViewController(cmd_, rowindex);
-			appManager.getDialogManager().pushDialog(chooser);
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+		}
+		
+		if(cmd.equals("CHOOSE2")) {
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+		}
+		
+		if(cmd.equals("CHOOSE3")) {
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
 		}
 		
 		if(cmd.equals("SAVE")) {
@@ -135,12 +152,13 @@ public class AddEditViewController extends ViewController implements ActionListe
 			if(cmd_.equals("EDIT")) { 
 				model.updateData(data,rowindex,title); 
 			} 
-			
+			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
 			appManager.getDialogManager().popDialog();
 			
 		}
 		
 		if(cmd.equals("CANCEL")) {
+			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
 			appManager.getDialogManager().popDialog();
 		}
 	}

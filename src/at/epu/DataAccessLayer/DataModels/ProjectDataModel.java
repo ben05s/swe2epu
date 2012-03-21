@@ -7,10 +7,10 @@ public abstract class ProjectDataModel extends BackofficeTableModel {
 		tableName = "Projekte";
 		String[] mappingTableName_ = {"-", "ausgangsrechnungen_mapping"};
 		String[] foreignTableName_ = {"Angebote","Ausgangsrechnungen"};
-		String[] foreignTableColumns_ = {"Angebot","Ausgangsrechnungen ID"};
+		String[] foreignTableColumns_ = {"Angebot","Ausgangsrechnungen"};
 		String[] foreignKeyColumns_ = {"angebot_id","ausgr_mapping_id"};
 		String[] foreignKeyFromMappingCol_ = {"-", "ausgangsrechnung_id"};
-		String[] desiredColFromForeignKey_ = {"titel","id"};
+		String[] desiredColFromForeignKey_ = {"titel","rechnungskürzel"};
 		
 		mappingTableName = mappingTableName_;
 		foreignTableName = foreignTableName_;
@@ -22,13 +22,13 @@ public abstract class ProjectDataModel extends BackofficeTableModel {
 		String [] columnNames_ = {"ID",
 				"Titel",
 				"Angebot",
-				"Ausgangsrechnungen ID"};
+				"Ausgangsrechnungen"};
 		
 		setColumnNames(columnNames_);
 	
 		String [] addEditColNames_ = {"Titel",
 				"Angebot",
-				"Ausgangsrechnung ID"};
+				"Ausgangsrechnungen"};
 		
 		setAddEditColNames(addEditColNames_);
 	}

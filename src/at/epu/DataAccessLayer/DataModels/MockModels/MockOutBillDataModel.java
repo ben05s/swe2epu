@@ -11,8 +11,8 @@ public class MockOutBillDataModel extends OutBillDataModel {
 	
 	public MockOutBillDataModel() {
 		Object [][] data_ = {
-				{new Integer(1), "MrX", new Integer(2), new Integer(1), "bezahlt"},
-				{new Integer(2), "Hur", new Integer(2), new Integer(1), "bezahlt"}
+				{new Integer(1), "R2054", "MrX", new Integer(2), new Integer(1), "bezahlt"},
+				{new Integer(2), "R353", "Hur", new Integer(2), new Integer(1), "bezahlt"}
 		};
 		
 		setData(data_);

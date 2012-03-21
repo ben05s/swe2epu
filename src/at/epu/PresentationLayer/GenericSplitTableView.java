@@ -151,7 +151,7 @@ public class GenericSplitTableView extends JPanel {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			DetailViewController controller = new DetailViewController(rowindex);
-		                			
+		                			ApplicationManager.getInstance().getActiveTableModel().setDetailTableView();
 		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});

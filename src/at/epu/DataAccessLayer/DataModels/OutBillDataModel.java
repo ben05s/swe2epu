@@ -20,6 +20,7 @@ public abstract class OutBillDataModel extends BackofficeTableModel {
 		foreignTableColumns = foreignTableColumns_;
 		
 		String [] columnNames_ = {"Ausgangsrechnung ID",
+				"Rechnungskürzel",
 				"Kunde",
 				"Rechnungszeilen ID",
 				"Buchungszeilen ID",
@@ -27,7 +28,8 @@ public abstract class OutBillDataModel extends BackofficeTableModel {
 		
 		setColumnNames(columnNames_);
 		
-		String [] addEditColNames_ = {"Kunde",
+		String [] addEditColNames_ = {"Rechnungskürzel",
+				"Kunde",
 				"Status"};
 		
 		setAddEditColNames(addEditColNames_);

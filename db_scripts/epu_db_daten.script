@@ -19,7 +19,7 @@ INSERT INTO angebote VALUES
 	(3,	'A003-Meier Prog',	1,	5000.00,	31,	'24.05.2012',	0.33);
 	
 INSERT INTO ausgangsrechnungen VALUES
-	(1,	2,	null,	null,	'bezahlt');
+	(1,	'R012039'	,2,	null,	null,	'bezahlt');
 	
 --INSERT INTO eingangsrechnungen VALUES
 --	();

@@ -10,12 +10,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SpringLayout;
 
+import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+
 public class GenericChooserFormView extends JPanel {
 
 	private static final long serialVersionUID = -3094659823177438706L;
 	
 	public GenericChooserFormView(ArrayList<JButton> buttons, ArrayList<JCheckBox> checkList, 
-									ArrayList<JRadioButton> radioList, String title) {
+									ArrayList<JRadioButton> radioList, String chooseCommand) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
+		BackofficeTableModel model = null;
+		model = appManager.getActiveTableModel();
+		String title = model.getTableName();
+		
 		setBackground(SystemColor.control);
 		JPanel springLayout = new JPanel(new SpringLayout());
 		ArrayList<JLabel> labels = new ArrayList<JLabel>();
@@ -39,6 +47,53 @@ public class GenericChooserFormView extends JPanel {
 			for (int i = 0; i < numPairs; i++) {
 				springLayout.add(radioList.get(i));
 				springLayout.add(labels.get(i));
+			}
+		}
+		if(title.equals("Projekte")) {
+			if(chooseCommand.equals("CHOOSE1")) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}
+			if(chooseCommand.equals("CHOOSE2")) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(checkList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}	
+		}
+		if(title.equals("Ausgangsrechnungen")) {
+			if(model.isDetailTableView()) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			} else {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}
+		}
+		if(title.equals("Buchungszeilen")) {
+			if(chooseCommand.equals("CHOOSE1")) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}
+			if(chooseCommand.equals("CHOOSE2")) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}
+			if(chooseCommand.equals("CHOOSE3")) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(checkList.get(i));
+					springLayout.add(labels.get(i));
+				}
 			}
 		}
 		springLayout.add(buttons.get(0));

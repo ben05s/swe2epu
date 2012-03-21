@@ -5,12 +5,12 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 	
 	public BankAccountDataModel() {
 		tableName = "Buchungszeilen";
-		String[] mappingTableName_ = {"kat_mapping"};
-		String[] foreignTableName_ = {"Kategorien"};
-		String[] foreignTableColumns_ = {"Kategorie"};
-		String[] foreignKeyColumns_ = {"kat_mapping_id"};
-		String[] foreignKeyFromMappingCol_ = {"kategorie_id"};
-		String[] desiredColFromForeignKey_ = {"name"};
+		String[] mappingTableName_ = {"-",					"-",					"kat_mapping"};
+		String[] foreignTableName_ = {"Eingangsrechnungen",	"Ausgangsrechnungen",	"Kategorien"};
+		String[] foreignTableColumns_={"Eingangsrechnung",	"Ausgangsrechnung",		"Kategorie"};
+		String[] foreignKeyColumns_={"eingangsrechnung_id",	"ausgangsrechnung_id",	"kat_mapping_id"};
+		String[] foreignKeyFromMappingCol_ = {"-",			"-",					"kategorie_id"};
+		String[] desiredColFromForeignKey_ = {"rechnungskürzel","rechnungskürzel",	"name"};
 		
 		mappingTableName = mappingTableName_;
 		foreignTableName = foreignTableName_;
@@ -20,8 +20,8 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 		foreignTableColumns = foreignTableColumns_;
 		
 		String [] columnNames_ = {"ID",
-				"Eingangsrechnung ID",
-				"Ausgangsrechnung ID",
+				"Eingangsrechnung",
+				"Ausgangsrechnung",
 				"Betrag",
 				"Umsatzsteuer",
 				"Buchungsdatum",
@@ -29,8 +29,8 @@ public abstract class BankAccountDataModel extends BackofficeTableModel {
 
 		setColumnNames(columnNames_);
 		
-		String [] addEditColNames_ = {"Eingangsrechnung ID",
-				"Ausgangsrechnung ID",
+		String [] addEditColNames_ = {"Eingangsrechnung",
+				"Ausgangsrechnung",
 				"Betrag",
 				"Umsatzsteuer",
 				"Buchungsdatum",

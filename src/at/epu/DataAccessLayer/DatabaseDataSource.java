@@ -36,7 +36,7 @@ public class DatabaseDataSource extends DataSource {
 		outbillModel = new SQLOutBillDataModel(databaseHandle);
 		bankaccountModel = new SQLBankAccountDataModel(databaseHandle);
 		billrowModel = new SQLBillRowDataModel(databaseHandle);
-		categoryModel = new SQLCategoryDataModel();
+		categoryModel = new SQLCategoryDataModel(databaseHandle);
 		inbillModel = new SQLInBillDataModel();
 	}
 }

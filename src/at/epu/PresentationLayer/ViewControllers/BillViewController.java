@@ -46,7 +46,7 @@ public class BillViewController extends ViewController implements ActionListener
 		
 		title = "Rechnungen";
 		
-		getIndexChoosable().add(0);
+		getIndexChoosable().add(1);
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
                 									databaseManager.getDataSource().getOutBillDataModel());

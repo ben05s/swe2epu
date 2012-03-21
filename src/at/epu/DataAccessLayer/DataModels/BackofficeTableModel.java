@@ -30,7 +30,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	protected Object[][] addEditData = null;
 	protected ArrayList<String> choosenData = new ArrayList<String>();
 	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
-	
+	protected boolean detailTableView = false;
 	protected Statement stm;
 	protected Statement sub_stm;
 	protected ResultSet rs;
@@ -48,6 +48,23 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		return addEditColNames;
 	}
 
+	public boolean isDetailTableView() {
+		return detailTableView;
+	}
+	
+	public void setDetailTableView() {
+		this.detailTableView = true;
+	}
+	
+	public void unsetDetailTableView() {
+		this.detailTableView = false;
+	}
+	
+
+	public void setDetailTableView(boolean detailTableView) {
+		this.detailTableView = detailTableView;
+	}
+	
 	public void setAddEditColNames(String[] addEditColNames) {
 		this.addEditColNames = addEditColNames;
 	}
@@ -144,10 +161,11 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	}
 	
 	public Object[][] getAddEditData() {		
-		int z=0;
+		int z=-1;
 		Object[][] addEditData = new Object[this.data.length][this.addEditColNames.length];
 		for(int i=0;i<this.data.length;i++) {
 			for(int x=0;x<this.addEditColNames.length;x++) {
+				z++;
 				while(! this.addEditColNames[x].equals(this.columnNames[z])) {	
 					if(i == 0) {
 						missingCols.add(z);
@@ -155,7 +173,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 					z++;
 				}
 				addEditData[i][x] = this.data[i][z];
-				z++;
+				
 			}
 			z=0;
 		}
