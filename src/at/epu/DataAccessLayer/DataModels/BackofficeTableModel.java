@@ -1,9 +1,5 @@
 package at.epu.DataAccessLayer.DataModels;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
@@ -14,32 +10,29 @@ import at.epu.DataAccessLayer.SQLQueryProvider;
 public abstract class BackofficeTableModel extends DefaultTableModel implements FilterableDataModel {
 	private static final long serialVersionUID = 2110831280426094363L;
 
-	protected SQLQueryProvider sqlProvider = null;
-	protected MockDataProvider mockProvider = null;
-	protected String[] columnNames 	= null;
-	protected String tableName = null;
-	protected String[] mappingTableName = null;
-	protected String[] foreignTableName = null;
-	protected String[] foreignKeyColumns = null;
-	protected String[] foreignTableColumns = null;
-	protected String[] foreignKeyFromMappingCol = null;
-	protected String[] desiredColFromForeignKey = null;
-	protected String[] addEditColNames = null;
-	protected Object[][] data 		= null;
-	protected Object[][] presented_data = null;
-	protected Object[][] addEditData = null;
-	protected ArrayList<String> choosenData = new ArrayList<String>();
-	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
-	protected boolean detailTableView = false;
-	protected Statement stm;
-	protected Statement sub_stm;
-	protected ResultSet rs;
-	protected ResultSet sub_rs;
-	protected String sql;
-	protected String sql_count;
-	protected Connection dbHandle = null;
-	protected ArrayList<Integer> missingCols = new ArrayList<Integer>();
-
+	protected SQLQueryProvider sqlProvider = null;							//used in the SQL Models to get data from Database
+	protected MockDataProvider mockProvider = null;							//used in the Mock Models to save/update/delete Data properly
+	
+	protected String[] mappingTableName = null;								//stores the Names of the MappingTables in the database (if there is no mapping for this object, value "-" is given
+	protected String[] foreignTableName = null;								//stores the Names of the Tables that provide data for foreign key relationships
+	protected String[] foreignKeyColumns = null;							//stores the actual column names of foreign keys in the database of that specific table
+	protected String[] foreignTableColumns = null;							//string that is equal to the string in the displayed table where the data from the foreign key should be displayed
+	protected String[] foreignKeyFromMappingCol = null;						//holds the column in the mapping table which points to another table
+	protected String[] desiredColFromForeignKey = null;						//stores the column of the foreign table which holds the desired data to be displayed
+	
+	protected String tableName = null;										//stores the name of the current tab/table (Kunden/Angebote/Rechnungen/...)
+	protected String[] columnNames 	= null;									//holds all column names that are displayed in the table grid on the screen
+	protected String[] addEditColNames = null;								//holds the columns that should be add/editable in the add/Edit form dialog
+	protected Object[][] data 		= null;									//stores all data that is displayed in a table
+	protected Object[][] presented_data = null;				//dont know ... but is somehow used
+	protected Object[][] addEditData = null;								//stores the data which is provided after calling the add/edit dialog (ignore some specified columns(missingCols))
+	
+	protected ArrayList<String> choosenData = new ArrayList<String>();		//stores the data which has been choosen from the auswählen function in the add/edit dialog
+	protected ArrayList<Integer> missingCols = new ArrayList<Integer>();	//holds the index of columns which are not editable or cannot be set for adding data(id for example)
+	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();//dont know ... probably not used
+	
+	protected boolean detailTableView = false;								//variable is true if the selected tab is "Rechnungen". In detail function popup with rechnungszeilen should be the active table model(is only set if this variable is 'true'
+	
 	public void updateTableData() {
 		this.fireTableDataChanged();
 	}
@@ -118,29 +111,13 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	
 	@Override
 	public int getRowCount() {
-		if(presented_data != null)
-		{
-			return presented_data.length;
-		}
-		else
-		{
-			return 0;
-		}
+		if(presented_data != null) { return presented_data.length; } 
+		else { return 0; }
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return presented_data[rowIndex][columnIndex];
-	}
-	
-	public void filterDataModel(String filterString) {
-		if(filterString.isEmpty()) {
-			presented_data = data;
-		} else {
-			presented_data = DataFilterProvider.filterDataModel(filterString, data);
-		}
-		
-		fireTableDataChanged();
 	}
 
 	public String[] getColumnNames() {
@@ -160,67 +137,12 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		this.data = data;
 	}
 	
-	public Object[][] getAddEditData() {		
-		int z=-1;
-		Object[][] addEditData = new Object[this.data.length][this.addEditColNames.length];
-		for(int i=0;i<this.data.length;i++) {
-			for(int x=0;x<this.addEditColNames.length;x++) {
-				z++;
-				while(! this.addEditColNames[x].equals(this.columnNames[z])) {	
-					if(i == 0) {
-						missingCols.add(z);
-					}
-					z++;
-				}
-				addEditData[i][x] = this.data[i][z];
-				
-			}
-			z=0;
-		}
-		return addEditData;
-	}
-	
 	public void addStringArrayListToData(ArrayList<String> list, int row, int col) {
 		this.data[row][col] = list;
 	}
 	
 	public void addIntegerArrayListToData(ArrayList<Integer> list, int row, int col) {
 		this.data[row][col] = list;
-	}
-	
-	public void deleteData(int rowindex, String title) {
-		int row = this.data.length;
-		int col = this.columnNames.length;
-		int counter = 0;
-		if(dbHandle != null) {
-			try {
-				stm = dbHandle.createStatement();
-			} catch (SQLException e) {
-				System.err.println("Could not create Delete Statement");
-			}
-			rowindex++;
-			sql = "DELETE FROM "+title+" WHERE ROWNUM = "+rowindex;
-			rowindex--;
-			try {
-				stm.executeUpdate(sql);
-			} catch (SQLException e) {
-				System.err.println("Error when executing the Delete Query");
-				e.printStackTrace();
-			}
-		}
-		
-		Object[][] newData = new Object[row-1][col];
-
-		for(int i=0;i<row;i++) {
-			for(int x=0;x<col;x++) {
-				if(i != rowindex) {
-					newData[counter][x] = this.data[i][x];
-				}
-			}
-			if(i != rowindex) { counter++; }
-		}
-		setData(newData);
-		fireTableDataChanged();
 	}
 	
 	public ArrayList<String> getChoosenData() {
@@ -260,190 +182,46 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		this.choosenData = new ArrayList<String>();
 	}
 	
-	
-	public void insertDataIntoMappingTable(ArrayList<Integer> ids_, String table_, int id_) {
-		for(int i=0;i<this.choosenData.size();i++) {
-			sql = "INSERT INTO "+table_+" VALUES("+id_+", "+ids_.get(i)+")";
-			
-			try {
-				stm.executeUpdate(sql);
-			} catch (SQLException e1) {
-				System.err.println("Error when executing the Save Query");
-				e1.printStackTrace();
-			}
-		}
-	}
-	
-	public void insertDataIntoKontakte(Object[] data_, String title) {
-		int id_ = 0;
-		//getNextIdForTable(title);
-		
-		sql = "INSERT INTO "+title+" VALUES("+id_+",\'"+data_[0].toString()+"\',\'"+
-				data_[1].toString()+"\',\'"+data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\')";
-		
-		try {
-			stm.executeUpdate(sql);
-		} catch (SQLException e1) {
-			System.err.println("Error when executing the Save Query");
-			e1.printStackTrace();
-		}
-	}
-	
-	public void insertDataIntoKunden(Object[] data_, String table) {
-		int id = 0;
-		//getNextIdForTable(table);
-		
-		//enter this if container only if some mapping has to be done
-		if(this.choosenData.size() != 0) { 
-			String mapping_table ="ANGEBOTE_MAPPING";
-			int mapping_id = 0;
-			//getNextIdForTable(mapping_table);
-			
-			insertDataIntoMappingTable(getIdsForMapping("ANGEBOTE"), mapping_table, mapping_id);
-			
-			sql = "INSERT INTO KUNDEN VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
-					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\',"+mapping_id+")";
+	public void filterDataModel(String filterString) {
+		if(filterString.isEmpty()) {
+			presented_data = data;
 		} else {
-			sql = "INSERT INTO KUNDEN VALUES("+id+",\'"+data_[0].toString()+"\',\'"+data_[1].toString()+"\',\'"+
-					data_[2].toString()+"\',\'"+data_[3].toString()+"\',\'"+data_[4].toString()+"\',\'"+data_[5].toString()+"\',"+null+")";
+			presented_data = DataFilterProvider.filterDataModel(filterString, data);
 		}
 		
-		try {
-			stm.executeUpdate(sql);
-		} catch (SQLException e1) {
-			System.err.println("Error when executing the Save Query");
-			e1.printStackTrace();
-		}
-	}
-	
-	public boolean checkIdValidation(String table, int id_) {
-		sql = "SELECT COUNT(*) FROM "+table+" WHERE id = "+id_;
-		
-		try {
-			rs = stm.executeQuery(sql);
-		} catch (SQLException e1) {
-			System.err.println("Error when executing the Save Query");
-			e1.printStackTrace();
-		}
-		
-		try {
-			rs.next();
-			if(rs.getInt(1) == 1) {
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	public int getIdForKunde(String table, String kunde) {
-		int id_ = 0;
-		String sub_sql = "SELECT id FROM "+table+" " +
-				"WHERE nachname = \'"+kunde+"\'";
-		
-		try {
-			sub_stm = dbHandle.createStatement();
-		} catch (SQLException e1) {
-			System.err.println("Error on creating sub statement");
-			e1.printStackTrace();
-		}
-			try {
-				sub_rs = sub_stm.executeQuery(sub_sql);
-			} catch(SQLException e) {
-				System.err.println("Error when executing Angebot Query");
-				e.printStackTrace();
-			}
-			
-			try {
-				while(sub_rs.next()) {
-					try {
-						id_ = sub_rs.getInt(1);
-					} catch (SQLException e) {			
-						System.err.println("Error when fetching data from Angebot title resultSet");
-					}
-				}
-			} catch (SQLException e) {
-				System.err.println("Error on next fkt from Angebot resultSet");
-			}
-			System.out.println(id_);
-		return id_;
-	}
-	
-	public void insertDataIntoAngebote(Object[] data_, String table) {
-		int id = 0; 
-			//getNextIdForTable(table);
-		
-		//enter this if container only if some mapping or id validation has to be done
-		if(this.choosenData.size() != 0) { 
-			String table_ ="KUNDEN";
-			int kunde_id = getIdForKunde(table_, this.choosenData.get(0));
-			
-			if(! checkIdValidation(table_, kunde_id)) {
-				System.err.println("There is no Primary Key to reference for Selected Data");
-			}
-			System.out.println(data_[0].toString()+", "+data_[1].toString()+", "+data_[2].toString()+", "+data_[3].toString()+", "+data_[4].toString()+", "+data_[5].toString());
-			sql = "INSERT INTO ANGEBOTE VALUES("+id+",\'"+data_[0].toString()+"\',"+kunde_id+",\'"+
-					Integer.parseInt(data_[2].toString())+"\',\'"+Integer.parseInt(data_[3].toString())+"\',\'"+
-					Integer.parseInt(data_[4].toString())+"\',\'"+Integer.parseInt(data_[5].toString())+"\')";
-		} else {
-
-			System.out.println(data_[0].toString()+", "+data_[1].toString()+", "+data_[2].toString()+", "+data_[3].toString()+", "+data_[4].toString()+", "+data_[5].toString());
-			sql = "INSERT INTO ANGEBOTE VALUES("+id+",\'"+data_[0].toString()+"\',"+null+","+
-					data_[2]+","+data_[3]+",\'"+data_[4].toString()+"\',"+data_[5]+")";
-		}
-		
-		try {
-			stm = dbHandle.createStatement();
-		} catch (SQLException e1) {
-			System.err.println("Error on creating sub statement");
-			e1.printStackTrace();
-		}
-		
-		try {
-			stm.executeUpdate(sql);
-		} catch (SQLException e1) {
-			System.err.println("Error when executing the Save Query");
-			e1.printStackTrace();
-		}
+		fireTableDataChanged();
 	}
 	
 	/*
-	 * the titles for desired ids must already be in the choosenData List
+	 * Creates the array to be presented when editing or adding some data.
+	 * must be different because some specified columns (missingCols) should not be in the add/Edit screen
 	 */
-	public ArrayList<Integer> getIdsForMapping(String table) {
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		try {
-			sub_stm = dbHandle.createStatement();
-		} catch (SQLException e1) {
-			System.err.println("Error on creating sub statement");
-			e1.printStackTrace();
-		}
-		for(int i=0;i<this.choosenData.size();i++) {
-			String sub_sql = "SELECT id FROM "+table+" " +
-				"WHERE titel = \'"+this.choosenData.get(i)+"\'";
-		
-			try {
-				sub_rs = sub_stm.executeQuery(sub_sql);
-			} catch(SQLException e) {
-				System.err.println("Error when executing Angebot Query");
-				e.printStackTrace();
-			}
-			
-			try {
-				while(sub_rs.next()) {
-					try {
-						ids.add(sub_rs.getInt(1));
-					} catch (SQLException e) {			
-						System.err.println("Error when fetching data from Angebot title resultSet");
+	public Object[][] getAddEditData() {		
+		int z=-1;
+		Object[][] addEditData = new Object[this.data.length][this.addEditColNames.length];
+		for(int i=0;i<this.data.length;i++) {
+			for(int x=0;x<this.addEditColNames.length;x++) {
+				z++;
+				while(! this.addEditColNames[x].equals(this.columnNames[z])) {	
+					if(i == 0) {
+						missingCols.add(z);
 					}
+					z++;
 				}
-			} catch (SQLException e) {
-				System.err.println("Error on next fkt from Angebot resultSet");
+				addEditData[i][x] = this.data[i][z];
+				
 			}
+			z=0;
 		}
-		
-		return ids;
+		return addEditData;
+	}
+	
+	public void saveData(BackofficeTableModel model, Object[] data_) {
+		try {
+			throw new Exception();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateData(BackofficeTableModel model, Object[] data_, int rowindex) {
@@ -454,7 +232,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		}
 	}
 	
-	public void saveData(BackofficeTableModel model, Object[] data_) {
+	public void deleteData(BackofficeTableModel model, int rowindex) {
 		try {
 			throw new Exception();
 		} catch (Exception e) {
