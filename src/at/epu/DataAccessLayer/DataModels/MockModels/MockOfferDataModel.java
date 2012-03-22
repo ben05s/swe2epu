@@ -30,4 +30,10 @@ public class MockOfferDataModel extends OfferDataModel {
 		mockProvider = new MockDataProvider();
 		mockProvider.saveData(model, data_);
 	}
+	
+	@Override
+	public void updateData(BackofficeTableModel model, Object[] data_, int rowindex) {	
+		mockProvider = new MockDataProvider();
+		mockProvider.updateData(model, data_, rowindex);
+	}
 }

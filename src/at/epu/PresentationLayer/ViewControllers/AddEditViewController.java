@@ -64,17 +64,16 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+		
 		model = appManager.getActiveTableModel();	
+		if(model.isDetailTableView()) {
+			model = databaseManager.getDataSource().getBillRowDataModel();
+		}
 		String[] columnNames = null;
 		Object[][] data = null;
 		
-		if(model.isDetailTableView()) {
-			columnNames = databaseManager.getDataSource().getBillRowDataModel().getAddEditColNames();
-			data = databaseManager.getDataSource().getBillRowDataModel().getAddEditData();
-		} else {
-			columnNames = model.getAddEditColNames();
-			data = model.getAddEditData();
-		}
+		columnNames = model.getAddEditColNames();
+		data = model.getAddEditData();
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		for(int i=0;i<columnNames.length;i++) {
@@ -117,7 +116,9 @@ public class AddEditViewController extends ViewController implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-		String[] columnNames = model.getAddEditColNames();
+		String[] columnNames = null;
+		columnNames = model.getAddEditColNames();
+			
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		if(cmd.equals("CHOOSE1")) {
@@ -149,23 +150,21 @@ public class AddEditViewController extends ViewController implements ActionListe
 			}
 
 			if(cmd_.equals("ADD")) {
-				if(model.isDetailTableView()) {
-					databaseManager.getDataSource().getBillRowDataModel().saveData(databaseManager.getDataSource().getBillRowDataModel(), data);
-				} else {
-					model.saveData(model, data); 
-				}
+				model.saveData(model, data); 
 			} 
 			if(cmd_.equals("EDIT")) { 
-				model.updateData(data,rowindex,title); 
+				model.updateData(model, data, rowindex); 
 			} 
 			
-			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
+			if(! model.getTableName().equals("Rechnungszeilen")) {
+				databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
+			}
 			appManager.getDialogManager().popDialog();
 			
 		}
 		
 		if(cmd.equals("CANCEL")) {
-			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
+			databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
 			appManager.getDialogManager().popDialog();
 		}
 	}

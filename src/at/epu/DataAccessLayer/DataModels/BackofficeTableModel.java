@@ -446,30 +446,12 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		return ids;
 	}
 	
-	public void updateData(Object[] data_, int rowindex, String title) {
-		if(dbHandle != null) {
-			try {
-				stm = dbHandle.createStatement();
-			} catch (SQLException e) {
-				System.err.println("Could not create Update Statement");
-			}
-			rowindex++;
-			sql = "UPDATE "+title+" SET ID="+data_[0].toString()+",VORNAME=\'"+data_[1].toString()+"\',NACHNAME=\'"+
-					data_[2].toString()+"\',ADRESSE=\'"+data_[3].toString()+"\',EMAIL=\'"+data_[4].toString()+"\',TELEFON=\'"+
-					data_[5].toString()+"\' WHERE ROWNUM="+rowindex;
-			rowindex--;
-			try {
-				stm.executeUpdate(sql);
-			} catch (SQLException e) {
-				System.err.println("Error when executing the Update Query");
-				e.printStackTrace();
-			}
+	public void updateData(BackofficeTableModel model, Object[] data_, int rowindex) {
+		try {
+			throw new Exception();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-			
-		for(int i=0;i<this.addEditColNames.length;i++) {
-			this.data[rowindex][i] = data_[i];
-		}
-		fireTableDataChanged();
 	}
 	
 	public void saveData(BackofficeTableModel model, Object[] data_) {

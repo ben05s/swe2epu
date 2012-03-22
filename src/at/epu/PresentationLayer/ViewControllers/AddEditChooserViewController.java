@@ -41,6 +41,9 @@ public class AddEditChooserViewController extends ViewController implements Acti
 	public AddEditChooserViewController(String chooseCommand, String cmd_, int rowindex_, ArrayList<Integer> indexChoosable_) {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		model = appManager.getActiveTableModel();
+		if(model.isDetailTableView()) {
+			model = databaseManager.getDataSource().getBillRowDataModel();
+		}
 		this.title = model.getTableName();
 		this.indexChoosable = indexChoosable_;
 		
@@ -63,14 +66,13 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			}
 		}
 		if(this.title == "Ausgangsrechnungen"){
-			if(model.isDetailTableView()) {
-				data = databaseManager.getDataSource().getOfferDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getBillRowDataModel().getChoosenData();
-			} else {
-				data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
-				preselectedItems = databaseManager.getDataSource().getOutBillDataModel().getChoosenData();
-			}
+			data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
+			preselectedItems = databaseManager.getDataSource().getOutBillDataModel().getChoosenData();
 		}
+		if(this.title == "Rechnungszeilen") {
+			data = databaseManager.getDataSource().getOfferDataModel().getData();
+			preselectedItems = databaseManager.getDataSource().getBillRowDataModel().getChoosenData();
+		} 
 		if(this.title == "Buchungszeilen"){
 			if(chooseCommand == "CHOOSE1") {
 				data = databaseManager.getDataSource().getInBillDataModel().getData();
@@ -213,7 +215,6 @@ public class AddEditChooserViewController extends ViewController implements Acti
 		}
 		
 		if(cmd.equals("OK")) {
-			System.out.println(databaseManager.getDataSource().getCustomerDataModel().getChoosenData().size());
 			appManager.getDialogManager().popDialog();
 		}
 	}
