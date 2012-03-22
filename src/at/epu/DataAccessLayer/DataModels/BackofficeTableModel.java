@@ -177,7 +177,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			}
 			z=0;
 		}
-		
 		return addEditData;
 	}
 	
@@ -250,6 +249,15 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 				this.choosenData.remove(i);
 			}
 		}
+	}
+	
+	public void setChoosenData(String data_) {
+		this.choosenData = new ArrayList<String>();
+		this.choosenData.add(data_);
+	}
+	
+	public void deleteChoosenData() {
+		this.choosenData = new ArrayList<String>();
 	}
 	
 	

@@ -41,7 +41,7 @@ public class DetailViewController extends ViewController implements ActionListen
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
 		
-		indexChoosable.add(0);
+		getIndexChoosable().add(0);
 		
 		rootComponent = new GenericDetailTableView(buttonList, menuList, databaseManager.getDataSource().getBillRowDataModel());	
 	}

@@ -9,8 +9,9 @@ public class MockDataProvider {
 		int row = model.getData().length;
 		int id = 0;
 		Object[] missingData = new Object[model.getMissingCols().size()];
-		
+		System.out.println(model.getTableName());
 		missingData[0] = id;
+		if(model.getTableName().equals("Rechnungszeilen")) { missingData[1] = 0; }
 		int insertCol = 0;
 		row++;
 

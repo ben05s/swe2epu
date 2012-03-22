@@ -16,6 +16,7 @@ import at.epu.PresentationLayer.GenericAddEditFormView;
 
 public class AddEditViewController extends ViewController implements ActionListener {
 	BackofficeTableModel model = null;
+	DatabaseManager databaseManager = null;
 	JFrame chooseFrame;
 	String cmd_;			//determines what command called the controller(Edit or Add)
 	int rowindex; 
@@ -62,7 +63,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		buttonList.add(btnChoose3);
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
-		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+		databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		model = appManager.getActiveTableModel();	
 		String[] columnNames = null;
 		Object[][] data = null;
@@ -120,23 +121,24 @@ public class AddEditViewController extends ViewController implements ActionListe
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		if(cmd.equals("CHOOSE1")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("CHOOSE2")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("CHOOSE3")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("SAVE")) {
 			Object[] data = new Object[columnNames.length];
 			int skip = 0;
 			for(int i=0;i<columnNames.length;i++) {
-				for(int x=0;x<this.chooseIndex.size();x++) {
-					if(i == this.chooseIndex.get(x)) {
+				for(int x=0;x<this.indexChoosable.size();x++) {
+					if(i == this.indexChoosable.get(x)) {
+						model.setChooseIndex(i);
 						data[i] = "placeholder";
 						skip++;
 					}
@@ -147,11 +149,16 @@ public class AddEditViewController extends ViewController implements ActionListe
 			}
 
 			if(cmd_.equals("ADD")) {
-				model.saveData(model, data); 
+				if(model.isDetailTableView()) {
+					databaseManager.getDataSource().getBillRowDataModel().saveData(databaseManager.getDataSource().getBillRowDataModel(), data);
+				} else {
+					model.saveData(model, data); 
+				}
 			} 
 			if(cmd_.equals("EDIT")) { 
 				model.updateData(data,rowindex,title); 
 			} 
+			
 			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
 			appManager.getDialogManager().popDialog();
 			
