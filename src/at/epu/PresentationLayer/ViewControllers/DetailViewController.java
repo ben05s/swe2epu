@@ -51,15 +51,17 @@ public class DetailViewController extends ViewController implements ActionListen
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
+			databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
 			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}
 		
 		if(cmd.equals("CANCEL")) {
+			databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
 			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}		
 		
 		if(cmd.equals("ADD")) {
-			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
 			
 			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		}

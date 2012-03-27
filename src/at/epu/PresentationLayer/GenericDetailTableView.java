@@ -21,13 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 
 public class GenericDetailTableView extends JPanel {
@@ -110,22 +110,24 @@ public class GenericDetailTableView extends JPanel {
                 			menu.removeActionListener(al);
                 		}
 	                	popup.add(menu);
-	                	if(menu.getLabel() == "Editieren") {
+	                	if(menu.getText() == "Editieren") {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
 
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+		                			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
 		                			
 		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});
 	                	}
-	                	if(menu.getLabel() == "Löschen") {
+	                	if(menu.getText() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-		                			databaseManager.getDataSource().getBillRowDataModel().deleteData(rowindex, title);
+		                			BackofficeTableModel model = databaseManager.getDataSource().getBillRowDataModel();
+		                			
+		                			databaseManager.getDataSource().getBillRowDataModel().deleteData(model, rowindex);
 		                		}
 	                		}); 
 	                	}

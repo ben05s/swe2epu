@@ -129,25 +129,25 @@ public class GenericSplitTableView extends JPanel {
                 			menu.removeActionListener(al);
                 		}
 	                	popup.add(menu);
-	                	if(menu.getLabel() == "Editieren") {
+	                	if(menu.getText() == "Editieren") {
 		                	menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
-		                			AddEditViewController controller = new AddEditViewController(title, cmd, rowindex, indexChoosable);
+		                			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
 		                			
 		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});
 	                	}
-	                	if(menu.getLabel() == "Löschen") {
+	                	if(menu.getText() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			ApplicationManager.getInstance().getActiveTableModel().deleteData(rowindex, title);
+		                			ApplicationManager.getInstance().getActiveTableModel().deleteData(model, rowindex);
 		                		}
 	                		}); 
 	                	}
 	                	//in Bill-Tab
-	                	if(menu.getLabel() == "Details") {
+	                	if(menu.getText() == "Details") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			DetailViewController controller = new DetailViewController(rowindex);
@@ -157,7 +157,7 @@ public class GenericSplitTableView extends JPanel {
 		                	});
 	                	}
 	                	//Ausgangsrechnung stellen(in Projekt Tab)
-	                	if(menu.getLabel() == "Ausgangsrechnung stellen") {
+	                	if(menu.getText() == "Ausgangsrechnung stellen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 			                		JFrame newFrame = new JFrame();

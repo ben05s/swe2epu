@@ -33,7 +33,7 @@ public class AddActionHandler extends ActionHandler {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		if( ev.getActionCommand().equals("ADD") ) {
-			AddEditViewController viewController = new AddEditViewController(addTitle, ev.getActionCommand(), 0, owner.getIndexChoosable());
+			AddEditViewController viewController = new AddEditViewController(ev.getActionCommand(), 0, owner.getIndexChoosable());
 			
 			ApplicationManager.getInstance().getDialogManager().pushDialog(viewController);
 		}	
