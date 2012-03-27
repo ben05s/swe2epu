@@ -29,7 +29,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	
 	protected ArrayList<String> choosenData = new ArrayList<String>();		//stores the data which has been choosen from the auswählen function in the add/edit dialog
 	protected ArrayList<Integer> missingCols = new ArrayList<Integer>();	//holds the index of columns which are not editable or cannot be set for adding data(id for example)
-	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();//dont know ... probably not used
+	protected ArrayList<Integer> chooseIndex = new ArrayList<Integer>();	//stores the index in the add/Edit data array where a placeholder is
 	
 	protected boolean detailTableView = false;								//variable is true if the selected tab is "Rechnungen". In detail function popup with rechnungszeilen should be the active table model(is only set if this variable is 'true'
 	
@@ -79,7 +79,7 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 		return foreignTableName;
 	}
 
-	public String[] getForeignColumns() {
+	public String[] getForeignKeyColumns() {
 		return foreignKeyColumns;
 	}
 	
@@ -94,7 +94,6 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	public String[] getDesiredColFromForeignKey() {
 		return desiredColFromForeignKey;
 	}
-
 	
 	public ArrayList<Integer> getMissingCols() {
 		return missingCols;
@@ -163,6 +162,10 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 	
 	public ArrayList<Integer> getChooseIndex() {
 		return this.chooseIndex;
+	}
+	
+	public void deleteChooseIndex() {
+		this.chooseIndex = new ArrayList<Integer>();
 	}
 	
 	public void removeChoosenData(String data_) {

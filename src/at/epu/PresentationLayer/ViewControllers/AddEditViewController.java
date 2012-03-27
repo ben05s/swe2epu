@@ -23,9 +23,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 	String[] columnNames = null;									//array with column names who can be changed/set
 	Object[][] data = null;											//dataarray without ignored columns(id) for add/edit 
 	ArrayList<JTextField> textList;									//for displaying the add/edit screen
-	//ArrayList<Integer> indexChoosable = new ArrayList<Integer>();	//stores the index of a multichoosable data (choose multiple angebote for kunden for example 
-	ArrayList<Integer> chooseIndex = new ArrayList<Integer>();		//dont know why this array is needed...
-
+	
 	public AddEditViewController(String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
 		this.cmd_ = action;
 		rowindex = rowindex_;		
@@ -96,11 +94,11 @@ public class AddEditViewController extends ViewController implements ActionListe
 		if(cmd_.equals("ADD")) {
 			for(int i=0;i<columnNames.length;i++) {
 				//ignore some labels because there is a button to choose this data
-				if(columnNames[i].equals("Kategorie") || columnNames[i].equals("Eingangsrechnung ID") || 
-				   columnNames[i].equals("Ausgangsrechnung ID") || columnNames[i].equals("Angebot") ||
+				if(columnNames[i].equals("Kategorie") || columnNames[i].equals("Ausgangsrechnung") ||
+				   columnNames[i].equals("Eingangsrechnung") || columnNames[i].equals("Ausgangsrechnungen") ||
 				   columnNames[i].equals("Angebot") || columnNames[i].equals("Kunde") || 
 				   columnNames[i].equals("Angebote")) {
-					chooseIndex = model.getChooseIndex();
+					//model.setChooseIndex(i);		//this value gets set correctly somewhere else. dont know where...
 					continue;
 				}
 				
@@ -112,7 +110,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 				}
 			}
 		}	
-		
+
 		//populate the Add/Edit Form Dialog
 		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList, indexChoosable);				
 	}
