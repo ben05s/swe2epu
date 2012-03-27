@@ -138,7 +138,6 @@ public class SQLQueryProvider {
 			stm = databaseHandle.createStatement();
 			stm.executeUpdate(sql);
 		} catch (SQLException e1) {
-			System.err.println("Error when executing the Save Query");
 			e1.printStackTrace();
 		}
 	}
