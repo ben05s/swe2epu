@@ -13,13 +13,13 @@ public class ApplicationManager {
 	DialogManager dialogManager 	   = null;
 	MainWindow mainWindow			   = null;
 	PDFManager pdfManager			   = null;
-	JSONManager JSONManager			   = null;
+	JSONManager jsonManager			   = null;
 	
 	private ApplicationManager() {
 		databaseManager = new DatabaseManager();
 		dialogManager   = new DialogManager();
 		pdfManager      = new PDFManager();
-		JSONManager     = new JSONManager();
+		jsonManager     = new JSONManager();
 	}
 	
 	public static synchronized ApplicationManager getInstance() {
@@ -41,9 +41,6 @@ public class ApplicationManager {
 		{
 			databaseManager.setDataSource(new MockDataSource());
 		}
-		
-		JSONManager.writeRandomTimeTableToFile("timetables/timetable.json");
-		System.out.println(JSONManager.getTimeTotalFromFile("timetables/timetable.json"));
 	}
 	
 	/**
