@@ -127,6 +127,12 @@ public abstract class BackofficeTableModel extends DefaultTableModel implements 
 			return 0;
 		}
 	}
+	
+	@Override
+    public boolean isCellEditable(int row, int column)
+    {
+        return false;
+    }
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {

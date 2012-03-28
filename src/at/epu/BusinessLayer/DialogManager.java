@@ -17,6 +17,7 @@ public class DialogManager {
 			dialogStack.peek().setEnabled(false);	
 		} else {
 			ApplicationManager.getInstance().getMainFrame().setEnabled(false);
+			ApplicationManager.getInstance().getMainFrame().setResizable(false);
 		}
 		
 		JDialog newDialog = new JDialog();
@@ -45,6 +46,7 @@ public class DialogManager {
 		
 		if(dialogStack.empty()){
 			ApplicationManager.getInstance().getMainFrame().setEnabled(true);
+			ApplicationManager.getInstance().getMainFrame().setResizable(true);
 		} else {
 			dialogStack.peek().setEnabled(true);
 		}
