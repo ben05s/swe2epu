@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import at.epu.PresentationLayer.ActionHandlers.ActionHandler;
 
 public class ViewController implements ActionListener {
-	protected Component rootComponent;
+	protected Component rootComponent;													//holds all Swing compontents to be presented on the screen
 	protected String title;
 	protected Icon icon;
-	protected ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
+	protected ArrayList<Integer> indexChoosable = new ArrayList<Integer>();				//stores the index of a multichoosable data (choose multiple angebote for kunden for example
 	private ArrayList<ActionHandler> actionHandlers = new ArrayList<ActionHandler>();
 	
 	public ViewController() {

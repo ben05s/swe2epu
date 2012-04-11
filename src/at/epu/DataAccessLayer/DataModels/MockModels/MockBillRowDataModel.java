@@ -31,4 +31,16 @@ public class MockBillRowDataModel extends BillRowDataModel{
 		mockProvider = new MockDataProvider();
 		mockProvider.saveData(model, data_);
 	}
+	
+	@Override
+	public void updateData(BackofficeTableModel model, Object[] data_, int rowindex) {	
+		mockProvider = new MockDataProvider();
+		mockProvider.updateData(model, data_, rowindex);
+	}
+	
+	@Override
+	public void deleteData(BackofficeTableModel model, int rowindex) {
+		mockProvider = new MockDataProvider();
+		mockProvider.deleteData(model, rowindex);
+	}
 }

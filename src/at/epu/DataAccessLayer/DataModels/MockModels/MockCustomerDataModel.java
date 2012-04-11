@@ -13,8 +13,6 @@ public class MockCustomerDataModel extends CustomerDataModel {
 		Object[][] data_ = {
 			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
 			     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", "Admin billig A."},
-			    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
-				     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", "Gutes Projekt teuer A."},
 			    {new Integer(2), "Fritz", "DD", "Privat", 
 			     "Zeilengasse 143/22", "f.DD@gmail.com", "06761252042", null},
 			    {new Integer(3), "Heinz", "MrX", "Haus Gmbh",
@@ -28,5 +26,17 @@ public class MockCustomerDataModel extends CustomerDataModel {
 	public void saveData(BackofficeTableModel model, Object[] data_){
 		mockProvider = new MockDataProvider();
 		mockProvider.saveData(model, data_);
+	}
+	
+	@Override
+	public void updateData(BackofficeTableModel model, Object[] data_, int rowindex) {	
+		mockProvider = new MockDataProvider();
+		mockProvider.updateData(model, data_, rowindex);
+	}
+	
+	@Override
+	public void deleteData(BackofficeTableModel model, int rowindex) {
+		mockProvider = new MockDataProvider();
+		mockProvider.deleteData(model, rowindex);
 	}
 }

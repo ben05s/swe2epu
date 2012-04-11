@@ -29,5 +29,6 @@ public class SQLContactDataModel extends ContactDataModel {
 		setData(sqlProvider.selectAll(this));
 		updateTableData();
 		resetChoosenData();
+		deleteChooseIndex();
 	}
 }

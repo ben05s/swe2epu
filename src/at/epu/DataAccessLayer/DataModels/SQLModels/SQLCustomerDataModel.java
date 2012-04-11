@@ -29,6 +29,7 @@ public class SQLCustomerDataModel extends CustomerDataModel {
 		setData(sqlProvider.selectAll(this));
 		updateTableData();
 		resetChoosenData();
+		deleteChooseIndex();
 	}
 	
 	/*

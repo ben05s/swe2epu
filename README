@@ -18,3 +18,12 @@ how to create database for EPU Backoffice App:
 Programm arguments for working db (db folder must be in working directory):
 connection to db and Database Manager must be closed when running the mainWindow
 ../db/backofficedb
+
+
+
+Known Defects:
+	-minor: auswählen: checkbox: eins auswählen(nicht das erste) -> OK -> auswählen -> eine checkbox darüber anklicken -> OK -> auswählen -> die erste checkbox die angeklickt wurde fehlt...
+	
+	-
+	
+	-

@@ -15,19 +15,18 @@ import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericAddEditFormView;
 
 public class AddEditViewController extends ViewController implements ActionListener {
-	BackofficeTableModel model = null;
-	JFrame chooseFrame;
-	String cmd_;			//determines what command called the controller(Edit or Add)
-	int rowindex; 
-	String title;
-	ArrayList<JTextField> textList;
-	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
-	ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
-
-	public AddEditViewController(String title_, String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
+	BackofficeTableModel model = null;								//stores all information about current tab/table
+	DatabaseManager databaseManager = null;
+	JFrame chooseFrame;												//open the multi choosable screen with radiobuttons or checkboxes to be able to select all needed data at once
+	String cmd_;													//determines what command called the controller(Edit or Add)
+	int rowindex; 													//determines what row should be edited/deleted when rightklicking on the row
+	String[] columnNames = null;									//array with column names who can be changed/set
+	Object[][] data = null;											//dataarray without ignored columns(id) for add/edit 
+	ArrayList<JTextField> textList;									//for displaying the add/edit screen
+	
+	public AddEditViewController(String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
 		this.cmd_ = action;
-		rowindex = rowindex_;
-		this.title = title_;
+		rowindex = rowindex_;		
 		indexChoosable = indexChoosable_;
 		
 		initialize_addEdit();
@@ -62,18 +61,18 @@ public class AddEditViewController extends ViewController implements ActionListe
 		buttonList.add(btnChoose3);
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
-		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-		model = appManager.getActiveTableModel();	
-		String[] columnNames = null;
-		Object[][] data = null;
+		databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
+		//get to current model 
+		model = appManager.getActiveTableModel();
+		//special case because the detailTable(Rechnungszeilen) is within the Rechnungen Tab (Ausgangsrechnungen)
 		if(model.isDetailTableView()) {
-			columnNames = databaseManager.getDataSource().getBillRowDataModel().getAddEditColNames();
-			data = databaseManager.getDataSource().getBillRowDataModel().getAddEditData();
-		} else {
-			columnNames = model.getAddEditColNames();
-			data = model.getAddEditData();
+			model = databaseManager.getDataSource().getBillRowDataModel();
 		}
+		
+		columnNames = model.getAddEditColNames();
+		data = model.getAddEditData();
+		
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		for(int i=0;i<columnNames.length;i++) {
@@ -82,6 +81,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		textList = new ArrayList<JTextField>();
 		if(cmd_.equals("EDIT")) {
+			//fill teh addEdit form with the data of the selected row
 			for(int i=0;i<columnNames.length;i++) {
 				if(data[rowindex][i] != null) {
 					textList.add(new JTextField(data[rowindex][i].toString(),20));
@@ -93,15 +93,16 @@ public class AddEditViewController extends ViewController implements ActionListe
 		}
 		if(cmd_.equals("ADD")) {
 			for(int i=0;i<columnNames.length;i++) {
-				//ignore some label because there is a button to choose this data
-				if(columnNames[i].equals("Kategorie") || columnNames[i].equals("Eingangsrechnung ID") || 
-				   columnNames[i].equals("Ausgangsrechnung ID") || columnNames[i].equals("Angebot") ||
+				//ignore some labels because there is a button to choose this data
+				if(columnNames[i].equals("Kategorie") || columnNames[i].equals("Ausgangsrechnung") ||
+				   columnNames[i].equals("Eingangsrechnung") || columnNames[i].equals("Ausgangsrechnungen") ||
 				   columnNames[i].equals("Angebot") || columnNames[i].equals("Kunde") || 
 				   columnNames[i].equals("Angebote")) {
-					chooseIndex = model.getChooseIndex();
+					//model.setChooseIndex(i);		//this value gets set correctly somewhere else. dont know where...
 					continue;
 				}
 				
+				//status column is by default "offen" has to be manually set to "bezahlt" via update funktion
 				if(columnNames[i].equals("Status")) {
 					textList.add(new JTextField("offen",20));
 				} else {
@@ -109,34 +110,38 @@ public class AddEditViewController extends ViewController implements ActionListe
 				}
 			}
 		}	
-		
+
+		//populate the Add/Edit Form Dialog
 		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList, indexChoosable);				
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-		String[] columnNames = model.getAddEditColNames();
+			
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
+		//when there are 3 different choosable buttons in the add/edit form every button needs to handle a different functionality
 		if(cmd.equals("CHOOSE1")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("CHOOSE2")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("CHOOSE3")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
 		}
 		
 		if(cmd.equals("SAVE")) {
 			Object[] data = new Object[columnNames.length];
 			int skip = 0;
 			for(int i=0;i<columnNames.length;i++) {
-				for(int x=0;x<this.chooseIndex.size();x++) {
-					if(i == this.chooseIndex.get(x)) {
+				//make a placeholder wherever there was a choosable button, the data from the choosables will be put into the data array in the saveData function
+				for(int x=0;x<this.indexChoosable.size();x++) {
+					if(i == this.indexChoosable.get(x)) {
+						model.setChooseIndex(i);
 						data[i] = "placeholder";
 						skip++;
 					}
@@ -150,15 +155,14 @@ public class AddEditViewController extends ViewController implements ActionListe
 				model.saveData(model, data); 
 			} 
 			if(cmd_.equals("EDIT")) { 
-				model.updateData(data,rowindex,title); 
+				model.updateData(model, data, rowindex); 
 			} 
-			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
+			
 			appManager.getDialogManager().popDialog();
 			
 		}
 		
 		if(cmd.equals("CANCEL")) {
-			if(model.isDetailTableView()) { model.unsetDetailTableView(); }
 			appManager.getDialogManager().popDialog();
 		}
 	}
