@@ -27,7 +27,7 @@ import javax.swing.table.TableModel;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 
 public class GenericDetailTableView extends JPanel {

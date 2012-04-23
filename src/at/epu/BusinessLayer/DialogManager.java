@@ -35,9 +35,12 @@ public class DialogManager {
 		
 		newDialog.setLocationRelativeTo(relativeTo);
 		newDialog.setAlwaysOnTop(true);
-		newDialog.setVisible(true);
 		
+		/** Must be prior to setModal/setVisible because it starts another thread */
 		dialogStack.push(newDialog);
+		
+		newDialog.setModal(true);
+		newDialog.setVisible(true);
 	}
 	
 	public void popDialog() {

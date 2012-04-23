@@ -2,6 +2,7 @@ package at.epu.PresentationLayer;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,7 +27,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 import at.epu.PresentationLayer.ViewControllers.DetailViewController;
 
@@ -47,7 +48,7 @@ public class GenericSplitTableView extends JPanel {
 		setModel(tableModel);
 	
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.columnWidths = new int[]{285, 0};
 		gridBagLayout.rowHeights = new int[]{0};
 		gridBagLayout.columnWeights = new double[]{Double.MIN_VALUE, 1.0};
 		gridBagLayout.rowWeights = new double[]{1.0};

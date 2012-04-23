@@ -1,4 +1,4 @@
-package at.epu.DataAccessLayer;
+package at.epu.DataAccessLayer.DataProviders;
 
 //import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -9,11 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 
 //import at.epu.DataAccessLayer.DataObjects.DataObject;
 
-public class SQLQueryProvider {
+public class SQLQueryProvider implements DataProvider {
 
 	Connection databaseHandle = null;
 
@@ -25,8 +26,8 @@ public class SQLQueryProvider {
 	protected ArrayList<String> choosenData = new ArrayList<String>();	//will be removed after implementation of saveData() (to disable errors)
 	
 	
-	public SQLQueryProvider(Connection dbHandle) {
-		databaseHandle = dbHandle;
+	public SQLQueryProvider() {
+		databaseHandle = ApplicationManager.getInstance().getDatabaseManager().getDataSource().getConnection();
 	}
 
 	public Object[][] selectAll(BackofficeTableModel model) {
@@ -536,6 +537,24 @@ public class SQLQueryProvider {
 			System.exit(1);
 		}
 	}*/
+
+	@Override
+	public void saveData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateData() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 /*

@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.*;
 
-import at.epu.DataAccessLayer.DataModels.InBillDataModel;
-import at.epu.DataAccessLayer.DataModels.OutBillDataModel;
+import at.epu.PresentationLayer.DataModels.InBillDataModel;
+import at.epu.PresentationLayer.DataModels.OutBillDataModel;
 import at.epu.DataAccessLayer.DataObjects.OutBillDataObject;
 
 public class PDFManager {

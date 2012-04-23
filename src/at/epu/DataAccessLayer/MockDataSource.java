@@ -1,6 +1,6 @@
 package at.epu.DataAccessLayer;
 
-import at.epu.DataAccessLayer.DataModels.MockModels.*;
+import at.epu.PresentationLayer.DataModels.MockModels.*;
 
 public class MockDataSource extends DataSource {	
 	public MockDataSource() {

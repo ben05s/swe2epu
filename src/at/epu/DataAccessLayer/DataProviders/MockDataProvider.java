@@ -1,9 +1,9 @@
-package at.epu.DataAccessLayer;
+package at.epu.DataAccessLayer.DataProviders;
 
 
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 
-public class MockDataProvider {
+public class MockDataProvider implements DataProvider {
 
 	public void saveData(BackofficeTableModel model, Object[] data_){
 		int col = model.getColumnNames().length;
@@ -102,5 +102,23 @@ public class MockDataProvider {
 		
 		model.setData(newData);
 		model.updateTableData();
+	}
+
+	@Override
+	public void saveData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,15 +2,7 @@ package at.epu.DataAccessLayer;
 
 import java.sql.Connection;
 
-import at.epu.DataAccessLayer.DataModels.BankAccountDataModel;
-import at.epu.DataAccessLayer.DataModels.BillRowDataModel;
-import at.epu.DataAccessLayer.DataModels.CategoryDataModel;
-import at.epu.DataAccessLayer.DataModels.ContactDataModel;
-import at.epu.DataAccessLayer.DataModels.CustomerDataModel;
-import at.epu.DataAccessLayer.DataModels.InBillDataModel;
-import at.epu.DataAccessLayer.DataModels.OfferDataModel;
-import at.epu.DataAccessLayer.DataModels.OutBillDataModel;
-import at.epu.DataAccessLayer.DataModels.ProjectDataModel;
+import at.epu.PresentationLayer.DataModels.*;
 
 public abstract class DataSource {
 	ContactDataModel contactModel;

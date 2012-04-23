@@ -3,20 +3,10 @@ package at.epu.DataAccessLayer;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLBankAccountDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLBillRowDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLCategoryDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLContactDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLCustomerDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLInBillDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLOfferDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLOutBillDataModel;
-import at.epu.DataAccessLayer.DataModels.SQLModels.SQLProjectDataModel;
+import at.epu.PresentationLayer.DataModels.SQLModels.*;
 
 public class DatabaseDataSource extends DataSource {	
 	public DatabaseDataSource(String databaseName) throws Exception {
-		
-	
 		String db_url = "jdbc:hsqldb:file:" + databaseName;
 		
 		try {
@@ -28,14 +18,14 @@ public class DatabaseDataSource extends DataSource {
 		} 
 		
 		
-		contactModel = new SQLContactDataModel(databaseHandle);
-		customerModel = new SQLCustomerDataModel(databaseHandle);
-		offerModel = new SQLOfferDataModel(databaseHandle);
-		projectModel = new SQLProjectDataModel(databaseHandle);
-		outbillModel = new SQLOutBillDataModel(databaseHandle);
-		bankaccountModel = new SQLBankAccountDataModel(databaseHandle);
-		billrowModel = new SQLBillRowDataModel(databaseHandle);
-		categoryModel = new SQLCategoryDataModel(databaseHandle);
+		contactModel = new SQLContactDataModel();
+		customerModel = new SQLCustomerDataModel();
+		offerModel = new SQLOfferDataModel();
+		projectModel = new SQLProjectDataModel();
+		outbillModel = new SQLOutBillDataModel();
+		bankaccountModel = new SQLBankAccountDataModel();
+		billrowModel = new SQLBillRowDataModel();
+		categoryModel = new SQLCategoryDataModel();
 		inbillModel = new SQLInBillDataModel();
 	}
 }

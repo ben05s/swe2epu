@@ -3,7 +3,7 @@ package at.epu.BusinessLayer;
 import javax.swing.JFrame;
 
 import at.epu.DataAccessLayer.*;
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.MainWindow;
 

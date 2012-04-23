@@ -13,7 +13,7 @@ import javax.swing.JRadioButton;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericChooserFormView;
 
 public class AddEditChooserViewController extends ViewController implements ActionListener {

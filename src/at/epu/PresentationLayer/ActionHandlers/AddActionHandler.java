@@ -11,7 +11,7 @@ import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 import at.epu.PresentationLayer.ViewControllers.ViewController;
 
 public class AddActionHandler extends ActionHandler {
-	String addTitle = "HinzufŸgen";
+	String addTitle = "Hinzufügen";
 	
 	public AddActionHandler(ViewController owner_) {
 		owner = owner_;

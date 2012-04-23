@@ -11,7 +11,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SpringLayout;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.DataAccessLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 
 public class GenericChooserFormView extends JPanel {
 
