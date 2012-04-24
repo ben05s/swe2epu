@@ -14,12 +14,14 @@ public class ApplicationManager {
 	MainWindow mainWindow			   = null;
 	PDFManager pdfManager			   = null;
 	JSONManager jsonManager			   = null;
+	BindingManager bindingManager 	   = null;
 	
 	private ApplicationManager() {
 		databaseManager = new DatabaseManager();
 		dialogManager   = new DialogManager();
 		pdfManager      = new PDFManager();
 		jsonManager     = new JSONManager();
+		bindingManager 	= new BindingManager();
 	}
 	
 	public static synchronized ApplicationManager getInstance() {
@@ -56,6 +58,10 @@ public class ApplicationManager {
 	
 	public DialogManager getDialogManager() {
 		return dialogManager;
+	}
+	
+	public BindingManager getBindingManager() {
+		return bindingManager;
 	}
 	
 	public void setMainWindow(MainWindow mainWindow_) {

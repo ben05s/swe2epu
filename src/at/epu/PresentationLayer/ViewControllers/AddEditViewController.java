@@ -158,7 +158,10 @@ public class AddEditViewController extends ViewController implements ActionListe
 				model.updateData(model, data, rowindex); 
 			} 
 			
-			appManager.getDialogManager().popDialog();
+			//check the user input. only if input is correct the frame is disposed
+			if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getChoosenData())) {
+				appManager.getDialogManager().popDialog();	
+			}
 			
 		}
 		
