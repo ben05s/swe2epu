@@ -1,87 +1,54 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-import java.util.ArrayList;
-
 public class CustomerDataObject extends DataObject {
-	int id_;
-	String vorname_;
-	String nachname_;
-	String adresse_;
-	String unternehmen_;
-	String email_;
-	String telefon_;
-	ArrayList<OfferDataObject> angebot_liste_ = new ArrayList<OfferDataObject>();
-	
-	public int getID() {
-		return id_;
-	}
-	
-	public void setID(int id) {
-		id_ = id;
-	}
+	String vorname;
+	String nachname;
+	String adresse;
+	String unternehmen;
+	String email;
+	String telefon;
+	int angebot_mapping_id;
 	
 	public String getVorname() {
-		return vorname_;
+		return vorname;
 	}
-	
 	public void setVorname(String vorname) {
-		vorname_ = vorname;
+		this.vorname = vorname;
 	}
-	
 	public String getNachname() {
-		return nachname_;
+		return nachname;
 	}
-	
 	public void setNachname(String nachname) {
-		nachname_ = nachname;
+		this.nachname = nachname;
 	}
-	
+	public String getAdresse() {
+		return adresse;
+	}
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
 	public String getUnternehmen() {
-		return unternehmen_;
+		return unternehmen;
 	}
-	
 	public void setUnternehmen(String unternehmen) {
-		unternehmen_ = unternehmen;
+		this.unternehmen = unternehmen;
 	}
-	
 	public String getEmail() {
-		return email_;
+		return email;
 	}
-	
 	public void setEmail(String email) {
-		email_ = email;
+		this.email = email;
 	}
-	
 	public String getTelefon() {
-		return telefon_;
+		return telefon;
 	}
-	
 	public void setTelefon(String telefon) {
-		telefon_ = telefon;
+		this.telefon = telefon;
 	}
-	
-	public ArrayList<OfferDataObject> getAngebot() {
-		if(angebot_liste_.size() == 0){
-			return null;
-		}
-		else {
-			return angebot_liste_;
-		}
+	public int getAngebot_mapping_id() {
+		return angebot_mapping_id;
 	}
-	
-	public String getAdresse_() {
-		return adresse_;
-	}
-
-	public void setAdresse_(String adresse_) {
-		this.adresse_ = adresse_;
-	}
-	
-	public void setAngebot(ArrayList<OfferDataObject> angebot_liste) {
-		angebot_liste_ = angebot_liste;
-	}
-	
-	public void addAngebot(OfferDataObject angebot) {
-		angebot_liste_.add(angebot);
+	public void setAngebot_mapping_id(int angebot_mapping_id) {
+		this.angebot_mapping_id = angebot_mapping_id;
 	}
 }

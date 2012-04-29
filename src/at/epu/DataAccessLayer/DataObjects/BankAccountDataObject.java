@@ -1,61 +1,52 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-import java.util.ArrayList;
 import java.util.Date;
 /*
  * | ID(PK) | EingRechnung | AusgRechnung | Betrag 
  * | Umsatzsteuer | Buchungsdatum | Kategorie
  */
 public class BankAccountDataObject extends DataObject {
-	int id_;
-	ArrayList<InBillDataObject> eingrechnung_liste_;
-	ArrayList<OutBillDataObject> ausgrechnung_liste_;
-	double betrag_;
-	double umsatzsteuer_;
-	Date buchungsdatum_;
-	ArrayList<CategoryDataObject> kategorie_;
+	int eingangsrechnung_id;
+	int ausgangsrechnung_id;
+	double betrag;
+	double umsatzsteuer;
+	Date buchungsdatum;
+	int kat_mapping_id;
 	
-	public ArrayList<CategoryDataObject> getKategorie_() {
-		return kategorie_;
+	public int getEingangsrechnung_id() {
+		return eingangsrechnung_id;
 	}
-	public void setKategorie_(ArrayList<CategoryDataObject> kategorie_) {
-		this.kategorie_ = kategorie_;
+	public void setEingangsrechnung_id(int eingangsrechnung_id) {
+		this.eingangsrechnung_id = eingangsrechnung_id;
 	}
-	public double getUmsatzsteuer_() {
-		return umsatzsteuer_;
+	public int getAusgangsrechnung_id() {
+		return ausgangsrechnung_id;
 	}
-	public void setUmsatzsteuer_(double umsatzsteuer_) {
-		this.umsatzsteuer_ = umsatzsteuer_;
+	public void setAusgangsrechnung_id(int ausgangsrechnung_id) {
+		this.ausgangsrechnung_id = ausgangsrechnung_id;
 	}
-	
-	public int getId_() {
-		return id_;
+	public double getBetrag() {
+		return betrag;
 	}
-	public void setId_(int id_) {
-		this.id_ = id_;
+	public void setBetrag(double betrag) {
+		this.betrag = betrag;
 	}
-	public ArrayList<InBillDataObject> getEingrechnung_liste_() {
-		return eingrechnung_liste_;
+	public double getUmsatzsteuer() {
+		return umsatzsteuer;
 	}
-	public void setEingrechnung_liste_(ArrayList<InBillDataObject> eingrechnung_liste_) {
-		this.eingrechnung_liste_ = eingrechnung_liste_;
+	public void setUmsatzsteuer(double umsatzsteuer) {
+		this.umsatzsteuer = umsatzsteuer;
 	}
-	public ArrayList<OutBillDataObject> getAusgrechnung_liste_() {
-		return ausgrechnung_liste_;
+	public Date getBuchungsdatum() {
+		return buchungsdatum;
 	}
-	public void setAusgrechnung_liste_(ArrayList<OutBillDataObject> ausgrechnung_liste_) {
-		this.ausgrechnung_liste_ = ausgrechnung_liste_;
+	public void setBuchungsdatum(Date buchungsdatum) {
+		this.buchungsdatum = buchungsdatum;
 	}
-	public double getBetrag_() {
-		return betrag_;
+	public int getKat_mapping_id() {
+		return kat_mapping_id;
 	}
-	public void setBetrag_(double betrag_) {
-		this.betrag_ = betrag_;
-	}
-	public Date getBuchungsdatum_() {
-		return buchungsdatum_;
-	}
-	public void setBuchungsdatum_(Date buchungsdatum_) {
-		this.buchungsdatum_ = buchungsdatum_;
-	}
+	public void setKat_mapping_id(int kat_mapping_id) {
+		this.kat_mapping_id = kat_mapping_id;
+	}	
 }

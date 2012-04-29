@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericAddEditFormView;
 
@@ -61,17 +62,16 @@ public class AddEditViewController extends ViewController implements ActionListe
 		buttonList.add(btnChoose3);
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
-		databaseManager = ApplicationManager.getInstance().getDatabaseManager();
 		
 		//get to current model 
 		model = appManager.getActiveTableModel();
 		//special case because the detailTable(Rechnungszeilen) is within the Rechnungen Tab (Ausgangsrechnungen)
-		if(model.isDetailTableView()) {
-			model = databaseManager.getDataSource().getBillRowDataModel();
+		if(model.getAddEditState().isDetailTableView()) {
+			model = appManager.getModelForTableName("Rechnungszeilen");
 		}
 		
-		columnNames = model.getAddEditColNames();
-		data = model.getAddEditData();
+		columnNames = model.getAddEditState().getAddEditColNames();
+		data = model.getAddEditState().getAddEditData();
 		
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
@@ -141,7 +141,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 				//make a placeholder wherever there was a choosable button, the data from the choosables will be put into the data array in the saveData function
 				for(int x=0;x<this.indexChoosable.size();x++) {
 					if(i == this.indexChoosable.get(x)) {
-						model.setChooseIndex(i);
+						model.getAddEditState().setChooseIndex(i);
 						data[i] = "placeholder";
 						skip++;
 					}
@@ -151,15 +151,16 @@ public class AddEditViewController extends ViewController implements ActionListe
 				}
 			}
 
-			if(cmd_.equals("ADD")) {
-				model.saveData(model, data); 
-			} 
-			if(cmd_.equals("EDIT")) { 
-				model.updateData(model, data, rowindex); 
+			if(cmd_.equals("ADD") || cmd_.equals("EDIT")) {
+				try {
+					appManager.getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), model.getDataObjectCollection());
+				} catch (DataProviderException e) {
+					e.printStackTrace();
+				}
 			} 
 			
 			//check the user input. only if input is correct the frame is disposed
-			if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getChoosenData())) {
+			if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData())) {
 				appManager.getDialogManager().popDialog();	
 			}
 			

@@ -2,8 +2,8 @@ package at.epu.BusinessLayer;
 
 import javax.swing.JFrame;
 
-import at.epu.DataAccessLayer.*;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.DataModels.DataModelFactory;
 import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.MainWindow;
 
@@ -15,13 +15,14 @@ public class ApplicationManager {
 	PDFManager pdfManager			   = null;
 	JSONManager jsonManager			   = null;
 	BindingManager bindingManager 	   = null;
+	DataModelFactory dataModelFactory  = null;
 	
 	private ApplicationManager() {
-		databaseManager = new DatabaseManager();
-		dialogManager   = new DialogManager();
-		pdfManager      = new PDFManager();
-		jsonManager     = new JSONManager();
-		bindingManager 	= new BindingManager();
+		dialogManager    = new DialogManager();
+		pdfManager       = new PDFManager();
+		jsonManager      = new JSONManager();
+		bindingManager   = new BindingManager();
+		dataModelFactory = new DataModelFactory();
 	}
 	
 	public static synchronized ApplicationManager getInstance() {
@@ -32,16 +33,17 @@ public class ApplicationManager {
 	
 	/**
 	 * Setup code.
-	 * @throws Exception 
 	 */
-	public void applicationStarted(String[] args) throws Exception {		
+	public void applicationStarted(String[] args) {		
 		if(args.length > 0)
 		{
-			databaseManager.setDataSource(new DatabaseDataSource(args[0]));
+			/** SQL */
+			databaseManager = new DatabaseManager(args[0]);
 		}
 		else
 		{
-			databaseManager.setDataSource(new MockDataSource());
+			/** Mock */
+			databaseManager = new DatabaseManager();
 		}
 	}
 	
@@ -53,6 +55,10 @@ public class ApplicationManager {
 	}
 	
 	public DatabaseManager getDatabaseManager() {
+		if(databaseManager == null) {
+			System.err.println("DatabaseManager is null. Don't call it in constructors.");
+		}
+		
 		return databaseManager;
 	}
 	
@@ -62,6 +68,10 @@ public class ApplicationManager {
 	
 	public BindingManager getBindingManager() {
 		return bindingManager;
+	}
+	
+	public BackofficeTableModel getModelForTableName(String tableName) {
+		return dataModelFactory.getModelForTableName(tableName);
 	}
 	
 	public void setMainWindow(MainWindow mainWindow_) {

@@ -1,59 +1,41 @@
 package at.epu.DataAccessLayer.DataObjects;
 
 public class BillRowDataObject extends DataObject {
-	int id_;
-	OutBillDataObject ausgrechnung_;
-	OfferDataObject angebot_;
-	String kommentar_;
-	double steuern_;
-	double betrag_;
+	int ausgangsrechnung_id;
+	int angebot_id;
+	String kommentar;
+	double steuern;
+	double betrag;
 	
-	public int getID() {
-		return id_;
+	public int getAusgangsrechnung_id() {
+		return ausgangsrechnung_id;
 	}
-	
-	public void setID(int id) {
-		id_ = id;
+	public void setAusgangsrechnung_id(int ausgangsrechnung_id) {
+		this.ausgangsrechnung_id = ausgangsrechnung_id;
 	}
-	
-	public OutBillDataObject getAusgRechnung() {
-		return ausgrechnung_;
+	public int getAngebot_id() {
+		return angebot_id;
 	}
-	
-	public void setAusgRechnung(OutBillDataObject ausgrechnung) {
-		ausgrechnung_ = ausgrechnung;
+	public void setAngebot_id(int angebot_id) {
+		this.angebot_id = angebot_id;
 	}
-	
-	public OfferDataObject getAngebot() {
-		return angebot_;
-	}
-	
-	public void setAngebot(OfferDataObject angebot) {
-		angebot_ = angebot;
-	}
-	
 	public String getKommentar() {
-		return kommentar_;
+		return kommentar;
 	}
-	
 	public void setKommentar(String kommentar) {
-		kommentar_ = kommentar;
+		this.kommentar = kommentar;
 	}
-	
 	public double getSteuern() {
-		return steuern_;
+		return steuern;
 	}
-	
 	public void setSteuern(double steuern) {
-		steuern_ = steuern;
+		this.steuern = steuern;
 	}
-	
 	public double getBetrag() {
-		return betrag_;
+		return betrag;
 	}
-	
 	public void setBetrag(double betrag) {
-		betrag_ = betrag;
+		this.betrag = betrag;
 	}
 }
  

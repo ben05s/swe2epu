@@ -3,70 +3,47 @@ package at.epu.DataAccessLayer.DataObjects;
 import java.util.Date;
 
 public class OfferDataObject extends DataObject {
-	int id_;
 	String titel;
-	CustomerDataObject kunde_;
-	double summe_;
-	int dauer_; // in Tagen
-	Date datum_;
-	double u_chance_; // in %
+	int kunde_id;
+	double summe;
+	int dauer; // in Tagen
+	Date datum;
+	double chance; // in %
 	
-	public OfferDataObject() {
-		
-	}
-	
-	public void setID(int id) {
-		id_ = id;
-	}
-	
-	public int getID() {
-		return id_;
-	}
 	public String getTitel() {
 		return titel;
 	}
-
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
-	
-	public void setKunde(CustomerDataObject kunde) {
-		kunde_ = kunde;
+	public int getKunde_id() {
+		return kunde_id;
 	}
-	
-	public CustomerDataObject getKunde() {
-		return kunde_;
+	public void setKunde_id(int kunde_id) {
+		this.kunde_id = kunde_id;
 	}
-	
-	public void setSumme(double summe) {
-		summe_ = summe;
-	}
-	
 	public double getSumme() {
-		return summe_;
+		return summe;
 	}
-	
-	public void setDauer(int dauer) {
-		dauer_ = dauer;
+	public void setSumme(double summe) {
+		this.summe = summe;
 	}
-	
 	public int getDauer() {
-		return dauer_;
+		return dauer;
 	}
-	
-	public void setDatum(Date datum) {
-		datum_ = datum;
+	public void setDauer(int dauer) {
+		this.dauer = dauer;
 	}
-	
 	public Date getDatum() {
-		return datum_;
+		return datum;
 	}
-	
-	public void setUChance(double chance) {
-		u_chance_ = chance;
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
-	
-	public double getUchance() {
-		return u_chance_;
+	public double getChance() {
+		return chance;
+	}
+	public void setChance(double chance) {
+		this.chance = chance;
 	}
 }

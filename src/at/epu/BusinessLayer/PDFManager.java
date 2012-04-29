@@ -1,12 +1,11 @@
 package at.epu.BusinessLayer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.*;
-
-import at.epu.PresentationLayer.DataModels.InBillDataModel;
-import at.epu.PresentationLayer.DataModels.OutBillDataModel;
+import at.epu.DataAccessLayer.DataObjects.InBillDataObject;
 import at.epu.DataAccessLayer.DataObjects.OutBillDataObject;
 
 public class PDFManager {
@@ -19,7 +18,7 @@ public class PDFManager {
 		saveDocument(doc, filepath);
 	}
 	
-	public void createOutBillReportPDF(OutBillDataModel outbillModel, String filepath) {
+	public void createOutBillReportPDF(ArrayList<OutBillDataObject> outbillObjects, String filepath) {
 		PDDocument doc = newDocument();
 		PDPage page = newPage();
 		
@@ -28,7 +27,7 @@ public class PDFManager {
 		saveDocument(doc, filepath);
 	}
 	
-	public void createInOutBillReportPDF(InBillDataModel inbillModel, OutBillDataModel outbillModel, String filepath) {
+	public void createInOutBillReportPDF(ArrayList<InBillDataObject> inbillModel, ArrayList<OutBillDataObject> outbillModel, String filepath) {
 		PDDocument doc = newDocument();
 		PDPage page = newPage();
 		

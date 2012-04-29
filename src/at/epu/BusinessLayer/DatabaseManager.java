@@ -1,20 +1,35 @@
 package at.epu.BusinessLayer;
 
 import at.epu.DataAccessLayer.*;
-import java.lang.NullPointerException;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 
 public class DatabaseManager {
 	DataSource dataSource = null;
+	DatabaseType type = null;
 	
-	public void setDataSource(DataSource dataSource_) {
-		dataSource = dataSource_;
+	public enum DatabaseType {
+		DatabaseTypeMock,
+		DatabaseTypeSQL
 	}
 	
-	public DataSource getDataSource() {
-		if(dataSource == null) {
-			throw new NullPointerException("Data source was null. You must supply a data source first.");
-		}
-		
-		return dataSource;
+	/** No arguments, default to Mock */
+	public DatabaseManager() {
+		type = DatabaseType.DatabaseTypeMock;
+		dataSource = new DataSource(type, null);
+	}
+	
+	/** argument is the database name, instantiate as SQL database */
+	public DatabaseManager(String databaseName) {
+		type = DatabaseType.DatabaseTypeSQL;
+		dataSource = new DataSource(type, databaseName);
+	}
+	
+	public DataObjectCollection getAllObjectsForTableName(String tableName) throws DataProviderException {
+		return dataSource.getAllObjectsForTableName(tableName);
+	}
+	
+	public void synchronizeObjectsForTableName(String tableName, DataObjectCollection objects) throws DataProviderException {
+		dataSource.synchronizeObjectsForTableName(tableName, objects);
 	}
 }

@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 
 public class MockDataTests {
@@ -12,11 +15,30 @@ public class MockDataTests {
 	
 	@Test
 	public void saveDataTest() {
+		String[] args= new String[0];
 		
-		BackofficeTableModel tableModel = appManager.getDatabaseManager().getDataSource().getContactDataModel();
-		Object[] data = {"Heinz", "Meier", "Hausgasse", "email", "0664123123"};
-		tableModel.saveData(tableModel, data);
+		appManager.applicationStarted(args);
 		
-		assertEquals("Heinz", tableModel.getData()[tableModel.getData().length][1]);
+		BackofficeTableModel tableModel = appManager.getModelForTableName("Kontakte");
+		
+		ContactDataObject object = new ContactDataObject();
+		object.setVorname("Heinz");
+		object.setNachname("Meier");
+		object.setAddresse("Hausgasse");
+		object.setEmail("email");
+		object.setTelefon("0664414123");
+		
+		DataObjectCollection collection = tableModel.getDataObjectCollection();
+		collection.add(object);
+		
+		try {
+			appManager.getDatabaseManager().synchronizeObjectsForTableName("Kontakte", collection);
+		} catch (DataProviderException e) {
+			e.printStackTrace();
+		}
+		
+		tableModel.setDataObjectCollection(collection);
+		
+		assertEquals("Heinz", tableModel.getDataObjectCollection().toDataArray()[tableModel.getDataObjectCollection().size()][1]);
 	}
 }

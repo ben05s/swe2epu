@@ -1,64 +1,44 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-import java.util.ArrayList;
 /*
  * ID | Kontakt | Buchungszeile
  */
-public class InBillDataObject extends DataObject {
-	int id_;
-	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
-	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();
-	ContactDataObject kontakt_;
+public class InBillDataObject extends DataObject {	
+	String rechnungskürzel;
+	int kontakt_id;
+	int rzeile_mapping_id;
+	int bzeile_mapping_id;
 	String status;
-
+	
+	public String getRechnungskürzel() {
+		return rechnungskürzel;
+	}
+	public void setRechnungskürzel(String rechnungskürzel) {
+		this.rechnungskürzel = rechnungskürzel;
+	}
+	public int getKontakt_id() {
+		return kontakt_id;
+	}
+	public void setKontakt_id(int kontakt_id) {
+		this.kontakt_id = kontakt_id;
+	}
+	public int getRzeile_mapping_id() {
+		return rzeile_mapping_id;
+	}
+	public void setRzeile_mapping_id(int rzeile_mapping_id) {
+		this.rzeile_mapping_id = rzeile_mapping_id;
+	}
+	public int getBzeile_mapping_id() {
+		return bzeile_mapping_id;
+	}
+	public void setBzeile_mapping_id(int bzeile_mapping_id) {
+		this.bzeile_mapping_id = bzeile_mapping_id;
+	}
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getID() {
-		return id_;
-	}
-	
-	public void setID(int id) {
-		id_ = id;
-	}
-	
-	public ArrayList<BillRowDataObject> getRechnungszeilen() {
-		if(rechnungszeile_liste_.size() == 0){
-			return null;
-		}
-		else {
-			return rechnungszeile_liste_;
-		}
-	}
-	
-	public void setRechnungszeilen(ArrayList<BillRowDataObject> rechnungszeile) {
-		rechnungszeile_liste_.addAll(rechnungszeile);
-	}
-	
-	public ArrayList<BankAccountDataObject> getBuchungszeilen() {
-		if(buchungszeile_liste_.size() == 0){
-			return null;
-		}
-		else {
-			return buchungszeile_liste_;
-		}
-	}
-	
-	public void setBuchungszeilen(ArrayList<BankAccountDataObject> buchungszeile) {
-		buchungszeile_liste_.addAll(buchungszeile);
-	}
-	
-	public ContactDataObject getKontakt() {
-		return kontakt_;
-	}
-	
-	public void setKontakt(ContactDataObject kontakt) {
-		kontakt_ = kontakt;
 	}
 }
 

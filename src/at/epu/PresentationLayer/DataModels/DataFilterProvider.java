@@ -1,12 +1,16 @@
 package at.epu.PresentationLayer.DataModels;
 
-import java.util.ArrayList;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 
 public class DataFilterProvider {
-	static public Object[][] filterDataModel(String filterString, Object[][] data) {
-		ArrayList<Object[]> new_data = new ArrayList<Object[]>();
+	static public DataObjectCollection filterDataModel(String filterString, DataObjectCollection dataObjects) {
+		Object[][] data = dataObjects.toDataArray();
 		
+		DataObjectCollection filteredObjects = new DataObjectCollection();
+		
+		int i = 0;
 		for(Object[] objarr : data) {
+			
 			for(Object obj : objarr) {
 				if(obj == null) {
 					continue;
@@ -15,19 +19,16 @@ public class DataFilterProvider {
 				if(obj.getClass() == filterString.getClass()) {
 					String str = (String)obj;
 					
-					if(filterString.equals(str) || str.contains(filterString)) {
-						new_data.add(objarr);
+					if(str.toLowerCase().contains(filterString.toLowerCase())) {
+						filteredObjects.add( dataObjects.get(i) );
+						break;
 					}
 				}
 			}
+			
+			i++;
 		}
 		
-		Object[][] tmp = new Object[new_data.size()][data[0].length];
-		
-		for(int i = 0; i < new_data.size(); i++) {
-			tmp[i] = new_data.get(i);
-		}
-		
-		return tmp;
+		return filteredObjects;
 	}
 }

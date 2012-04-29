@@ -1,49 +1,36 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-import java.util.ArrayList;
-
 /*
  * ID(PK) | Angebot_ID(FK) | AusgRechnung_Liste(FK/PK)
  */
 public class ProjectDataObject extends DataObject {
-	int id_;
 	String titel;
-	int angebot_id_;
-	ArrayList<OutBillDataObject> ausgrechnung_liste_ = new ArrayList<OutBillDataObject>();
+	int angebot_id;
+	int ausgr_mapping_id;
+	double zeit;
 	
-	public int getId_() {
-		return id_;
-	}
-	public void setId_(int id_) {
-		this.id_ = id_;
-	}
-	public int getAngebot_id_() {
-		return angebot_id_;
-	}
-	public void setAngebot_id_(int angebot_id_) {
-		this.angebot_id_ = angebot_id_;
-	}
-	public ArrayList<OutBillDataObject> getAusgrechnung_liste_() {
-		return ausgrechnung_liste_;
-	}
 	public String getTitel() {
 		return titel;
 	}
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
-	public void setAusgrechnung_liste_(ArrayList<OutBillDataObject> ausgrechnung_liste_) {
-		this.ausgrechnung_liste_.addAll(ausgrechnung_liste_);
+	public int getAngebot_id() {
+		return angebot_id;
 	}
-	public void addAusgrechnung_item_(OutBillDataObject item) {
-		this.ausgrechnung_liste_.add(item);
+	public void setAngebot_id(int angebot_id) {
+		this.angebot_id = angebot_id;
 	}
-	public void deleteAusgrechnung_item_(OutBillDataObject item) {
-		for(int i=0;i<this.ausgrechnung_liste_.size();i++) {
-			if(this.ausgrechnung_liste_.get(i) == item) {
-				this.ausgrechnung_liste_.remove(i);
-			}
-		}
+	public int getAusgr_mapping_id() {
+		return ausgr_mapping_id;
 	}
-	
+	public void setAusgr_mapping_id(int ausgr_mapping_id) {
+		this.ausgr_mapping_id = ausgr_mapping_id;
+	}
+	public double getZeit() {
+		return zeit;
+	}
+	public void setZeit(double zeit) {
+		this.zeit = zeit;
+	}
 }

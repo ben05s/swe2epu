@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericDetailTableView;
 
 public class DetailViewController extends ViewController implements ActionListener{
 
-	DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+	ApplicationManager appManager = ApplicationManager.getInstance();
 	int rowindex; 	
 	
 	public DetailViewController(int rowindex_) {
@@ -43,7 +42,7 @@ public class DetailViewController extends ViewController implements ActionListen
 		
 		getIndexChoosable().add(0);
 		
-		rootComponent = new GenericDetailTableView(buttonList, menuList, databaseManager.getDataSource().getBillRowDataModel());	
+		rootComponent = new GenericDetailTableView(buttonList, menuList, appManager.getModelForTableName("Rechnungszeilen"));	
 	}
 	
 	@Override
@@ -51,12 +50,12 @@ public class DetailViewController extends ViewController implements ActionListen
 		String cmd = event.getActionCommand();
 		
 		if(cmd.equals("SAVE")) {
-			databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
+			ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().unsetDetailTableView();
 			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}
 		
 		if(cmd.equals("CANCEL")) {
-			databaseManager.getDataSource().getOutBillDataModel().unsetDetailTableView();
+			ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().unsetDetailTableView();
 			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}		
 		

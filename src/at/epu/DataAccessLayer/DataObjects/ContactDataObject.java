@@ -1,49 +1,41 @@
 package at.epu.DataAccessLayer.DataObjects;
 
 public class ContactDataObject extends DataObject {
-	int id_;
-	String vorname_;
-	String nachname_;
-	String unternehmen_;
-	String email_;
-	String telefon_;
+	String vorname;
+	String nachname;
+	String addresse;
+	String email;
+	String telefon;
 	
-	public int getId_() {
-		return id_;
+	public String getVorname() {
+		return vorname;
 	}
-	public void setId_(int id_) {
-		this.id_ = id_;
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
 	}
-	public String getVorname_() {
-		return vorname_;
+	public String getNachname() {
+		return nachname;
 	}
-	public void setVorname_(String vorname_) {
-		this.vorname_ = vorname_;
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
 	}
-	public String getNachname_() {
-		return nachname_;
+	public String getAddresse() {
+		return addresse;
 	}
-	public void setNachname_(String nachname_) {
-		this.nachname_ = nachname_;
+	public void setAddresse(String addresse) {
+		this.addresse = addresse;
 	}
-	public String getUnternehmen_() {
-		return unternehmen_;
+	public String getEmail() {
+		return email;
 	}
-	public void setUnternehmen_(String unternehmen_) {
-		this.unternehmen_ = unternehmen_;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getEmail_() {
-		return email_;
+	public String getTelefon() {
+		return telefon;
 	}
-	public void setEmail_(String email_) {
-		this.email_ = email_;
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
 	}
-	public String getTelefon_() {
-		return telefon_;
-	}
-	public void setTelefon_(String telefon_) {
-		this.telefon_ = telefon_;
-	}
-	
 	
 }

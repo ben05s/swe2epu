@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.swing.JButton;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.PresentationLayer.GenericFilterDialogueView;
+import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ViewControllers.FilterViewController;
 import at.epu.PresentationLayer.ViewControllers.ViewController;
 
@@ -41,7 +42,7 @@ public class FilterActionHandler extends ActionHandler {
 		if( e.getActionCommand().equals("FILTER")) {
 			prefilterText = ((GenericFilterDialogueView)viewController.getRootComponent()).getTextFieldValue();
 			
-			ApplicationManager.getInstance().getActiveTableModel().filterDataModel(prefilterText);
+			((GenericSplitTableView)owner.getRootComponent()).getModel().filterDataModel(prefilterText);
 			
 			ApplicationManager.getInstance().getDialogManager().popDialog();
 		}

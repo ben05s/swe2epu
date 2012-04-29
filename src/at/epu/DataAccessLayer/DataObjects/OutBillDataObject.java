@@ -1,61 +1,40 @@
 package at.epu.DataAccessLayer.DataObjects;
 
-import java.util.ArrayList;
-
 public class OutBillDataObject extends DataObject {
-	int id_;
-	ArrayList<BillRowDataObject> rechnungszeile_liste_ = new ArrayList<BillRowDataObject>();
-	ArrayList<BankAccountDataObject> buchungszeile_liste_ = new ArrayList<BankAccountDataObject>();
-	CustomerDataObject kunde_;
+	String rechnungskürzel;
+	int kunde_id;
+	int rzeile_mapping_id;
+	int bzeile_mapping_id;
 	String status;
-
+	
+	public String getRechnungskürzel() {
+		return rechnungskürzel;
+	}
+	public void setRechnungskürzel(String rechnungskürzel) {
+		this.rechnungskürzel = rechnungskürzel;
+	}
+	public int getKunde_id() {
+		return kunde_id;
+	}
+	public void setKunde_id(int kunde_id) {
+		this.kunde_id = kunde_id;
+	}
+	public int getRzeile_mapping_id() {
+		return rzeile_mapping_id;
+	}
+	public void setRzeile_mapping_id(int rzeile_mapping_id) {
+		this.rzeile_mapping_id = rzeile_mapping_id;
+	}
+	public int getBzeile_mapping_id() {
+		return bzeile_mapping_id;
+	}
+	public void setBzeile_mapping_id(int bzeile_mapping_id) {
+		this.bzeile_mapping_id = bzeile_mapping_id;
+	}
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getID() {
-		return id_;
-	}
-	
-	public void setID(int id) {
-		id_ = id;
-	}
-	
-	public ArrayList<BillRowDataObject> getRechnungszeilen() {
-		if(rechnungszeile_liste_.size() == 0){
-			return null;
-		}
-		else {
-			return rechnungszeile_liste_;
-		}
-	}
-	
-	public void setRechnungszeilen(ArrayList<BillRowDataObject> rechnungszeile) {
-		rechnungszeile_liste_.addAll(rechnungszeile);
-	}
-	
-	public ArrayList<BankAccountDataObject> getBuchungszeilen() {
-		if(buchungszeile_liste_.size() == 0){
-			return null;
-		}
-		else {
-			return buchungszeile_liste_;
-		}
-	}
-	
-	public void setBuchungszeilen(ArrayList<BankAccountDataObject> buchungszeile) {
-		buchungszeile_liste_.addAll(buchungszeile);
-	}
-	
-	public CustomerDataObject getKunde() {
-		return kunde_;
-	}
-	
-	public void setKunde(CustomerDataObject kunde) {
-		kunde_ = kunde;
 	}
 }

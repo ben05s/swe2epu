@@ -41,50 +41,50 @@ public class AddEditChooserViewController extends ViewController implements Acti
 	public AddEditChooserViewController(String chooseCommand, String cmd_, int rowindex_, ArrayList<Integer> indexChoosable_) {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		model = appManager.getActiveTableModel();
-		if(model.isDetailTableView()) {
-			model = databaseManager.getDataSource().getBillRowDataModel();
+		if(model.getAddEditState().isDetailTableView()) {
+			model = ApplicationManager.getInstance().getModelForTableName("Rechnungszeilen");
 		}
 		this.title = model.getTableName();
 		this.indexChoosable = indexChoosable_;
 		
 		if(this.title == "Kunden"){
-			data = databaseManager.getDataSource().getOfferDataModel().getData();
-			preselectedItems = databaseManager.getDataSource().getCustomerDataModel().getChoosenData();
+			data = ApplicationManager.getInstance().getModelForTableName("Angebote").getDataObjectCollection().toDataArray();
+			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Kunden").getAddEditState().getChoosenData();
 		}
-		if(this.title == "Angebote"){
-			data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
-			preselectedItems = databaseManager.getDataSource().getOfferDataModel().getChoosenData();
+		else if(this.title == "Angebote"){
+			data = ApplicationManager.getInstance().getModelForTableName("Kunden").getDataObjectCollection().toDataArray();
+			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Angebote").getAddEditState().getChoosenData();
 		}
-		if(this.title == "Projekte"){
+		else if(this.title == "Projekte"){
 			if(chooseCommand == "CHOOSE1") {
-				data = databaseManager.getDataSource().getOfferDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getProjectDataModel().getChoosenData();
+				data = ApplicationManager.getInstance().getModelForTableName("Angebote").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Projekte").getAddEditState().getChoosenData();
 			}
-			if(chooseCommand == "CHOOSE2") {
-				data = databaseManager.getDataSource().getOutBillDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getProjectDataModel().getChoosenData();	
+			else if(chooseCommand == "CHOOSE2") {
+				data = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Projekte").getAddEditState().getChoosenData();
 			}
 		}
-		if(this.title == "Ausgangsrechnungen"){
-			data = databaseManager.getDataSource().getCustomerDataModel().getAddEditData();
-			preselectedItems = databaseManager.getDataSource().getOutBillDataModel().getChoosenData();
+		else if(this.title == "Ausgangsrechnungen"){
+			data = ApplicationManager.getInstance().getModelForTableName("Kunden").getDataObjectCollection().toDataArray();
+			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData();
 		}
-		if(this.title == "Rechnungszeilen") {
-			data = databaseManager.getDataSource().getOfferDataModel().getData();
-			preselectedItems = databaseManager.getDataSource().getBillRowDataModel().getChoosenData();
+		else if(this.title == "Rechnungszeilen") {
+			data = ApplicationManager.getInstance().getModelForTableName("Angebote").getDataObjectCollection().toDataArray();
+			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Rechnungszeilen").getAddEditState().getChoosenData();
 		} 
-		if(this.title == "Buchungszeilen"){
+		else if(this.title == "Buchungszeilen"){
 			if(chooseCommand == "CHOOSE1") {
-				data = databaseManager.getDataSource().getInBillDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();
+				data = ApplicationManager.getInstance().getModelForTableName("Eingangsrechnungen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen").getAddEditState().getChoosenData();
 			}
-			if(chooseCommand == "CHOOSE2") {
-				data = databaseManager.getDataSource().getOutBillDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();	
+			else if(chooseCommand == "CHOOSE2") {
+				data = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen").getAddEditState().getChoosenData();
 			}
-			if(chooseCommand == "CHOOSE3") {
-				data = databaseManager.getDataSource().getCategoryDataModel().getData();
-				preselectedItems = databaseManager.getDataSource().getBankAccountDataModel().getChoosenData();	
+			else if(chooseCommand == "CHOOSE3") {
+				data = ApplicationManager.getInstance().getModelForTableName("Kategorien").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen").getAddEditState().getChoosenData();
 			}
 		}
 		
@@ -120,12 +120,12 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			int count = 0;
 			for(int i=0;i<this.data.length;i++) {
 				JCheckBox box;
-				if(model.getChoosenData().isEmpty()) {
+				if(model.getAddEditState().getChoosenData().isEmpty()) {
 					checked[i] = false;
 				} else {
 					checked[i] = false;
-					for(int z=count;z<model.getChoosenData().size();z++) {
-						if(model.getChoosenData().get(z).equals(this.data[i][1].toString())) {
+					for(int z=count;z<model.getAddEditState().getChoosenData().size();z++) {
+						if(model.getAddEditState().getChoosenData().get(z).equals(this.data[i][1].toString())) {
 							checked[i] = true;
 							count++;
 							break;
@@ -151,12 +151,12 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			int count = 0;
 			for(int i=0;i<this.data.length;i++) {
 				JRadioButton box;
-				if(model.getChoosenData().isEmpty()) {
+				if(model.getAddEditState().getChoosenData().isEmpty()) {
 					checked[i] = false;
 				} else {
 					checked[i] = false;
-					for(int z=count;z<model.getChoosenData().size();z++) {
-						if(model.getChoosenData().get(z).equals(this.data[i][1].toString())) {
+					for(int z=count;z<model.getAddEditState().getChoosenData().size();z++) {
+						if(model.getAddEditState().getChoosenData().get(z).equals(this.data[i][1].toString())) {
 							checked[i] = true;
 							count++;
 							break;
@@ -186,11 +186,11 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			if(cmd.equals("CHECKBOX"+i)) {
 				AbstractButton ab = (AbstractButton) event.getSource();
 				if(ab.getModel().isSelected()) {
-					if(command.equals("ADD")) { model.addChoosenData(this.data[i][1].toString()); }
+					if(command.equals("ADD")) { model.getAddEditState().addChoosenData(this.data[i][1].toString()); }
 					if(command.equals("EDIT")) { }	
 				}
 				if(! ab.getModel().isSelected()) {
-					if(command.equals("ADD")) { model.removeChoosenData(this.data[i][1].toString()); }
+					if(command.equals("ADD")) { model.getAddEditState().removeChoosenData(this.data[i][1].toString()); }
 					if(command.equals("EDIT")) { }
 				}
 			}
@@ -200,14 +200,14 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			if(cmd.equals("RADIOBUTTON"+i)) {
 				AbstractButton ab = (AbstractButton) event.getSource();
 				if(ab.getModel().isSelected()) {
-					if(command.equals("ADD")) { model.setChoosenData(this.data[i][1].toString()); }
+					if(command.equals("ADD")) { model.getAddEditState().setChoosenData(this.data[i][1].toString()); }
 					if(command.equals("EDIT")) { }	
 				}
 			}
 		}
 		
 		if(cmd.equals("DESELECT")) {
-			model.deleteChoosenData();
+			model.getAddEditState().deleteChoosenData();
 			clearAll.setSelected(true);
 			for(int i=0;i<this.data.length;i++) {
 				checkList.get(i).setSelected(false);

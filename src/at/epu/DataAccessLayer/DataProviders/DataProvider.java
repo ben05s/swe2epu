@@ -1,8 +1,18 @@
 package at.epu.DataAccessLayer.DataProviders;
 
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+
 public interface DataProvider {
-	//public DataObjectCollection selectAll(BackofficeTableModel model);
-	public void saveData();
-	public void deleteData();
-	public void updateData();
+	public class DataProviderException extends Exception {
+		public DataProviderException() {
+			
+		}
+		
+		public DataProviderException(String str) {
+			super(str);
+		}
+	}
+	
+	public DataObjectCollection selectAll(String tableName) throws DataProviderException;
+	public void syncData(String tableName, DataObjectCollection collection) throws DataProviderException;
 }

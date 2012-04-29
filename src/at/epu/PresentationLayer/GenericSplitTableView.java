@@ -1,8 +1,6 @@
 package at.epu.PresentationLayer;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,8 +24,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataObjects.DataObject;
+import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 import at.epu.PresentationLayer.ViewControllers.DetailViewController;
@@ -35,8 +39,8 @@ public class GenericSplitTableView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private BackofficeTableModel model;
-	private JTable table;
+	BackofficeTableModel model;
+	JTable table;
 	DatabaseManager databaseManager;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
@@ -64,7 +68,7 @@ public class GenericSplitTableView extends JPanel {
 		add(panel, gbc_panel);
 		
 		table = new JTable(tableModel);
-		table.setBackground(Color.ORANGE);
+		//table.setBackground(Color.ORANGE);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	
 		for(int i = 0; i < table.getColumnCount(); i++) {
@@ -143,7 +147,20 @@ public class GenericSplitTableView extends JPanel {
 	                	if(menu.getText() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			ApplicationManager.getInstance().getActiveTableModel().deleteData(model, rowindex);
+		                			DataObjectCollection collection = model.getDataObjectCollection();
+		                			DataObject obj = model.getObjectAtRow(rowindex);
+		                			
+		                			obj.setState(DataObjectState.DataObjectStateDeleted);
+		                			
+		                			try {
+										ApplicationManager.getInstance().getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), collection);
+									} catch (DataProviderException e1) {
+										e1.printStackTrace();
+									}
+		                			
+		                			model.setDataObjectCollection(collection);
+		                			
+		                			model.updateTableData();
 		                		}
 	                		}); 
 	                	}
@@ -152,7 +169,7 @@ public class GenericSplitTableView extends JPanel {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
 		                			DetailViewController controller = new DetailViewController(rowindex);
-		                			ApplicationManager.getInstance().getActiveTableModel().setDetailTableView();
+		                			ApplicationManager.getInstance().getActiveTableModel().getAddEditState().setDetailTableView();
 		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}
 		                	});

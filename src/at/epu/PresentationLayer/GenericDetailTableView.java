@@ -23,10 +23,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataObjects.DataObject;
+import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 
@@ -34,13 +37,15 @@ public class GenericDetailTableView extends JPanel {
 
 	private static final long serialVersionUID = -2369098626177028829L;
 	
-	private JTable table;
+	JTable table;
+	BackofficeTableModel model;
 	DatabaseManager databaseManager;
 	String title = null;
 	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
-	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final TableModel tableModel) {
+	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final BackofficeTableModel tableModel) {
 		setBackground(SystemColor.control);
+		setModel(tableModel);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0};
@@ -124,10 +129,18 @@ public class GenericDetailTableView extends JPanel {
 	                	if(menu.getText() == "Löschen") {
 	                		menu.addActionListener(new ActionListener() {
 		                		public void actionPerformed(ActionEvent e) {
-		                			DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
-		                			BackofficeTableModel model = databaseManager.getDataSource().getBillRowDataModel();
+		                			DataObject obj = model.getObjectAtRow(rowindex);
 		                			
-		                			databaseManager.getDataSource().getBillRowDataModel().deleteData(model, rowindex);
+		                			obj.setState(DataObjectState.DataObjectStateDeleted);
+		                			
+		                			DataObjectCollection collection = new DataObjectCollection();
+		                			collection.add(obj);
+		                			
+		                			try {
+										ApplicationManager.getInstance().getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), collection);
+									} catch (DataProviderException e1) {
+										e1.printStackTrace();
+									}
 		                		}
 	                		}); 
 	                	}
@@ -138,6 +151,14 @@ public class GenericDetailTableView extends JPanel {
 	 });
 	}
 	
+	public BackofficeTableModel getModel() {
+		return model;
+	}
+
+	public void setModel(BackofficeTableModel model) {
+		this.model = model;
+	}
+
 	public void packColumns(JTable table, int margin) {
 	    for (int c=0; c<table.getColumnCount(); c++) {
 	        packColumn(table, c, 2);

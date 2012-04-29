@@ -64,7 +64,7 @@ public class GenericChooserFormView extends JPanel {
 			}	
 		}
 		if(title.equals("Ausgangsrechnungen")) {
-			if(model.isDetailTableView()) {
+			if(model.getAddEditState().isDetailTableView()) {
 				for (int i = 0; i < numPairs; i++) {
 					springLayout.add(radioList.get(i));
 					springLayout.add(labels.get(i));

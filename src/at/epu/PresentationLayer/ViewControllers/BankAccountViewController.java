@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
@@ -24,7 +23,7 @@ public class BankAccountViewController extends ViewController implements ActionL
 	void initialize() {
 		title = "Bankkonto";
 		
-		DatabaseManager databaseManager = ApplicationManager.getInstance().getDatabaseManager();
+		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		registerActionHandler(new FilterActionHandler(this));
 		registerActionHandler(new AddActionHandler(this));
@@ -44,7 +43,7 @@ public class BankAccountViewController extends ViewController implements ActionL
 		getIndexChoosable().add(5);
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
-                										databaseManager.getDataSource().getBankAccountDataModel());
+                										appManager.getModelForTableName("Buchungszeilen"));
 	}
 
 	@Override
