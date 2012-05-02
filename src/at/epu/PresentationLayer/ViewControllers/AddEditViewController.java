@@ -2,6 +2,7 @@ package at.epu.PresentationLayer.ViewControllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -11,6 +12,11 @@ import javax.swing.JTextField;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
+import at.epu.DataAccessLayer.DataObjects.DataObject;
+import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataObjects.DataObjectFactory;
+import at.epu.DataAccessLayer.DataObjects.IntermediateObjects.ArrayResultSet;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.GenericAddEditFormView;
@@ -152,18 +158,48 @@ public class AddEditViewController extends ViewController implements ActionListe
 			}
 
 			if(cmd_.equals("ADD") || cmd_.equals("EDIT")) {
-				try {
-					appManager.getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), model.getDataObjectCollection());
-				} catch (DataProviderException e) {
-					e.printStackTrace();
+				//check the user input. only if input is correct the frame is disposed
+				if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData(), false)) {
+					DataObjectCollection collection = model.getDataObjectCollection();
+					
+					Object[] tmp = new Object[columnNames.length + 1];
+					
+					try {
+						tmp[0] = appManager.getDatabaseManager().getNextIdForTableName(model.getTableName());
+					} catch (DataProviderException e2) {
+						e2.printStackTrace();
+					}
+					
+					for(int i = 1; i < tmp.length; i++) {
+						tmp[i] = data[i - 1];
+					}
+					
+					ArrayResultSet rs = new ArrayResultSet(tmp);
+					
+					DataObject object = null;
+					try {
+						object = DataObjectFactory.createObject(model.getTableName(), rs);
+					} catch (SQLException e1) {
+						/** This particular one should not throw SQL exception */
+						e1.printStackTrace();
+					}
+					
+					object.setState(DataObjectState.DataObjectStateNew);
+					
+					collection.add(object);
+					
+					try {
+						appManager.getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), collection);
+					} catch (DataProviderException e) {
+						e.printStackTrace();
+					}
+					
+					model.setDataObjectCollection(collection);
+        			model.updateTableData();
+					
+					appManager.getDialogManager().popDialog();	
 				}
-			} 
-			
-			//check the user input. only if input is correct the frame is disposed
-			if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData())) {
-				appManager.getDialogManager().popDialog();	
-			}
-			
+			} 			
 		}
 		
 		if(cmd.equals("CANCEL")) {

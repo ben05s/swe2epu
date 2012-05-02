@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class AddEditState {
 	 String[] addEditColNames = null;
 	 Object[][] addEditData = null;
-	 ArrayList<String> choosenData = new ArrayList<String>();
-	 ArrayList<Integer> missingCols = new ArrayList<Integer>();
-	 ArrayList<Integer> chooseIndex = new ArrayList<Integer>();
+	 ArrayList<String> choosenData = new ArrayList<String>();	/** ausgewählte Datei */
+	 ArrayList<Integer> missingCols = new ArrayList<Integer>(); /** nicht editierbar */
+	 ArrayList<Integer> chooseIndex = new ArrayList<Integer>(); /** auswählbar */
 	 boolean detailTableView = false;
 	 BackofficeTableModel parent = null;
 	 

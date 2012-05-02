@@ -1,7 +1,5 @@
 package at.epu.PresentationLayer.DataModels;
 
-import at.epu.BusinessLayer.ApplicationManager;
-
 public class AddEditStateFactory {
 	public static AddEditState createAddEditStateForTableName(String tableName, BackofficeTableModel parent) {
 		AddEditState state = new AddEditState(parent);

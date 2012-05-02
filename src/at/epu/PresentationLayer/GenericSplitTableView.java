@@ -1,10 +1,10 @@
 package at.epu.PresentationLayer;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -32,6 +32,7 @@ import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.Renderers.ColorRenderer;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 import at.epu.PresentationLayer.ViewControllers.DetailViewController;
 
@@ -48,7 +49,8 @@ public class GenericSplitTableView extends JPanel {
 	 * Create the panel.
 	 */
 	public GenericSplitTableView(List<JButton> buttons, List<JLabel> labels, final List<JMenuItem> menuList, final String title, final BackofficeTableModel tableModel) {
-		setBackground(SystemColor.control);
+		Color bgColor = new Color(230,230,230);
+		setBackground(bgColor);
 		setModel(tableModel);
 	
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -59,6 +61,7 @@ public class GenericSplitTableView extends JPanel {
 		setLayout(gridBagLayout);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(bgColor);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -70,6 +73,14 @@ public class GenericSplitTableView extends JPanel {
 		table = new JTable(tableModel);
 		//table.setBackground(Color.ORANGE);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
+		ColorRenderer cellRenderer = new ColorRenderer("cellRenderer");
+		
+		table.getTableHeader().setReorderingAllowed(false);
+		
+		for(int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+		}
 	
 		for(int i = 0; i < table.getColumnCount(); i++) {
 			packColumn(table, i, 10);
@@ -93,6 +104,7 @@ public class GenericSplitTableView extends JPanel {
 		
 		int i = 0;
 		for(JButton button : buttons) {
+			button.setFocusPainted(false);
 			GridBagConstraints gbc_button = new GridBagConstraints();
 			gbc_button.insets = new Insets(5, 10, 5, 10);
 			gbc_button.gridx = 0;

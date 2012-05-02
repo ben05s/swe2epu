@@ -43,7 +43,7 @@ public class DataObjectFactory {
 			tmp.setId(resultSet.getInt(1));
 			tmp.setVorname(resultSet.getString(2));
 			tmp.setNachname(resultSet.getString(3));
-			tmp.setAddresse(resultSet.getString(4));
+			tmp.setAdresse(resultSet.getString(4));
 			tmp.setEmail(resultSet.getString(5));
 			tmp.setTelefon(resultSet.getString(6));
 			

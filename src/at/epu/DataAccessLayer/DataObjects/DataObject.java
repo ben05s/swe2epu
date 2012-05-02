@@ -25,7 +25,7 @@ public class DataObject {
 		fieldList = new ArrayList<Field>();
 		
 		try {
-			fieldList.add(this.getClass().getDeclaredField("id"));
+			fieldList.add(this.getClass().getSuperclass().getDeclaredField("id"));
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {

@@ -45,7 +45,7 @@ public class MockDataFactory {
 			obj1.setNachname("Smith");
 			obj1.setEmail("sd.sd@gmx.at");
 			obj1.setTelefon("066034212502");
-			obj1.setAddresse("Landstr 33/7");
+			obj1.setAdresse("Landstr 33/7");
 			
 			collection.add(obj1);
 			
@@ -56,7 +56,7 @@ public class MockDataFactory {
 			obj2.setNachname("Doe");
 			obj2.setEmail("asd.asd@gmail.com");
 			obj2.setTelefon("066034212522");
-			obj2.setAddresse("Hansgasse 43/2");
+			obj2.setAdresse("Hansgasse 43/2");
 			
 			collection.add(obj2);
 		} else if( tableName.equals("Kategorien") ) {

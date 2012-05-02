@@ -28,7 +28,7 @@ public class BindingManager {
 		illegalInput.add("buchungszeilen");
 	}
 	
-	public boolean checkInput(Object[] data, ArrayList<String> choosenData) throws NullPointerException {
+	public boolean checkInput(Object[] data, ArrayList<String> choosenData, boolean silent) throws NullPointerException {
 		
 		if(data.length == 0) {
 			JOptionPane.showMessageDialog(null, "Sie haben noch nichts ausgefüllt!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -38,22 +38,26 @@ public class BindingManager {
 			for(int i=0;i<data.length;i++) {
 				
 				if(data[i].toString().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Füllen sie bitte alle Felder aus!", "Error", JOptionPane.ERROR_MESSAGE);
+					if(!silent) {
+						JOptionPane.showMessageDialog(null, "Füllen sie bitte alle Felder aus!", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 					return false;
 				} 
 				else {
 					for(int x=0;x<illegalInput.size();x++) {
-						if(data[i].toString().contains(illegalInput.get(x))) {
-							JOptionPane.showMessageDialog(null, "Die Eingabe: \'" + data[i] + "\' ist nicht erlaubt!", "Error", JOptionPane.ERROR_MESSAGE);
+						if(data[i].toString().toLowerCase().contains(illegalInput.get(x))) {
+							if(!silent) {
+								JOptionPane.showMessageDialog(null, "Die Eingabe: \'" + data[i] + "\' ist nicht erlaubt!", "Error", JOptionPane.ERROR_MESSAGE);
+							}
 							return false;
 						}
 					}	
 				}
 				
-				if(choosenData.size() == 0) {
+				/**if(choosenData.size() == 0) {
 					JOptionPane.showMessageDialog(null, "Wählen sie von allen Auswählen-Buttons etwas aus bevor sie fortfahren!", "Error", JOptionPane.ERROR_MESSAGE);
 					return false;
-				}
+				}*/
 			}
 		}
 		

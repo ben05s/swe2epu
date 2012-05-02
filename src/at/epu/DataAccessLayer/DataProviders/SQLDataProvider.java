@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -27,6 +28,26 @@ public class SQLDataProvider implements DataProvider {
 			e.printStackTrace();
 			System.exit(0);
 		} 
+	}
+	
+	@Override
+	public int getNextIdForTable(String tableName) {
+		String sql = "SELECT MAX(id) FROM " + tableName;
+		int retVal = 0;
+		
+		try {
+			Statement stm = databaseHandle.createStatement();
+			
+			ResultSet rs = stm.executeQuery(sql);
+			
+			rs.next();
+			retVal = rs.getInt(1) + 1;
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retVal;
 	}
 	
 	@Override
@@ -90,16 +111,22 @@ public class SQLDataProvider implements DataProvider {
 			builder.append(fieldName + ",");
 		}
 		
-		builder.replace(builder.length()-2, builder.length()-1, ")");
+		builder.replace(builder.length()-1, builder.length(), ")");
 		builder.append(" VALUES (");
 		
 		for(Object obj : object.getFieldValues()) {
+			if(obj.getClass() == String.class) {
+				obj = new String("'" + obj + "'");
+			}
+			
 			builder.append(obj + ",");
 		}
 		
-		builder.replace(builder.length()-2, builder.length()-1, ")");
+		builder.replace(builder.length()-1, builder.length(), ")");
 		
-		PreparedStatement statement = databaseHandle.prepareStatement(builder.toString());
+		String sql = builder.toString();
+		
+		PreparedStatement statement = databaseHandle.prepareStatement(sql);
 		
 		statement.execute();
 	}

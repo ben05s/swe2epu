@@ -25,6 +25,10 @@ public class DatabaseManager {
 		dataSource = new DataSource(type, databaseName);
 	}
 	
+	public int getNextIdForTableName(String tableName) throws DataProviderException {
+		return dataSource.getNextIdForTableName(tableName);
+	}
+	
 	public DataObjectCollection getAllObjectsForTableName(String tableName) throws DataProviderException {
 		return dataSource.getAllObjectsForTableName(tableName);
 	}

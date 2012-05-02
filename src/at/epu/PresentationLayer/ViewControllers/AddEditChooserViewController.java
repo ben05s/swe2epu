@@ -186,7 +186,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			if(cmd.equals("CHECKBOX"+i)) {
 				AbstractButton ab = (AbstractButton) event.getSource();
 				if(ab.getModel().isSelected()) {
-					if(command.equals("ADD")) { model.getAddEditState().addChoosenData(this.data[i][1].toString()); }
+					if(command.equals("ADD")) { model.getAddEditState().addChoosenData(this.data[i][0].toString()); }
 					if(command.equals("EDIT")) { }	
 				}
 				if(! ab.getModel().isSelected()) {

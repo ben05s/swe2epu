@@ -17,6 +17,22 @@ public class MockDataProvider implements DataProvider {
 		objectCache = new HashMap<String, DataObjectCollection>();
 		dataFactory = new MockDataFactory();
 	}
+	
+	@Override
+	public int getNextIdForTable(String tableName) {
+		int retVal = 0;
+		
+		DataObjectCollection collection = objectCache.get(tableName);
+		
+		/** Find highest Id */
+		for(DataObject object : collection) {
+			if(object.getId() > retVal) {
+				retVal = object.getId();
+			}
+		}
+		
+		return retVal + 1;
+	}
 
 	@Override
 	public DataObjectCollection selectAll(String tableName)

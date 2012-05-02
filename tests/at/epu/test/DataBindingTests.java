@@ -16,10 +16,10 @@ public class DataBindingTests {
 		Object[] data = {""};
 		ArrayList<String> choosenData = new ArrayList<String>();
 		choosenData.add("Dummy");
-		assertEquals(false, appManager.getBindingManager().checkInput(data, choosenData));
+		assertEquals(false, appManager.getBindingManager().checkInput(data, choosenData, true));
 		
 		Object[] data2 = {"Fritz"};
-		assertEquals(true, appManager.getBindingManager().checkInput(data2, choosenData));
+		assertEquals(true, appManager.getBindingManager().checkInput(data2, choosenData, true));
 	}
 	
 	@Test
@@ -27,7 +27,7 @@ public class DataBindingTests {
 		Object[] data = {"drop table kontakte;", "delete * from buchungszeilen;"};
 		ArrayList<String> choosenData = new ArrayList<String>();
 		choosenData.add("Dummy");
-		assertEquals(false, appManager.getBindingManager().checkInput(data, choosenData));
+		assertEquals(false, appManager.getBindingManager().checkInput(data, choosenData, true));
 	}
 	
 	@Test
@@ -35,7 +35,7 @@ public class DataBindingTests {
 		Object[] data = {"Heinz", "Klaus"};
 		ArrayList<String> choosenData = new ArrayList<String>();
 		choosenData.add("Dummy");
-		assertEquals(true, appManager.getBindingManager().checkInput(data, choosenData));
+		assertEquals(true, appManager.getBindingManager().checkInput(data, choosenData, true));
 	}
 
 }

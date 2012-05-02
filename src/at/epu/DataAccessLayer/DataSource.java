@@ -21,6 +21,10 @@ public class DataSource {
 		}
 	}
 	
+	public int getNextIdForTableName(String tableName) throws DataProviderException {
+		return dataProvider.getNextIdForTable(tableName);
+	}
+	
 	public DataObjectCollection getAllObjectsForTableName(String tableName) throws DataProviderException {
 		return dataProvider.selectAll(tableName);
 	}

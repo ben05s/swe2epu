@@ -24,7 +24,7 @@ public class MockDataTests {
 		ContactDataObject object = new ContactDataObject();
 		object.setVorname("Heinz");
 		object.setNachname("Meier");
-		object.setAddresse("Hausgasse");
+		object.setAdresse("Hausgasse");
 		object.setEmail("email");
 		object.setTelefon("0664414123");
 		
@@ -39,6 +39,6 @@ public class MockDataTests {
 		
 		tableModel.setDataObjectCollection(collection);
 		
-		assertEquals("Heinz", tableModel.getDataObjectCollection().toDataArray()[tableModel.getDataObjectCollection().size()][1]);
+		assertEquals("Heinz", tableModel.getDataObjectCollection().toDataArray()[tableModel.getDataObjectCollection().size() - 1][1]);
 	}
 }

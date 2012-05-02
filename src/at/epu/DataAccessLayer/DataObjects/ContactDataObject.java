@@ -3,7 +3,7 @@ package at.epu.DataAccessLayer.DataObjects;
 public class ContactDataObject extends DataObject {
 	String vorname;
 	String nachname;
-	String addresse;
+	String adresse;
 	String email;
 	String telefon;
 	
@@ -19,11 +19,11 @@ public class ContactDataObject extends DataObject {
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
-	public String getAddresse() {
-		return addresse;
+	public String getAdresse() {
+		return adresse;
 	}
-	public void setAddresse(String addresse) {
-		this.addresse = addresse;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 	public String getEmail() {
 		return email;

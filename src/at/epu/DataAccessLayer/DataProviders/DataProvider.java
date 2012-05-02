@@ -13,6 +13,7 @@ public interface DataProvider {
 		}
 	}
 	
+	public int getNextIdForTable(String tableName);
 	public DataObjectCollection selectAll(String tableName) throws DataProviderException;
 	public void syncData(String tableName, DataObjectCollection collection) throws DataProviderException;
 }
