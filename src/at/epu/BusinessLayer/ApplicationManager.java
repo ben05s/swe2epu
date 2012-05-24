@@ -6,7 +6,9 @@ import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.DataModels.DataModelFactory;
 import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.MainWindow;
-
+/*
+ * 
+ */
 public class ApplicationManager {
 	static ApplicationManager instance = null;
 	DatabaseManager databaseManager    = null;
