@@ -1,17 +1,17 @@
 package at.epu.DataAccessLayer.DataObjects;
 
 public class OutBillDataObject extends DataObject {
-	String rechnungskürzel;
+	String rechnungskÃ¼rzel;
 	int kunde_id;
 	int rzeile_mapping_id;
 	int bzeile_mapping_id;
 	String status;
 	
-	public String getRechnungskürzel() {
-		return rechnungskürzel;
+	public String getRechnungskÃ¼rzel() {
+		return rechnungskÃ¼rzel;
 	}
-	public void setRechnungskürzel(String rechnungskürzel) {
-		this.rechnungskürzel = rechnungskürzel;
+	public void setRechnungskÃ¼rzel(String rechnungskÃ¼rzel) {
+		this.rechnungskÃ¼rzel = rechnungskÃ¼rzel;
 	}
 	public int getKunde_id() {
 		return kunde_id;

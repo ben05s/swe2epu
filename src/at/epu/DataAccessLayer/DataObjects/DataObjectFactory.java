@@ -65,7 +65,7 @@ public class DataObjectFactory {
 			InBillDataObject tmp = new InBillDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskürzel(resultSet.getString(2));
+			tmp.setRechnungskÃ¼rzel(resultSet.getString(2));
 			tmp.setKontakt_id(resultSet.getInt(3));
 			tmp.setRzeile_mapping_id(resultSet.getInt(4));
 			tmp.setBzeile_mapping_id(resultSet.getInt(5));
@@ -88,7 +88,7 @@ public class DataObjectFactory {
 			OutBillDataObject tmp = new OutBillDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskürzel(resultSet.getString(2));
+			tmp.setRechnungskÃ¼rzel(resultSet.getString(2));
 			tmp.setKunde_id(resultSet.getInt(3));
 			tmp.setRzeile_mapping_id(resultSet.getInt(4));
 			tmp.setBzeile_mapping_id(resultSet.getInt(5));
