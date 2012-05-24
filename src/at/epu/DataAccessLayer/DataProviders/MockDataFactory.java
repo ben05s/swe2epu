@@ -5,6 +5,7 @@ import java.util.Date;
 
 import at.epu.DataAccessLayer.DataObjects.BankAccountDataObject;
 import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
+import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
@@ -37,7 +38,7 @@ public class MockDataFactory {
 			obj2.setKat_mapping_id(1);
 			
 			collection.add(obj2);
-		} else if( tableName.equals("Rechnungszeilen") ) {
+		} else if( tableName.equals("Kontakte") ) {
 			ContactDataObject obj1 = new ContactDataObject();
 			
 			obj1.setId(new Integer(1));
@@ -65,19 +66,21 @@ public class MockDataFactory {
 				    {new Integer(2), "Ausgabe"},
 				    {new Integer(3), "Steuer"}
 				};
-		} else if( tableName.equals("Kontakte") ) {
-			Object[][] data_ = {
-				    {new Integer(1), "Kathy", "Smith",
-				     "Landstr 33/7", "sd.sd@gmx.at", "066034212502"},
-				    {new Integer(2), "John", "Doe",
-				     "Hansgasse 43/2", "asd.asd@gmail.com", null},
-				    {new Integer(3), "Sue", "Black",
-				     "Hufoasdgasse 89/12", "asgdgs.s@chello.at", "06646342325"}
-				};
 		} else if( tableName.equals("Kunden") ) {
+			CustomerDataObject obj1 = new CustomerDataObject();
+			
+			obj1.setId(1);
+			obj1.setVorname("Ben");
+			obj1.setNachname("Hur");
+			obj1.setUnternehmen("Mobil Gmbh");
+			obj1.setAdresse("Petergasse 354/7");
+			obj1.setEmail("sdas.t@gmx.at");
+			obj1.setTelefon("06602348192");
+			obj1.setAngebot_mapping_id(1);
+			
+			collection.add(obj1);
+			
 			Object[][] data_ = {
-				    {new Integer(1), "Ben", "Hur", "Mobil Gmbh",
-				     "Petergasse 345/7", "sdas.t@gmx.at", "06603412402", "Admin billig A."},
 				    {new Integer(2), "Fritz", "DD", "Privat", 
 				     "Zeilengasse 143/22", "f.DD@gmail.com", "06761252042", null},
 				    {new Integer(3), "Heinz", "MrX", "Haus Gmbh",
