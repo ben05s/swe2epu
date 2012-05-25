@@ -1,5 +1,7 @@
 package at.epu.DataAccessLayer.DataObjects;
 
+import java.util.ArrayList;
+
 public class CustomerDataObject extends DataObject {
 	String vorname;
 	String nachname;
@@ -7,7 +9,7 @@ public class CustomerDataObject extends DataObject {
 	String unternehmen;
 	String email;
 	String telefon;
-	int angebot_mapping_id;
+	String angebote;
 	
 	public String getVorname() {
 		return vorname;
@@ -45,10 +47,10 @@ public class CustomerDataObject extends DataObject {
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
-	public int getAngebot_mapping_id() {
-		return angebot_mapping_id;
+	public String getAngebote() {
+		return angebote;
 	}
-	public void setAngebot_mapping_id(int angebot_mapping_id) {
-		this.angebot_mapping_id = angebot_mapping_id;
+	public void setAngebote(String angebote) {
+		this.angebote = angebote;
 	}
 }

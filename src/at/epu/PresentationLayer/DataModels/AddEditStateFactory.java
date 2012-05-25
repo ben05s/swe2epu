@@ -23,16 +23,18 @@ public class AddEditStateFactory {
 		} else if( tableName.equals("Kategorien") ) {
 			// NOP
 		} else if( tableName.equals("Kontakte") ) {
-			String[] addEditColNames_ = {"Vorname",
+			String[] addEditColNames_ = {
 	                "Nachname",
+	                "Vorname",
 	                "Adresse",
 	                "Email",
 	                "Telefon"};
 			
 			state.setAddEditColNames(addEditColNames_);
 		} else if( tableName.equals("Kunden") ) {
-			String[] addEditColNames_ = {"Vorname",
+			String[] addEditColNames_ = {
 					"Nachname",
+					"Vorname",
 					"Unternehmen",
 					"Adresse",
 					"Email",
@@ -41,7 +43,11 @@ public class AddEditStateFactory {
 			
 			state.setAddEditColNames(addEditColNames_);
 		} else if( tableName.equals("Eingangsrechnungen") ) {
-			// NOP
+			String [] addEditColNames_ = {"Rechnungskürzel",
+					"Kontakt",
+					"Status"};
+			
+			state.setAddEditColNames(addEditColNames_);
 		} else if( tableName.equals("Angebote") ) {
 			String[] addEditColNames_ = {"Titel",
 					"Kunde",

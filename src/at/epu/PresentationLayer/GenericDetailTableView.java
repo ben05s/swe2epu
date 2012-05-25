@@ -31,6 +31,7 @@ import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.Renderers.ColorRenderer;
 import at.epu.PresentationLayer.ViewControllers.AddEditViewController;
 
 public class GenericDetailTableView extends JPanel {
@@ -65,8 +66,16 @@ public class GenericDetailTableView extends JPanel {
 		add(panel, gbc_panel);
 		
 		table = new JTable(tableModel);
-		table.setBackground(Color.ORANGE);
+		//table.setBackground(Color.ORANGE);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
+		ColorRenderer cellRenderer = new ColorRenderer("cellRenderer");
+		
+		table.getTableHeader().setReorderingAllowed(false);
+		
+		for(int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+		}
 		
 		for(int i = 0; i < table.getColumnCount(); i++) {
 			packColumn(table, i, 10);

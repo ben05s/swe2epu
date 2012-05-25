@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.PresentationLayer.ViewControllers.BankAccountViewController;
-import at.epu.PresentationLayer.ViewControllers.BillViewController;
+import at.epu.PresentationLayer.ViewControllers.InBillViewController;
+import at.epu.PresentationLayer.ViewControllers.OutBillViewController;
 import at.epu.PresentationLayer.ViewControllers.ContactViewController;
 import at.epu.PresentationLayer.ViewControllers.CustomerViewController;
 import at.epu.PresentationLayer.ViewControllers.OfferViewController;
@@ -60,7 +61,7 @@ public class MainWindow {
 	private void initialize() {
 		frmBackoffice = new JFrame();
 		frmBackoffice.setTitle("Backoffice");
-		frmBackoffice.setBounds(100, 100, 800, 600);
+		frmBackoffice.setBounds(100, 100, 1024, 600);
 		frmBackoffice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -70,7 +71,8 @@ public class MainWindow {
 		addViewToMainControl(new CustomerViewController(frmBackoffice));
 		addViewToMainControl(new OfferViewController(frmBackoffice));
 		addViewToMainControl(new ProjectViewController(frmBackoffice));
-		addViewToMainControl(new BillViewController(frmBackoffice));
+		addViewToMainControl(new InBillViewController(frmBackoffice));
+		addViewToMainControl(new OutBillViewController(frmBackoffice));
 		addViewToMainControl(new BankAccountViewController(frmBackoffice));
 	}
 	

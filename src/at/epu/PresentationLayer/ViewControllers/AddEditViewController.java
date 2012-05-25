@@ -124,7 +124,9 @@ public class AddEditViewController extends ViewController implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-			
+		ArrayList<String> foreignValue = new ArrayList<String>();
+		StringBuilder val = new StringBuilder();
+		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		//when there are 3 different choosable buttons in the add/edit form every button needs to handle a different functionality
@@ -162,6 +164,11 @@ public class AddEditViewController extends ViewController implements ActionListe
 				if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData(), false)) {
 					DataObjectCollection collection = model.getDataObjectCollection();
 					
+					for(int i=0;i<appManager.getActiveTableModel().getAddEditState().getChoosenData().size();i++) {
+						val.append(appManager.getActiveTableModel().getAddEditState().getChoosenData().get(i) + " ");
+					}
+					foreignValue.add(val.toString());
+					
 					Object[] tmp = new Object[columnNames.length + 1];
 					
 					try {
@@ -178,7 +185,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 					
 					DataObject object = null;
 					try {
-						object = DataObjectFactory.createObject(model.getTableName(), rs);
+						object = DataObjectFactory.createObject(model.getTableName(), rs, foreignValue);
 					} catch (SQLException e1) {
 						/** This particular one should not throw SQL exception */
 						e1.printStackTrace();

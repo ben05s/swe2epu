@@ -76,6 +76,19 @@ public class GenericChooserFormView extends JPanel {
 				}
 			}
 		}
+		if(title.equals("Eingangsrechnungen")) {
+			if(model.getAddEditState().isDetailTableView()) {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			} else {
+				for (int i = 0; i < numPairs; i++) {
+					springLayout.add(radioList.get(i));
+					springLayout.add(labels.get(i));
+				}
+			}
+		}
 		if(title.equals("Buchungszeilen")) {
 			if(chooseCommand.equals("CHOOSE1")) {
 				for (int i = 0; i < numPairs; i++) {

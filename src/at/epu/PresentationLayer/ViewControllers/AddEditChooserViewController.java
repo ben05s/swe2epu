@@ -69,6 +69,10 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			data = ApplicationManager.getInstance().getModelForTableName("Kunden").getDataObjectCollection().toDataArray();
 			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData();
 		}
+		else if(this.title == "Eingangsrechnungen"){
+			data = ApplicationManager.getInstance().getModelForTableName("Kontakte").getDataObjectCollection().toDataArray();
+			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Eingangsrechnungen").getAddEditState().getChoosenData();
+		}
 		else if(this.title == "Rechnungszeilen") {
 			data = ApplicationManager.getInstance().getModelForTableName("Angebote").getDataObjectCollection().toDataArray();
 			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Rechnungszeilen").getAddEditState().getChoosenData();
@@ -125,6 +129,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 				} else {
 					checked[i] = false;
 					for(int z=count;z<model.getAddEditState().getChoosenData().size();z++) {
+						//the second string in the array will be displayed
 						if(model.getAddEditState().getChoosenData().get(z).equals(this.data[i][1].toString())) {
 							checked[i] = true;
 							count++;
@@ -186,7 +191,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			if(cmd.equals("CHECKBOX"+i)) {
 				AbstractButton ab = (AbstractButton) event.getSource();
 				if(ab.getModel().isSelected()) {
-					if(command.equals("ADD")) { model.getAddEditState().addChoosenData(this.data[i][0].toString()); }
+					if(command.equals("ADD")) { model.getAddEditState().addChoosenData(this.data[i][1].toString()); }
 					if(command.equals("EDIT")) { }	
 				}
 				if(! ab.getModel().isSelected()) {

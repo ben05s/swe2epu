@@ -54,8 +54,8 @@ public class DataModelFactory {
 			tmp = columnNames_;
 		} else if( tableName.equals("Kontakte") ) {
 			String[] columnNames_ = {"ID",
-					"Vorname",
 	                "Nachname",
+					"Vorname",
 	                "Adresse",
 	                "Email",
 	                "Telefon"};
@@ -63,8 +63,8 @@ public class DataModelFactory {
 			tmp = columnNames_;
 		} else if( tableName.equals("Kunden") ) {
 			String[] columnNames_ = {"ID",
-					"Vorname",
 	                "Nachname",
+					"Vorname",
 	                "Unternehmen",
 	                "Adresse",
 	                "Email",
@@ -74,8 +74,8 @@ public class DataModelFactory {
 			tmp = columnNames_;
 		} else if( tableName.equals("Eingangsrechnungen") ) {
 			String [] columnNames_ = {"Eingangsrechnung ID",
+					"Rechnungskürzel",
 					"Kontakt",
-					"Anz Rechnungszeilen",
 					"Anz Buchungszeilen",
 					"Status"};
 			

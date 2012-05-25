@@ -1,7 +1,7 @@
 CREATE TABLE kontakte 
 	(id INTEGER,
+	nachname VARCHAR(50),	
 	vorname VARCHAR(50),
-	nachname VARCHAR(50),
 	adresse VARCHAR(50),
 	email VARCHAR(100),
 	telefon varchar(50),
@@ -9,8 +9,8 @@ CREATE TABLE kontakte
 
 CREATE TABLE kunden
 	(id INTEGER,
-	vorname VARCHAR(50),
 	nachname VARCHAR(50),
+	vorname VARCHAR(50),
 	unternehmen VARCHAR(50),
 	adresse VARCHAR(50),
 	email VARCHAR(100),
@@ -66,12 +66,10 @@ CREATE TABLE ausgangsrechnungen
 	status VARCHAR(50),
 	PRIMARY KEY(id));
 
---fraglich welche zusätzlichen daten für eingrechnung bennötigt werden bzw woher die daten kommen sollen(scannen?) -> fragen!
 CREATE TABLE eingangsrechnungen
 	(id INTEGER,
 	rechnungskürzel VARCHAR(50),
 	kontakt_id INTEGER,
-	rzeile_mapping_id INTEGER,
 	bzeile_mapping_id INTEGER,
 	status VARCHAR(50),
 	PRIMARY KEY(id));

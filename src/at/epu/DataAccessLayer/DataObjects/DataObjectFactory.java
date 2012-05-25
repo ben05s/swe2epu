@@ -2,9 +2,10 @@ package at.epu.DataAccessLayer.DataObjects;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DataObjectFactory {
-	public static DataObject createObject(String tableName, ResultSet resultSet) throws SQLException {
+	public static DataObject createObject(String tableName, ResultSet resultSet, ArrayList<String> foreignValue) throws SQLException {
 		DataObject retVal = null;
 		
 		if( tableName.equals("Buchungszeilen") ) {
@@ -58,18 +59,17 @@ public class DataObjectFactory {
 			tmp.setAdresse(resultSet.getString(5));
 			tmp.setEmail(resultSet.getString(6));
 			tmp.setTelefon(resultSet.getString(7));
-			tmp.setAngebot_mapping_id(resultSet.getInt(8));
+			tmp.setAngebote(foreignValue.get(0));
 			
 			retVal = tmp;
 		} else if( tableName.equals("Eingangsrechnungen") ) {
 			InBillDataObject tmp = new InBillDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskürzel(resultSet.getString(2));
+			tmp.setRechnungskuerzel(resultSet.getString(2));
 			tmp.setKontakt_id(resultSet.getInt(3));
-			tmp.setRzeile_mapping_id(resultSet.getInt(4));
-			tmp.setBzeile_mapping_id(resultSet.getInt(5));
-			tmp.setStatus(resultSet.getString(6));
+			tmp.setBzeile_mapping_id(resultSet.getInt(4));
+			tmp.setStatus(resultSet.getString(5));
 			
 			retVal = tmp;
 		} else if( tableName.equals("Angebote") ) {
@@ -88,7 +88,7 @@ public class DataObjectFactory {
 			OutBillDataObject tmp = new OutBillDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskürzel(resultSet.getString(2));
+			tmp.setRechnungskuerzel(resultSet.getString(2));
 			tmp.setKunde_id(resultSet.getInt(3));
 			tmp.setRzeile_mapping_id(resultSet.getInt(4));
 			tmp.setBzeile_mapping_id(resultSet.getInt(5));

@@ -70,7 +70,7 @@ public class AddEditState {
 	 */
 	public Object[][] getAddEditData() {
 		Object[][] data = parent.getDataObjectCollection().toDataArray();
-		
+
 		int z=-1;
 		Object[][] addEditData = new Object[data.length][this.addEditColNames.length];
 		for(int i=0;i<data.length;i++) {

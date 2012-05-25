@@ -1,6 +1,7 @@
 package at.epu.DataAccessLayer.DataProviders;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import at.epu.DataAccessLayer.DataObjects.BankAccountDataObject;
@@ -9,6 +10,7 @@ import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataObjects.InBillDataObject;
 
 public class MockDataFactory {	
 	DataObjectCollection createObjects(String tableName) {
@@ -76,7 +78,7 @@ public class MockDataFactory {
 			obj1.setAdresse("Petergasse 354/7");
 			obj1.setEmail("sdas.t@gmx.at");
 			obj1.setTelefon("06602348192");
-			obj1.setAngebot_mapping_id(1);
+			obj1.setAngebote("A002-Tool");
 			
 			collection.add(obj1);
 			
@@ -87,8 +89,17 @@ public class MockDataFactory {
 				     "Franzgasse 9/12", "x.x@chello.at", "066465352325", "A003"},
 				};
 		} else if( tableName.equals("Eingangsrechnungen") ) {
+			InBillDataObject obj1 = new InBillDataObject();
+			
+			obj1.setId(1);
+			obj1.setRechnungskuerzel("InBill123");
+			obj1.setKontakt_id(1);
+			obj1.setBzeile_mapping_id(1);
+			obj1.setStatus("bezahlt");
+			
+			collection.add(obj1);
+			
 			Object [][] data_ = {
-					{new Integer(1), "InBill123", "Smith", new Integer(0), new Integer(0), "offen"},
 					{new Integer(2), "InBill932", "Black", new Integer(0), new Integer(0), "offen"}
 			};
 		} else if( tableName.equals("Angebote") ) {

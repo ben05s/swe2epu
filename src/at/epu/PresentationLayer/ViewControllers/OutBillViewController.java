@@ -16,8 +16,8 @@ import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 
 // TODO: combine OutBill and InBill DataObjects
 // currently only OutBill
-public class BillViewController extends ViewController implements ActionListener{
-	public BillViewController(JFrame mainWindow) {
+public class OutBillViewController extends ViewController implements ActionListener{
+	public OutBillViewController(JFrame mainWindow) {
 		super(mainWindow);
 	}
 	
@@ -30,7 +30,6 @@ public class BillViewController extends ViewController implements ActionListener
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		
-		buttonList.add(new JButton("Eingangsrechnungen Scannen"));
 		buttonList.add(new JButton("Rechnungen generieren PDF"));
 		buttonList.add(new JButton("Rechnungsreport PDF"));
 		buttonList.add(new JButton("Ein- Ausgaben Report PDF"));
@@ -43,7 +42,7 @@ public class BillViewController extends ViewController implements ActionListener
 		menuList.add(new JMenuItem("Details"));
 		menuList.add(new JMenuItem("Löschen"));
 		
-		title = "Rechnungen";
+		title = "Ausgangsrechnungen";
 		
 		getIndexChoosable().add(1);
 		

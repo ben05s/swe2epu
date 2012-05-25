@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import at.epu.DataAccessLayer.DataObjects.DataObject;
-import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
+import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataObjects.DataObjectFactory;
 
 public class SQLDataProvider implements DataProvider {
@@ -54,18 +54,23 @@ public class SQLDataProvider implements DataProvider {
 	public DataObjectCollection selectAll(String tableName)
 			throws DataProviderException {
 		String selectString = "SELECT * FROM " + tableName;
+		
 		PreparedStatement statement = null;
+		ArrayList<String> foreignValue = new ArrayList<String>();
 		
 		try {
-			statement = databaseHandle.prepareStatement(selectString);
+			statement = databaseHandle.prepareStatement(selectString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
 
 			if( statement.execute() ) {
 				ResultSet result = statement.getResultSet();
 				
 				DataObjectCollection retVal = new DataObjectCollection();
-				
+
 				while( result.next() ) {
-					retVal.add( DataObjectFactory.createObject(tableName, result) );
+					foreignValue = resolveForeignKeys(tableName, result);
+					retVal.add( DataObjectFactory.createObject(tableName, result, foreignValue) );
 				}
 				
 				return retVal;
@@ -78,6 +83,42 @@ public class SQLDataProvider implements DataProvider {
 		}
 	}
 
+	public ArrayList<String> resolveForeignKeys(String tableName, ResultSet result)
+			throws DataProviderException {
+		
+		PreparedStatement statement = null;
+		String selectString = new String();
+		
+		ArrayList<String> retValue = new ArrayList<String>();
+		StringBuilder val = new StringBuilder();
+		
+		try {
+			if(tableName.equals("Kunden")) {
+				selectString = "SELECT Angebote.Titel FROM Angebote, Kunden, Angebote_Mapping " +
+						"WHERE Kunden.angebot_mapping_id = Angebote_Mapping.id " +
+						"AND Angebote.id = Angebote_Mapping.angebot_id " +
+						"AND Kunden.angebot_mapping_id = " + result.getInt("angebot_mapping_id");
+				
+				statement = databaseHandle.prepareStatement(selectString);
+				if( statement.execute() ) {
+					ResultSet rs = statement.getResultSet();
+					
+					while( rs.next() ) {
+						val.append(rs.getString(1) + " ");
+					}
+				} 
+				retValue.add(val.toString());
+			} else if(tableName.equals("Angebote")) {
+				
+			}
+			
+		} catch(SQLException e) {
+			System.err.println("Failed to resolved Foreign Keys from table: " + tableName);
+			throw new DataProviderException(e.getMessage());
+		}
+		return retValue;
+	}
+	
 	@Override
 	public void syncData(String tableName, DataObjectCollection collection) throws DataProviderException {
 		Iterator<DataObject> iterator = collection.iterator();
@@ -102,8 +143,52 @@ public class SQLDataProvider implements DataProvider {
 		}
 	}
 	
-	void insert(String tableName, DataObject object) throws SQLException {
+	public DataObject insertForeignMapping(String tableName, DataObject object) 
+		throws DataProviderException, SQLException {
+		String insertString = new String();
+		String selectString = new String();
+		/*
+		 * todo: make sure no spaces are in the input !!!
+		 */
+		if(tableName.equals("Kunden")) {
+			int nextID = getNextIdForTable("Angebote_Mapping");
+			String[] tmp;
+			String delimiter = " ";
+			
+			tmp = object.getFieldValues().get(7).toString().split(delimiter);
+			
+			for(int i=0;i<tmp.length;i++) {
+				selectString = "SELECT id FROM Angebote WHERE Titel = ?";
+				PreparedStatement statement1 = databaseHandle.prepareStatement(selectString);
+				statement1.setString(1, tmp[i]);
+				if( statement1.execute() ) {
+					ResultSet rs = statement1.getResultSet();
+					rs.next();
+					insertString = "INSERT INTO Angebote_Mapping VALUES(?, ?)";
+					PreparedStatement statement2 = databaseHandle.prepareStatement(insertString);
+					statement2.setInt(1, nextID);
+					statement2.setInt(2, rs.getInt(1));
+					statement2.execute();
+				} 
+			}
+			
+			/*insertString = "UPDATE Kunden SET angebot_mapping_id = ?";
+			PreparedStatement statement3 = databaseHandle.prepareStatement(insertString);
+			statement3.setInt(1, nextID);
+			statement3.execute();
+			*/
+			
+		} else if(tableName.equals("Angebote")) {
+			//NOI
+		}
+		
+		return object;
+	}
+	
+	void insert(String tableName, DataObject object) throws SQLException, DataProviderException {
 		StringBuilder builder = new StringBuilder();
+		
+		object = insertForeignMapping(tableName, object);
 		
 		builder.append("INSERT INTO " + tableName + " (");
 		
@@ -118,6 +203,7 @@ public class SQLDataProvider implements DataProvider {
 			if(obj.getClass() == String.class) {
 				obj = new String("'" + obj + "'");
 			}
+			
 			
 			builder.append(obj + ",");
 		}

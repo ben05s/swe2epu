@@ -1,28 +1,28 @@
 INSERT INTO kontakte VALUES
-	(1,	'Benjamin',	'Steindl',	'Landstr. 33/7',	'b.s80@gmx.at',	'06601231231');
+	(1,	'Steindl',	'Benjamin',	'Landstr. 33/7',	'b.s80@gmx.at',	'06601231231');
 INSERT INTO kontakte VALUES
-	(2,	'Patrick',	'Schwab',	'Höchstädtplatz 5',	'if10b047@technikum-wien.at',	'0664000999');
+	(2,	'Schwab',	'Patrick',	'Höchstädtplatz 5',	'if10b047@technikum-wien.at',	'0664000999');
 	
 INSERT INTO kunden VALUES
-	(1,	'Hans',	'Meier',	'Versicherungs GMBH',	'Hausgasse 55/1',	'hans.meier@gmail.com',	'06641234829203',	1);
+	(1,	'Meier',	'Hans',		'Versicherungs GMBH',	'Hausgasse 55/1',	'hans.meier@gmail.com',	'06641234829203',	1);
 	
 INSERT INTO kunden VALUES
-	(2,	'Peter',	'Schwarz',	'Tabak AG',	'Keinergasse 76/1',	'p.schwarz@gmx.at',	'06761023439283',	2);
+	(2,	'Schwarz',	'Peter',	'Tabak AG',	'Keinergasse 76/1',	'p.schwarz@gmx.at',	'06761023439283',	2);
 	
 INSERT INTO angebote VALUES
-	(1,	'A001-Programm',	1,	20100.00,	180,	'17.04.2012',	0.80);
+	(1,	'A001-Programm',	1,	20100.00,	180,	to_date('17.04.2012', 'DD.MM.YYYY'),	0.80);
 	
 INSERT INTO angebote VALUES
-	(2,	'A002-Tool',	2,	12000.00,	55,	'04.04.2012',	0.67);
+	(2,	'A002-Tool',	2,	12000.00,	55,	to_date('04.04.2012', 'DD.MM.YYYY'),	0.67);
 	
 INSERT INTO angebote VALUES
-	(3,	'A003-Meier Prog',	1,	5000.00,	31,	'24.05.2012',	0.33);
+	(3,	'A003-Meier Prog',	1,	5000.00,	31,	to_date('24.05.2012', 'DD.MM.YYYY'),	0.33);
 	
 INSERT INTO ausgangsrechnungen VALUES
 	(1,	'R012039'	,2,	null,	null,	'bezahlt');
 	
---INSERT INTO eingangsrechnungen VALUES
---	();
+INSERT INTO eingangsrechnungen VALUES
+	(1, 'R01230'	,1,	null, 'bezahlt');
 	
 INSERT INTO angebote_mapping VALUES
 	(1,	1);
@@ -55,11 +55,13 @@ INSERT INTO kat_mapping VALUES
 	(1,1);
 	
 INSERT INTO buchungszeilen VALUES
-	(1,	null,	1,	12000.00, null,	'02.12.2012',	1);
+	(1,	null,	1,	12000.00, null,	to_date('02.12.2012', 'DD.MM.YYYY'),	1);
 
+INSERT INTO buchungszeilen VALUES
+	(2,	null,	1,	1000.00, null,	to_date('14.12.2012', 'DD.MM.YYYY'),	1);
 	
 INSERT INTO buchungszeilen VALUES
-	(2,	null,	1,	1000.00, null,	'14.12.2012',	1);
+	(3,	1,	null,	500.00, null,	to_date('05.05.2012', 'DD.MM.YYYY'),	1);
 	
 INSERT INTO rechnungszeilen VALUES
 	(1,	1,	2,	'Bezahlung für das Projekt',	2400.00,	12000.00);
@@ -78,5 +80,10 @@ INSERT INTO bzeilen_mapping VALUES
 	
 INSERT INTO bzeilen_mapping VALUES
 	(1,	2);
+	
+INSERT INTO bzeilen_mapping VALUES
+	(2,	3);
 
 UPDATE ausgangsrechnungen SET rzeile_mapping_id=1,bzeile_mapping_id=1 WHERE id=1;
+
+UPDATE eingangsrechnungen SET bzeile_mapping_id=2 WHERE id=1;
