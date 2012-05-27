@@ -1,6 +1,5 @@
-package at.epu.PresentationLayer;
+package at.epu.PresentationLayer.Views;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -42,7 +41,6 @@ public class GenericDetailTableView extends JPanel {
 	BackofficeTableModel model;
 	DatabaseManager databaseManager;
 	String title = null;
-	ArrayList<Integer> indexChoosable = new ArrayList<Integer>();
 	
 	public GenericDetailTableView(final List<JButton> buttons, final List<JMenuItem> menuList, final BackofficeTableModel tableModel) {
 		setBackground(SystemColor.control);
@@ -129,7 +127,7 @@ public class GenericDetailTableView extends JPanel {
 		                		public void actionPerformed(ActionEvent e) {
 		                			String cmd = "EDIT";
 
-		                			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
+		                			AddEditViewController controller = new AddEditViewController(cmd, rowindex, model.getAddEditState().getIndexChoosable());
 		                			
 		                			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		                		}

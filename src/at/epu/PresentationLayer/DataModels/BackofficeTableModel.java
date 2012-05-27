@@ -68,7 +68,34 @@ public class BackofficeTableModel extends DefaultTableModel implements Filterabl
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return presentedObjects.toDataArray()[rowIndex][columnIndex];
+		if(presentedObjects.get(rowIndex).isForeignKeyField(columnIndex)) {
+			try {
+				ArrayList<String> tmp = ApplicationManager.getInstance()
+						 								  .getDatabaseManager()
+						 				.resolveForeignKeyForTableNameAndObject(tableName, presentedObjects.get(rowIndex), columnIndex);
+				
+				StringBuilder builder = new StringBuilder();
+				
+				int i = 0;
+				/** Reformat to single string. */
+				for(String string : tmp) {
+					if( i != 0 ) {
+						builder.append(", ");
+					}
+					
+					builder.append(string);
+					i++;
+				}
+				
+				return builder.toString();
+			} catch (DataProviderException e) {
+				e.printStackTrace();
+			}
+			
+			return "";
+		} else {
+			return presentedObjects.toDataArray()[rowIndex][columnIndex];
+		}
 	}
 	
 	@Override

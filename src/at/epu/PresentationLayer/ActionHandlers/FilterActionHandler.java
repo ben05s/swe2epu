@@ -6,10 +6,10 @@ import java.util.Collection;
 
 import javax.swing.JButton;
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.PresentationLayer.GenericFilterDialogueView;
-import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ViewControllers.FilterViewController;
 import at.epu.PresentationLayer.ViewControllers.ViewController;
+import at.epu.PresentationLayer.Views.GenericFilterDialogueView;
+import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
 public class FilterActionHandler extends ActionHandler {
 	String prefilterText;

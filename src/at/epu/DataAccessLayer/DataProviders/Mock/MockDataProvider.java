@@ -1,5 +1,6 @@
-package at.epu.DataAccessLayer.DataProviders;
+package at.epu.DataAccessLayer.DataProviders.Mock;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataProviders.DataProvider;
 
 public class MockDataProvider implements DataProvider {
 	/** Mock objects are held in process memory */
@@ -70,5 +72,11 @@ public class MockDataProvider implements DataProvider {
 		
 		objectCache.remove(tableName);
 		objectCache.put(tableName, collection);
+	}
+
+	@Override
+	public ArrayList<String> resolveForeignKey(String tableName,
+			DataObject object, int fieldIndex) throws DataProviderException {
+		return MockForeignKeyDataFactory.createForeignKeyResults(tableName, object, fieldIndex);
 	}
 }

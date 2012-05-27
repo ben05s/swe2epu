@@ -2,10 +2,9 @@ package at.epu.DataAccessLayer.DataObjects;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DataObjectFactory {
-	public static DataObject createObject(String tableName, ResultSet resultSet, ArrayList<String> foreignValue) throws SQLException {
+	public static DataObject createObject(String tableName, ResultSet resultSet) throws SQLException {
 		DataObject retVal = null;
 		
 		if( tableName.equals("Buchungszeilen") ) {
@@ -59,7 +58,7 @@ public class DataObjectFactory {
 			tmp.setAdresse(resultSet.getString(5));
 			tmp.setEmail(resultSet.getString(6));
 			tmp.setTelefon(resultSet.getString(7));
-			tmp.setAngebote(foreignValue.get(0));
+			tmp.setAngebot_mapping_id(resultSet.getInt(8));
 			
 			retVal = tmp;
 		} else if( tableName.equals("Eingangsrechnungen") ) {

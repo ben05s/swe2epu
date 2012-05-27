@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.PresentationLayer.GenericDetailTableView;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.Views.GenericDetailTableView;
 
 public class DetailViewController extends ViewController implements ActionListener{
 
@@ -40,7 +41,9 @@ public class DetailViewController extends ViewController implements ActionListen
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
 		
-		getIndexChoosable().add(0);
+		BackofficeTableModel model = appManager.getModelForTableName("Rechnungszeilen");
+		
+		model.getAddEditState().getIndexChoosable().add(0);
 		
 		rootComponent = new GenericDetailTableView(buttonList, menuList, appManager.getModelForTableName("Rechnungszeilen"));	
 	}
@@ -60,7 +63,7 @@ public class DetailViewController extends ViewController implements ActionListen
 		}		
 		
 		if(cmd.equals("ADD")) {
-			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
+			AddEditViewController controller = new AddEditViewController(cmd, rowindex, appManager.getModelForTableName("Projekte").getAddEditState().getIndexChoosable());
 			
 			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 		}

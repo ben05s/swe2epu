@@ -1,4 +1,4 @@
-package at.epu.PresentationLayer;
+package at.epu.PresentationLayer.Views;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

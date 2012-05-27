@@ -1,8 +1,8 @@
 package at.epu.PresentationLayer.ViewControllers;
 
 import java.awt.event.ActionListener;
-import at.epu.PresentationLayer.GenericFilterDialogueView;
 import at.epu.PresentationLayer.ActionHandlers.ActionHandler;
+import at.epu.PresentationLayer.Views.GenericFilterDialogueView;
 
 public class FilterViewController extends ViewController implements ActionListener {
 	String prefilterText;

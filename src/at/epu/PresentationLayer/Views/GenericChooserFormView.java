@@ -1,4 +1,4 @@
-package at.epu.PresentationLayer;
+package at.epu.PresentationLayer.Views;
 
 import java.awt.Dimension;
 import java.awt.SystemColor;
@@ -11,6 +11,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SpringLayout;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.PresentationLayer.SpringUtilities;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 
 public class GenericChooserFormView extends JPanel {

@@ -10,9 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
 public class ProjectViewController extends ViewController implements ActionListener{
 	public ProjectViewController(JFrame mainWindow) {
@@ -23,8 +24,10 @@ public class ProjectViewController extends ViewController implements ActionListe
 	void initialize() {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
+		BackofficeTableModel model = appManager.getModelForTableName("Projekte");
+		
 		registerActionHandler(new FilterActionHandler(this));
-		registerActionHandler(new AddActionHandler(this));
+		registerActionHandler(new AddActionHandler(this, model));
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		buttonList.add(new JButton("Zeiten Buchen"));
@@ -40,8 +43,8 @@ public class ProjectViewController extends ViewController implements ActionListe
 		
 		title = "Projekte";
 		
-		getIndexChoosable().add(1);
-		getIndexChoosable().add(2);
+		model.getAddEditState().getIndexChoosable().add(1);
+		model.getAddEditState().getIndexChoosable().add(2);
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
 												  appManager.getModelForTableName("Projekte"));

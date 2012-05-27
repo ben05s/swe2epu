@@ -14,7 +14,7 @@ import javax.swing.JRadioButton;
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
-import at.epu.PresentationLayer.GenericChooserFormView;
+import at.epu.PresentationLayer.Views.GenericChooserFormView;
 
 public class AddEditChooserViewController extends ViewController implements ActionListener {
 	
@@ -115,12 +115,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 		boolean checked[] = new boolean[this.data.length];
 		
 		checkList = new ArrayList<JCheckBox>();
-		if(command.equals("EDIT")) {
-			for(int i=0;i<this.data.length;i++) {
-				//checkList.add(new JCheckBox(this.data[i][1].toString(), false));
-			}
-		}
-		if(command.equals("ADD")) {
+		if(command.equals("ADD") || command.equals("EDIT")) {
 			int count = 0;
 			for(int i=0;i<this.data.length;i++) {
 				JCheckBox box;
@@ -147,12 +142,7 @@ public class AddEditChooserViewController extends ViewController implements Acti
 		radioList = new ArrayList<JRadioButton>();
 		ButtonGroup group = new ButtonGroup();
 		
-		if(command.equals("EDIT")) {
-			for(int i=0;i<data.length;i++) {
-				//checkList.add(new JCheckBox(this.data[i][1].toString(), false));
-			}
-		}
-		if(command.equals("ADD")) {
+		if(command.equals("ADD") || command.equals("EDIT")) {
 			int count = 0;
 			for(int i=0;i<this.data.length;i++) {
 				JRadioButton box;

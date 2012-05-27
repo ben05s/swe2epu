@@ -1,4 +1,4 @@
-package at.epu.PresentationLayer;
+package at.epu.PresentationLayer.Views;
 
 import java.awt.SystemColor;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
+import at.epu.PresentationLayer.SpringUtilities;
 
 public class GenericAddEditFormView extends JPanel{
 

@@ -19,7 +19,7 @@ import at.epu.DataAccessLayer.DataObjects.DataObjectFactory;
 import at.epu.DataAccessLayer.DataObjects.IntermediateObjects.ArrayResultSet;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
-import at.epu.PresentationLayer.GenericAddEditFormView;
+import at.epu.PresentationLayer.Views.GenericAddEditFormView;
 
 public class AddEditViewController extends ViewController implements ActionListener {
 	BackofficeTableModel model = null;								//stores all information about current tab/table
@@ -33,8 +33,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 	
 	public AddEditViewController(String action, int rowindex_, ArrayList<Integer> indexChoosable_) {	
 		this.cmd_ = action;
-		rowindex = rowindex_;		
-		indexChoosable = indexChoosable_;
+		rowindex = rowindex_;
 		
 		initialize_addEdit();
 	}
@@ -87,7 +86,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		textList = new ArrayList<JTextField>();
 		if(cmd_.equals("EDIT")) {
-			//fill teh addEdit form with the data of the selected row
+			//fill the addEdit form with the data of the selected row
 			for(int i=0;i<columnNames.length;i++) {
 				if(data[rowindex][i] != null) {
 					textList.add(new JTextField(data[rowindex][i].toString(),20));
@@ -118,7 +117,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		}	
 
 		//populate the Add/Edit Form Dialog
-		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList, indexChoosable);				
+		rootComponent = new GenericAddEditFormView(buttonList, labelList, textList, model.getAddEditState().getIndexChoosable());				
 	}
 	
 	@Override
@@ -131,15 +130,15 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		//when there are 3 different choosable buttons in the add/edit form every button needs to handle a different functionality
 		if(cmd.equals("CHOOSE1")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, model.getAddEditState().getIndexChoosable()));
 		}
 		
 		if(cmd.equals("CHOOSE2")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, model.getAddEditState().getIndexChoosable()));
 		}
 		
 		if(cmd.equals("CHOOSE3")) {
-			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, indexChoosable));
+			appManager.getDialogManager().pushDialog(new AddEditChooserViewController(cmd, cmd_, rowindex, model.getAddEditState().getIndexChoosable()));
 		}
 		
 		if(cmd.equals("SAVE")) {
@@ -147,8 +146,8 @@ public class AddEditViewController extends ViewController implements ActionListe
 			int skip = 0;
 			for(int i=0;i<columnNames.length;i++) {
 				//make a placeholder wherever there was a choosable button, the data from the choosables will be put into the data array in the saveData function
-				for(int x=0;x<this.indexChoosable.size();x++) {
-					if(i == this.indexChoosable.get(x)) {
+				for(int x=0;x<model.getAddEditState().getIndexChoosable().size();x++) {
+					if(i == model.getAddEditState().getIndexChoosable().get(x)) {
 						model.getAddEditState().setChooseIndex(i);
 						data[i] = "placeholder";
 						skip++;
@@ -185,7 +184,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 					
 					DataObject object = null;
 					try {
-						object = DataObjectFactory.createObject(model.getTableName(), rs, foreignValue);
+						object = DataObjectFactory.createObject(model.getTableName(), rs);
 					} catch (SQLException e1) {
 						/** This particular one should not throw SQL exception */
 						e1.printStackTrace();

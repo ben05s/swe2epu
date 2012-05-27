@@ -1,4 +1,4 @@
-package at.epu.DataAccessLayer.DataProviders;
+package at.epu.DataAccessLayer.DataProviders.Mock;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class MockDataFactory {
 			obj1.setAdresse("Petergasse 354/7");
 			obj1.setEmail("sdas.t@gmx.at");
 			obj1.setTelefon("06602348192");
-			obj1.setAngebote("A002-Tool");
+			obj1.setAngebot_mapping_id(1);
 			
 			collection.add(obj1);
 			

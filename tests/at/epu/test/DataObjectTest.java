@@ -1,4 +1,4 @@
-package at.epu.test.suites;
+package at.epu.test;
 
 import static org.junit.Assert.*;
 

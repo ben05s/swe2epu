@@ -8,11 +8,16 @@ public class AddEditState {
 	 ArrayList<String> choosenData = new ArrayList<String>();	/** ausgewählte Datei */
 	 ArrayList<Integer> missingCols = new ArrayList<Integer>(); /** nicht editierbar */
 	 ArrayList<Integer> chooseIndex = new ArrayList<Integer>(); /** auswählbar */
+	 ArrayList<Integer> indexChoosable = new ArrayList<Integer>(); /** auswählbare spalten */
 	 boolean detailTableView = false;
 	 BackofficeTableModel parent = null;
 	 
 	public AddEditState(BackofficeTableModel parent) {
 		this.parent = parent;
+	}
+	
+	public ArrayList<Integer> getIndexChoosable() {
+		return indexChoosable;
 	}
 	 
 	public ArrayList<Integer> getMissingCols() {

@@ -10,9 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
+import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
+import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
 public class CustomerViewController extends ViewController implements ActionListener{
 	public CustomerViewController(JFrame mainWindow) {
@@ -23,8 +24,10 @@ public class CustomerViewController extends ViewController implements ActionList
 	void initialize() {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
+		BackofficeTableModel model = appManager.getModelForTableName("Kunden");
+		
 		registerActionHandler(new FilterActionHandler(this));
-		registerActionHandler(new AddActionHandler(this));
+		registerActionHandler(new AddActionHandler(this, model));
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 
@@ -36,7 +39,7 @@ public class CustomerViewController extends ViewController implements ActionList
 		
 		title = "Kunden";
 		
-		getIndexChoosable().add(6);
+		model.getAddEditState().getIndexChoosable().add(6);
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title, 
 											      appManager.getModelForTableName("Kunden"));

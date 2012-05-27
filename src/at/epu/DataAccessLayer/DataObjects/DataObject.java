@@ -18,6 +18,16 @@ public class DataObject {
 	
 	DataObjectState state;
 	
+	public boolean isForeignKeyField(int index) {
+		ArrayList<String> fieldNames = getFieldNames();
+		
+		if(fieldNames.get(index).endsWith("_id")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	ArrayList<Field> getObjectFields() {
 		ArrayList<Field> fieldList = null;
 		Field[] fields = this.getClass().getDeclaredFields();

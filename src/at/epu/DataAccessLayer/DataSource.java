@@ -1,11 +1,14 @@
 package at.epu.DataAccessLayer;
 
+import java.util.ArrayList;
+
 import at.epu.BusinessLayer.DatabaseManager.DatabaseType;
+import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataProviders.DataProvider;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
-import at.epu.DataAccessLayer.DataProviders.MockDataProvider;
-import at.epu.DataAccessLayer.DataProviders.SQLDataProvider;
+import at.epu.DataAccessLayer.DataProviders.Mock.MockDataProvider;
+import at.epu.DataAccessLayer.DataProviders.SQL.SQLDataProvider;
 
 public class DataSource {
 	DataProvider dataProvider;
@@ -31,5 +34,9 @@ public class DataSource {
 	
 	public void synchronizeObjectsForTableName(String tableName, DataObjectCollection objects) throws DataProviderException {
 		dataProvider.syncData(tableName, objects);
+	}
+	
+	public ArrayList<String> resolveForeignKeyForTableNameAndObject(String tableName, DataObject object, int fieldIndex) throws DataProviderException {
+		return dataProvider.resolveForeignKey(tableName, object, fieldIndex);
 	}
 }

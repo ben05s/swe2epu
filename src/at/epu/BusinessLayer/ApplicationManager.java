@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.DataModels.DataModelFactory;
-import at.epu.PresentationLayer.GenericSplitTableView;
+import at.epu.PresentationLayer.Views.GenericSplitTableView;
 import at.epu.PresentationLayer.MainWindow;
 /*
  * 

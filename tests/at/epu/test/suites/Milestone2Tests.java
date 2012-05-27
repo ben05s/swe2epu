@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import at.epu.test.DataBindingTests;
+import at.epu.test.DataObjectTest;
 import at.epu.test.MockDataTests;
 
 @RunWith(Suite.class)

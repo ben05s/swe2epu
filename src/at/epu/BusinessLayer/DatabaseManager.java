@@ -1,6 +1,9 @@
 package at.epu.BusinessLayer;
 
+import java.util.ArrayList;
+
 import at.epu.DataAccessLayer.*;
+import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 
@@ -35,5 +38,9 @@ public class DatabaseManager {
 	
 	public void synchronizeObjectsForTableName(String tableName, DataObjectCollection objects) throws DataProviderException {
 		dataSource.synchronizeObjectsForTableName(tableName, objects);
+	}
+	
+	public ArrayList<String> resolveForeignKeyForTableNameAndObject(String tableName, DataObject object, int fieldIndex) throws DataProviderException {
+		return dataSource.resolveForeignKeyForTableNameAndObject(tableName, object, fieldIndex);
 	}
 }

@@ -10,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
-import at.epu.PresentationLayer.GenericSplitTableView;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
+import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
 public class ContactViewController extends ViewController implements ActionListener {
 	public ContactViewController(JFrame mainWindow) {
@@ -24,7 +24,7 @@ public class ContactViewController extends ViewController implements ActionListe
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		registerActionHandler(new FilterActionHandler(this));
-		registerActionHandler(new AddActionHandler(this));
+		registerActionHandler(new AddActionHandler(this, appManager.getModelForTableName("Kontakte")));
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 
