@@ -1,7 +1,6 @@
 package at.epu.DataAccessLayer.DataProviders.Mock;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import at.epu.DataAccessLayer.DataObjects.BankAccountDataObject;

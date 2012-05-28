@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class AddEditState {
 	 String[] addEditColNames = null;
 	 Object[][] addEditData = null;
-	 ArrayList<String> choosenData = new ArrayList<String>();	/** ausgewählte Datei */
+	 ArrayList< ArrayList<String> > chosenData = new ArrayList< ArrayList<String> >();	/** ausgewählte Daten */
 	 ArrayList<Integer> missingCols = new ArrayList<Integer>(); /** nicht editierbar */
 	 ArrayList<Integer> chooseIndex = new ArrayList<Integer>(); /** auswählbar */
 	 ArrayList<Integer> indexChoosable = new ArrayList<Integer>(); /** auswählbare spalten */
@@ -14,6 +14,18 @@ public class AddEditState {
 	 
 	public AddEditState(BackofficeTableModel parent) {
 		this.parent = parent;
+		
+		for ( int i = 0; i < 3; ++i) {
+			chosenData.add(new ArrayList<String>());
+		}
+	}
+	
+	public int getMaxChosenDataSize() {
+		return chosenData.size();
+	}
+	
+	public ArrayList< ArrayList<String> > getAllChosenData() {
+		return chosenData;
 	}
 	
 	public ArrayList<Integer> getIndexChoosable() {
@@ -28,16 +40,16 @@ public class AddEditState {
 		this.missingCols = missingCols;
 	}
 	
-	public ArrayList<String> getChoosenData() {
-		return this.choosenData;
+	public ArrayList<String> getChoosenData(int index) {
+		return this.chosenData.get(index);
 	}
 
-	public void resetChoosenData() {
-		this.choosenData = new ArrayList<String>();
+	public void resetChoosenData(int index) {
+		this.chosenData.set(index, new ArrayList<String>());
 	}
 
-	public void addChoosenData(String data_) {
-		this.choosenData.add(data_);
+	public void addChoosenData(int index, String data_) {
+		this.chosenData.get(index).add(data_);
 	}
 
 	public void setChooseIndex(int index) {
@@ -52,21 +64,19 @@ public class AddEditState {
 		this.chooseIndex = new ArrayList<Integer>();
 	}
 
-	public void removeChoosenData(String data_) {
-		for(int i=0;i<this.choosenData.size();i++) {
-			if(this.choosenData.get(i).equals(data_)) {
-				this.choosenData.remove(i);
-			}
-		}
+	public void removeChoosenData(int index, String data_) {
+		int idx = this.chosenData.get(index).indexOf(data_);
+		
+		this.chosenData.remove(idx);
 	}
 
-	public void setChoosenData(String data_) {
-		this.choosenData = new ArrayList<String>();
-		this.choosenData.add(data_);
+	public void setChoosenData(int index, String data_) {
+		this.chosenData.set(index, new ArrayList<String>());
+		this.chosenData.get(index).add(data_);
 	}
 
-	public void deleteChoosenData() {
-		this.choosenData = new ArrayList<String>();
+	public void deleteChoosenData(int index) {
+		this.chosenData.set(index, new ArrayList<String>());
 	}
 	
 	/*

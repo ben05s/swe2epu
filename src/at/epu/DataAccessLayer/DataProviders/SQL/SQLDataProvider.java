@@ -221,4 +221,10 @@ public class SQLDataProvider implements DataProvider {
 			DataObject object, int fieldIndex) throws DataProviderException {
 		return SQLForeignKeyResolveFactory.getForeignKeyResults(tableName, object, fieldIndex);
 	}
+
+	@Override
+	public int getForeignKeyForName(String tableName, String fieldName,
+			String name) throws DataProviderException {
+		return SQLForeignKeyResolveFactory.getForeignNameResult(tableName, fieldName, name);
+	}
 }

@@ -123,8 +123,6 @@ public class AddEditViewController extends ViewController implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-		ArrayList<String> foreignValue = new ArrayList<String>();
-		StringBuilder val = new StringBuilder();
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
@@ -160,13 +158,79 @@ public class AddEditViewController extends ViewController implements ActionListe
 
 			if(cmd_.equals("ADD") || cmd_.equals("EDIT")) {
 				//check the user input. only if input is correct the frame is disposed
-				if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData(), false)) {
+				
+				ArrayList<String> accumulatedChooseData = new ArrayList<String>();
+				
+				for(int i = 0; i < appManager.getActiveTableModel().getAddEditState().getMaxChosenDataSize(); ++i) {
+					accumulatedChooseData.addAll( appManager.getActiveTableModel().getAddEditState().getChoosenData(i) );
+				}
+				
+				if(appManager.getBindingManager().checkInput(data, accumulatedChooseData, false)) {
 					DataObjectCollection collection = model.getDataObjectCollection();
 					
-					for(int i=0;i<appManager.getActiveTableModel().getAddEditState().getChoosenData().size();i++) {
-						val.append(appManager.getActiveTableModel().getAddEditState().getChoosenData().get(i) + " ");
+					ArrayList< ArrayList<String> > foreignValue = appManager.getActiveTableModel().getAddEditState().getAllChosenData();
+					ArrayList< ArrayList<Integer> > foreignKeys = new ArrayList<ArrayList<Integer>>();
+					
+					for(int i = 0; i < foreignValue.size(); ++i) {
+						ArrayList<String> valuesPerIndex = foreignValue.get(i);
+						foreignKeys.add(new ArrayList<Integer>());
+						
+						for(String value : valuesPerIndex) {
+							String tableName = null;
+							String fieldName = null;
+								
+							if(model.getTableName().equals("Kunden")){
+								tableName = "Angebote";
+								fieldName = "titel";
+							}
+							else if(model.getTableName().equals("Angebote")){
+								tableName = "Kunden";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Projekte")){
+								if(i == 0) {
+									tableName = "Angebote";
+									fieldName = "titel";
+								}
+								else if(i == 1) {
+									tableName = "Ausgangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+							}
+							else if(model.getTableName().equals("Ausgangsrechnungen")){
+								tableName = "Kunden";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Eingangsrechnungen")){
+								tableName = "Kontakte";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Rechnungszeilen")) {
+								tableName = "Angebote";
+								fieldName = "titel";
+							} 
+							else if(model.getTableName().equals("Buchungszeilen")){
+								if(i == 0) {
+									tableName = "Eingangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+								else if(i == 1) {
+									tableName = "Ausgangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+								else if(i == 2) {
+									tableName = "Kategorien";
+									fieldName = "name";
+								}
+							}
+							
+							try {
+								foreignKeys.get(i).add(appManager.getDatabaseManager().getForeignKeyForName(tableName, fieldName, value));
+							} catch (DataProviderException e) {
+								e.printStackTrace();
+							}
+						}
 					}
-					foreignValue.add(val.toString());
 					
 					Object[] tmp = new Object[columnNames.length + 1];
 					
@@ -176,7 +240,17 @@ public class AddEditViewController extends ViewController implements ActionListe
 						e2.printStackTrace();
 					}
 					
+					int chooseBtnNumber = 0;
 					for(int i = 1; i < tmp.length; i++) {
+						if( data[i - 1].equals("placeholder") ) {
+							ArrayList<Integer> keys = foreignKeys.get(chooseBtnNumber);
+							
+							/** TODO: Implement mapping table inserts. */
+							data[i - 1] = keys.get(0);
+							
+							chooseBtnNumber++;
+						}
+						
 						tmp[i] = data[i - 1];
 					}
 					

@@ -1,8 +1,8 @@
 package at.epu.DataAccessLayer.DataObjects;
 
 public class CustomerDataObject extends DataObject {
-	String vorname;
 	String nachname;
+	String vorname;
 	String adresse;
 	String unternehmen;
 	String email;

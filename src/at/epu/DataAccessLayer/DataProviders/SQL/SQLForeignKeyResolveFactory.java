@@ -16,6 +16,33 @@ public class SQLForeignKeyResolveFactory {
 		SQLForeignKeyResolveFactory.databaseHandle = databaseHandle;
 	}
 	
+	public static int getForeignNameResult(String tableName, String fieldName, String name) throws DataProviderException {
+		int retVal = 0;
+		
+		String sql = "SELECT id FROM " + tableName + " WHERE " + fieldName + " = ?";
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = databaseHandle.prepareStatement(sql);
+
+			statement.setString(1, name);
+			
+			if( statement.execute() ) {
+				ResultSet result = statement.getResultSet();
+				
+				while( result.next() ) {
+					return result.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", name = " + name + ".");
+			throw new DataProviderException(e.getMessage());
+		}
+		
+		return retVal;
+	}
+	
 	public static ArrayList<String> getForeignKeyResults(String tableName, DataObject object, int fieldIndex) throws DataProviderException {
 		ArrayList<String> retVal = new ArrayList<String>();
 		String fieldName = object.getFieldNames().get(fieldIndex);
