@@ -47,4 +47,8 @@ public class DatabaseManager {
 	public int getForeignKeyForName(String tableName, String fieldName, String name) throws DataProviderException {
 		return dataSource.getForeignKeyForName(tableName, fieldName, name);
 	}
+	
+	public int createMappingEntryForValues(String tableName, String mappingTableName, ArrayList<Integer> keys) throws DataProviderException {
+		return dataSource.createMappingEntryForValues(tableName, mappingTableName, keys);
+	}
 }

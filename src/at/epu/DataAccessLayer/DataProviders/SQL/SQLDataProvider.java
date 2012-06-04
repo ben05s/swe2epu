@@ -105,52 +105,8 @@ public class SQLDataProvider implements DataProvider {
 		}
 	}
 	
-	public DataObject insertForeignMapping(String tableName, DataObject object) 
-		throws DataProviderException, SQLException {
-		String insertString = new String();
-		String selectString = new String();
-		/*
-		 * todo: make sure no spaces are in the input !!!
-		 */
-		if(tableName.equals("Kunden")) {
-			int nextID = getNextIdForTable("Angebote_Mapping");
-			String[] tmp;
-			String delimiter = " ";
-			
-			tmp = object.getFieldValues().get(7).toString().split(delimiter);
-			
-			for(int i=0;i<tmp.length;i++) {
-				selectString = "SELECT id FROM Angebote WHERE Titel = ?";
-				PreparedStatement statement1 = databaseHandle.prepareStatement(selectString);
-				statement1.setString(1, tmp[i]);
-				if( statement1.execute() ) {
-					ResultSet rs = statement1.getResultSet();
-					rs.next();
-					insertString = "INSERT INTO Angebote_Mapping VALUES(?, ?)";
-					PreparedStatement statement2 = databaseHandle.prepareStatement(insertString);
-					statement2.setInt(1, nextID);
-					statement2.setInt(2, rs.getInt(1));
-					statement2.execute();
-				} 
-			}
-			
-			/*insertString = "UPDATE Kunden SET angebot_mapping_id = ?";
-			PreparedStatement statement3 = databaseHandle.prepareStatement(insertString);
-			statement3.setInt(1, nextID);
-			statement3.execute();
-			*/
-			
-		} else if(tableName.equals("Angebote")) {
-			//NOI
-		}
-		
-		return object;
-	}
-	
 	void insert(String tableName, DataObject object) throws SQLException, DataProviderException {
 		StringBuilder builder = new StringBuilder();
-		
-		object = insertForeignMapping(tableName, object);
 		
 		builder.append("INSERT INTO " + tableName + " (");
 		
@@ -200,12 +156,23 @@ public class SQLDataProvider implements DataProvider {
 		for(int i = 0; i < object.getFieldNames().size(); i++) {
 			String fieldName = fieldNames.get(i);
 			Object value = fieldValues.get(i);
-			builder.append(fieldName + "=" + value + ",");
+			
+			if(value.getClass() == String.class) {
+				value = new String("'" + value + "'");
+			}
+			
+			builder.append(fieldName + "=" + value);
+			
+			if( i != object.getFieldNames().size() - 1) {
+				builder.append(", ");
+			}
 		}
 		
 		builder.append(" WHERE id = ?");
 		
-		PreparedStatement statement = databaseHandle.prepareStatement(builder.toString());
+		String sql = builder.toString();
+		
+		PreparedStatement statement = databaseHandle.prepareStatement(sql);
 		
 		statement.setInt(1, object.getId());
 		
@@ -226,5 +193,29 @@ public class SQLDataProvider implements DataProvider {
 	public int getForeignKeyForName(String tableName, String fieldName,
 			String name) throws DataProviderException {
 		return SQLForeignKeyResolveFactory.getForeignNameResult(tableName, fieldName, name);
+	}
+
+	@Override
+	public int createMappingEntryForValues(String tableName,
+			String mappingTableName, ArrayList<Integer> keys)
+			throws DataProviderException {
+		int id = getNextIdForTable(mappingTableName);
+		
+		for(int key : keys) {
+			String sql = "INSERT INTO " + mappingTableName + " VALUES (?, ?)";
+			
+			try {
+				PreparedStatement statement = databaseHandle.prepareStatement(sql);
+				
+				statement.setInt(1, id);
+				statement.setInt(2, key);
+			
+				statement.execute();
+			} catch (SQLException e) {
+				throw new DataProviderException(e.getMessage());
+			}
+		}
+		
+		return id;
 	}
 }

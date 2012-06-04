@@ -88,7 +88,14 @@ public class SQLForeignKeyResolveFactory {
 			} else if(fieldName.equals("ausgr_mapping_id")) {
 				retVal = getAllNamesForTableNameWithMapping("Ausgangsrechnungen", "rechnungskürzel", "ausgangsrechnungen_mapping", foreignKey);
 			}
-		} else {
+		}  else if( tableName.equals("Rechnungszeilen") ) {
+			if(fieldName.equals("angebot_id")) {
+				retVal = getNameForForeignKey("Angebote", foreignKey, "titel");
+			} else if(fieldName.equals("ausgangsrechnung_id")) {
+				retVal = getNameForForeignKey("Ausgangsrechnungen", foreignKey, "rechnungskürzel");
+			}
+		}  
+		else {
 			System.err.println("[ERROR][SQLForeignKeyResolveFactory] You requested foreign key data that is not defined. (tableName = " +
 							   tableName + ", fieldName = " + fieldName + " )");
 			

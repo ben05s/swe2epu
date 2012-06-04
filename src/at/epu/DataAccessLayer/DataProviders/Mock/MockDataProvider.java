@@ -85,4 +85,12 @@ public class MockDataProvider implements DataProvider {
 			String name) throws DataProviderException {
 		return MockForeignKeyDataFactory.createForeignNameResult(tableName, fieldName, name);
 	}
+
+	@Override
+	public int createMappingEntryForValues(String tableName,
+			String mappingTableName, ArrayList<Integer> keys)
+			throws DataProviderException {
+		/** There's no mapping tables in mock mode. */
+		return 0;
+	}
 }

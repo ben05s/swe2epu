@@ -41,8 +41,8 @@ public class DataObjectFactory {
 			ContactDataObject tmp = new ContactDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setVorname(resultSet.getString(2));
-			tmp.setNachname(resultSet.getString(3));
+			tmp.setNachname(resultSet.getString(2));
+			tmp.setVorname(resultSet.getString(3));
 			tmp.setAdresse(resultSet.getString(4));
 			tmp.setEmail(resultSet.getString(5));
 			tmp.setTelefon(resultSet.getString(6));
@@ -52,8 +52,8 @@ public class DataObjectFactory {
 			CustomerDataObject tmp = new CustomerDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setVorname(resultSet.getString(2));
-			tmp.setNachname(resultSet.getString(3));
+			tmp.setNachname(resultSet.getString(2));
+			tmp.setVorname(resultSet.getString(3));
 			tmp.setUnternehmen(resultSet.getString(4));
 			tmp.setAdresse(resultSet.getString(5));
 			tmp.setEmail(resultSet.getString(6));
@@ -65,7 +65,7 @@ public class DataObjectFactory {
 			InBillDataObject tmp = new InBillDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskuerzel(resultSet.getString(2));
+			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKontakt_id(resultSet.getInt(3));
 			tmp.setBzeile_mapping_id(resultSet.getInt(4));
 			tmp.setStatus(resultSet.getString(5));
@@ -87,7 +87,7 @@ public class DataObjectFactory {
 			OutBillDataObject tmp = new OutBillDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskuerzel(resultSet.getString(2));
+			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKunde_id(resultSet.getInt(3));
 			tmp.setRzeile_mapping_id(resultSet.getInt(4));
 			tmp.setBzeile_mapping_id(resultSet.getInt(5));

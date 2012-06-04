@@ -72,12 +72,28 @@ public class AddEditChooserViewController extends ViewController implements Acti
 			}
 		}
 		else if(this.title == "Ausgangsrechnungen"){
-			data = ApplicationManager.getInstance().getModelForTableName("Kunden").getDataObjectCollection().toDataArray();
-			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData(index);
+			if(chooseCommand == "CHOOSE1") {
+				data = ApplicationManager.getInstance().getModelForTableName("Kunden").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData(index);
+			}
+			else if(chooseCommand == "CHOOSE2") {
+				data = ApplicationManager.getInstance().getModelForTableName("Rechnungszeilen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData(index);
+			}
+			else if(chooseCommand == "CHOOSE3") {
+				data = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getAddEditState().getChoosenData(index);
+			}
 		}
 		else if(this.title == "Eingangsrechnungen"){
-			data = ApplicationManager.getInstance().getModelForTableName("Kontakte").getDataObjectCollection().toDataArray();
-			preselectedItems = ApplicationManager.getInstance().getModelForTableName("Eingangsrechnungen").getAddEditState().getChoosenData(index);
+			if(chooseCommand == "CHOOSE1") {
+				data = ApplicationManager.getInstance().getModelForTableName("Kontakte").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Eingangsrechnungen").getAddEditState().getChoosenData(index);
+			}
+			else if(chooseCommand == "CHOOSE2") {
+				data = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen").getDataObjectCollection().toDataArray();
+				preselectedItems = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen").getAddEditState().getChoosenData(index);
+			}
 		}
 		else if(this.title == "Rechnungszeilen") {
 			data = ApplicationManager.getInstance().getModelForTableName("Angebote").getDataObjectCollection().toDataArray();

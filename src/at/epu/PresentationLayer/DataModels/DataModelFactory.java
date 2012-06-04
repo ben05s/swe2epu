@@ -76,7 +76,7 @@ public class DataModelFactory {
 			String [] columnNames_ = {"Eingangsrechnung ID",
 					"Rechnungskürzel",
 					"Kontakt",
-					"Anz Buchungszeilen",
+					"Buchungszeilen ID",
 					"Status"};
 			
 			tmp = columnNames_;

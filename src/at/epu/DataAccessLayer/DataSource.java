@@ -43,4 +43,8 @@ public class DataSource {
 	public int getForeignKeyForName(String tableName, String fieldName, String name) throws DataProviderException {
 		return dataProvider.getForeignKeyForName(tableName, fieldName, name);
 	}
+	
+	public int createMappingEntryForValues(String tableName, String mappingTableName, ArrayList<Integer> keys) throws DataProviderException {
+		return dataProvider.createMappingEntryForValues(tableName, mappingTableName, keys);
+	}
 }

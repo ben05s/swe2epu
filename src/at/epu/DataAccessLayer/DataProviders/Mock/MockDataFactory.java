@@ -91,7 +91,7 @@ public class MockDataFactory {
 			InBillDataObject obj1 = new InBillDataObject();
 			
 			obj1.setId(1);
-			obj1.setRechnungskuerzel("InBill123");
+			obj1.setRechnungskürzel("InBill123");
 			obj1.setKontakt_id(1);
 			obj1.setBzeile_mapping_id(1);
 			obj1.setStatus("bezahlt");

@@ -4,16 +4,16 @@ package at.epu.DataAccessLayer.DataObjects;
  * ID | Kontakt | Buchungszeile
  */
 public class InBillDataObject extends DataObject {	
-	String rechnungskuerzel;
+	String rechnungskürzel;
 	int kontakt_id;
 	int bzeile_mapping_id;
 	String status;
 	
-	public String getRechnungskuerzel() {
-		return rechnungskuerzel;
+	public String getRechnungskürzel() {
+		return rechnungskürzel;
 	}
-	public void setRechnungskuerzel(String rechnungskuerzel) {
-		this.rechnungskuerzel = rechnungskuerzel;
+	public void setRechnungskürzel(String rechnungskürzel) {
+		this.rechnungskürzel = rechnungskürzel;
 	}
 	public int getKontakt_id() {
 		return kontakt_id;

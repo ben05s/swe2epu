@@ -168,6 +168,8 @@ public class AddEditViewController extends ViewController implements ActionListe
 				if(appManager.getBindingManager().checkInput(data, accumulatedChooseData, false)) {
 					DataObjectCollection collection = model.getDataObjectCollection();
 					
+					DataObject previous = collection.get(rowindex);
+					
 					ArrayList< ArrayList<String> > foreignValue = appManager.getActiveTableModel().getAddEditState().getAllChosenData();
 					ArrayList< ArrayList<Integer> > foreignKeys = new ArrayList<ArrayList<Integer>>();
 					
@@ -234,10 +236,14 @@ public class AddEditViewController extends ViewController implements ActionListe
 					
 					Object[] tmp = new Object[columnNames.length + 1];
 					
-					try {
-						tmp[0] = appManager.getDatabaseManager().getNextIdForTableName(model.getTableName());
-					} catch (DataProviderException e2) {
-						e2.printStackTrace();
+					if(cmd_.equals("ADD")) {
+						try {
+							tmp[0] = appManager.getDatabaseManager().getNextIdForTableName(model.getTableName());
+						} catch (DataProviderException e2) {
+							e2.printStackTrace();
+						}
+					} else if (cmd_.equals("EDIT")) {
+						tmp[0] = previous.getId();
 					}
 					
 					int chooseBtnNumber = 0;
@@ -245,8 +251,17 @@ public class AddEditViewController extends ViewController implements ActionListe
 						if( data[i - 1].equals("placeholder") ) {
 							ArrayList<Integer> keys = foreignKeys.get(chooseBtnNumber);
 							
-							/** TODO: Implement mapping table inserts. */
-							data[i - 1] = keys.get(0);
+							if( isMappingValue(model.getTableName(), chooseBtnNumber) ) {
+								String mappingTableName = getMappingTableName(model.getTableName(), chooseBtnNumber);
+								try {
+									data[i - 1] = appManager.getDatabaseManager().createMappingEntryForValues(model.getTableName(), mappingTableName, keys);
+								} catch (DataProviderException e) {
+									e.printStackTrace();
+								}
+							}
+							else {
+								data[i - 1] = keys.get(0);
+							}
 							
 							chooseBtnNumber++;
 						}
@@ -264,9 +279,17 @@ public class AddEditViewController extends ViewController implements ActionListe
 						e1.printStackTrace();
 					}
 					
-					object.setState(DataObjectState.DataObjectStateNew);
-					
-					collection.add(object);
+					if(cmd_.equals("ADD")) {
+						object.setState(DataObjectState.DataObjectStateNew);
+						
+						collection.add(object);
+					} else if (cmd_.equals("EDIT")) {
+						collection.remove(previous);
+
+						object.setState(DataObjectState.DataObjectStateModified);
+						
+						collection.add(object);
+					}
 					
 					try {
 						appManager.getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), collection);
@@ -284,6 +307,38 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		if(cmd.equals("CANCEL")) {
 			appManager.getDialogManager().popDialog();
+		}
+	}
+
+	boolean isMappingValue(String tableName, int buttonIndex) {
+		if(tableName.equals("Kunden") && buttonIndex == 0 ||
+	       tableName.equals("Projekte") && buttonIndex == 1 ||
+	       tableName.equals("Ausgangsrechnungen") && (buttonIndex == 1 || buttonIndex == 2) ||
+	       tableName.equals("Eingangsrechnungen") && buttonIndex == 1 ||
+	       tableName.equals("Buchungszeilen") && buttonIndex == 2 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	String getMappingTableName(String tableName, int buttonIndex) {
+		if(tableName.equals("Kunden") && buttonIndex == 0 ) {
+			return "angebote_mapping";
+		} else if(tableName.equals("Projekte") && buttonIndex == 1 ) {
+			return "ausgangsrechnungen_mapping";
+		} else if( tableName.equals("Ausgangsrechnungen") && buttonIndex == 1) {
+			return "rzeilen_mapping";
+		} else if( tableName.equals("Ausgangsrechnungen") && buttonIndex == 2 ) {
+			return "bzeilen_mapping";
+		} else if( tableName.equals("Eingangsrechnungen") && buttonIndex == 1 ) {
+			return "bzeilen_mapping";
+		} else if( tableName.equals("Buchungszeilen") && buttonIndex == 2 ) {
+			return "kat_mapping";
+		} else {
+			System.err.println("[ERROR] Requested mapping table name for a table that has no mapping table name defined.");
+			return "";
 		}
 	}
 }
