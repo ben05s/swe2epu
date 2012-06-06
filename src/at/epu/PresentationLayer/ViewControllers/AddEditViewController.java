@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
@@ -337,7 +339,7 @@ public class AddEditViewController extends ViewController implements ActionListe
 		} else if( tableName.equals("Buchungszeilen") && buttonIndex == 2 ) {
 			return "kat_mapping";
 		} else {
-			System.err.println("[ERROR] Requested mapping table name for a table that has no mapping table name defined.");
+			Logger.getLogger(AddEditViewController.class.getName()).error("[ERROR] Requested mapping table name for a table that has no mapping table name defined.");
 			return "";
 		}
 	}

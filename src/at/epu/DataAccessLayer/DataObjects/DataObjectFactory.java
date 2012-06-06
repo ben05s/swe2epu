@@ -3,6 +3,8 @@ package at.epu.DataAccessLayer.DataObjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 public class DataObjectFactory {
 	public static DataObject createObject(String tableName, ResultSet resultSet) throws SQLException {
 		DataObject retVal = null;
@@ -105,7 +107,7 @@ public class DataObjectFactory {
 			
 			retVal = tmp;
 		} else {
-			System.err.println("[ERROR][DataObjectFactory] You requested an object for a table that is not defined. (table = " + tableName + " )");
+			Logger.getLogger(DataObjectFactory.class.getName()).error("[ERROR][DataObjectFactory] You requested an object for a table that is not defined. (table = " + tableName + " )");
 		}
 		
 		return retVal;

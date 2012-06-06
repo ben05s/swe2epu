@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 
@@ -36,7 +38,7 @@ public class SQLForeignKeyResolveFactory {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", name = " + name + ".");
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", name = " + name + ".");
 			throw new DataProviderException(e.getMessage());
 		}
 		
@@ -96,7 +98,7 @@ public class SQLForeignKeyResolveFactory {
 			}
 		}  
 		else {
-			System.err.println("[ERROR][SQLForeignKeyResolveFactory] You requested foreign key data that is not defined. (tableName = " +
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("[ERROR][SQLForeignKeyResolveFactory] You requested foreign key data that is not defined. (tableName = " +
 							   tableName + ", fieldName = " + fieldName + " )");
 			
 			return null;
@@ -128,7 +130,7 @@ public class SQLForeignKeyResolveFactory {
 				return retVal;
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", foreignKey = " + foreignKey + ".");
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", foreignKey = " + foreignKey + ".");
 			throw new DataProviderException(e.getMessage());
 		}
 		
@@ -161,7 +163,7 @@ public class SQLForeignKeyResolveFactory {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get all name mappings from table: " + tableName);
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get all name mappings from table: " + tableName);
 			throw new DataProviderException(e.getMessage());
 		}
 		

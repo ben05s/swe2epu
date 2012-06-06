@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
@@ -26,7 +28,7 @@ public class SQLDataProvider implements DataProvider {
 			
 			SQLForeignKeyResolveFactory.setDatabaseHandle(databaseHandle);
 		} catch (SQLException e) {
-			System.err.println("Could not open connection to database at " + db_url);
+			Logger.getLogger(SQLDataProvider.class.getName()).error("Could not open connection to database at " + db_url);
 			e.printStackTrace();
 			System.exit(0);
 		} 
@@ -76,7 +78,7 @@ public class SQLDataProvider implements DataProvider {
 				return new DataObjectCollection();
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get all dataObjects from table: " + tableName);
+			Logger.getLogger(SQLDataProvider.class.getName()).error("Failed to get all dataObjects from table: " + tableName);
 			throw new DataProviderException(e.getMessage());
 		}
 	}
@@ -97,7 +99,7 @@ public class SQLDataProvider implements DataProvider {
 					update(tableName, obj);
 				}
 			} catch(SQLException e) {
-				System.err.println("Failed to synchronize with database.");
+				Logger.getLogger(SQLDataProvider.class.getName()).error("Failed to synchronize with database.");
 				throw new DataProviderException(e.getMessage());
 			}
 			

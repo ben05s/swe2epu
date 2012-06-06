@@ -2,6 +2,8 @@ package at.epu.DataAccessLayer.DataProviders.Mock;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
@@ -68,7 +70,7 @@ public class MockForeignKeyDataFactory {
 				retVal = getAllNamesForTableName("Ausgangsrechnungen", "rechnungskuerzel");
 			}
 		} else {
-			System.err.println("[ERROR][MockForeignKeyDataFactory] You requested foreign key mock data that is not defined. (tableName = " + tableName + " )");
+			Logger.getLogger(MockForeignKeyDataFactory.class.getName()).error("[ERROR][MockForeignKeyDataFactory] You requested foreign key mock data that is not defined. (tableName = " + tableName + " )");
 			
 			return null;
 		}

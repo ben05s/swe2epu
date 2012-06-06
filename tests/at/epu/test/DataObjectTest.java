@@ -17,8 +17,8 @@ public class DataObjectTest {
 		ArrayList<String> fieldNames = contact.getFieldNames();
 		
 		assertEquals("id", fieldNames.get(0));
-		assertEquals("vorname", fieldNames.get(1));
-		assertEquals("nachname", fieldNames.get(2));
+		assertEquals("nachname", fieldNames.get(1));
+		assertEquals("vorname", fieldNames.get(2));
 		assertEquals("adresse", fieldNames.get(3));
 		assertEquals("email", fieldNames.get(4));
 		assertEquals("telefon", fieldNames.get(5));
@@ -38,8 +38,8 @@ public class DataObjectTest {
 		ArrayList<Object> fieldValues = contact.getFieldValues();
 		
 		assertEquals("0", fieldValues.get(0).toString());
-		assertEquals("Herbert", fieldValues.get(1).toString());
-		assertEquals("Foobar", fieldValues.get(2).toString());
+		assertEquals("Foobar", fieldValues.get(1).toString());
+		assertEquals("Herbert", fieldValues.get(2).toString());
 		assertEquals("herbifoobigasse 7/123", fieldValues.get(3).toString());
 		assertEquals("herbi@foobi.at", fieldValues.get(4).toString());
 		assertEquals("066666666", fieldValues.get(5).toString());

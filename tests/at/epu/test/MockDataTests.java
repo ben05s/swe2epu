@@ -39,6 +39,6 @@ public class MockDataTests {
 		
 		tableModel.setDataObjectCollection(collection);
 		
-		assertEquals("Heinz", tableModel.getDataObjectCollection().toDataArray()[tableModel.getDataObjectCollection().size() - 1][1]);
+		assertEquals("Heinz", tableModel.getDataObjectCollection().toDataArray()[tableModel.getDataObjectCollection().size() - 1][2]);
 	}
 }
