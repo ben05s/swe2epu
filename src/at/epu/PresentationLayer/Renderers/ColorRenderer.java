@@ -8,6 +8,8 @@ import javax.swing.table.TableCellRenderer;
 
 public class ColorRenderer extends JLabel implements TableCellRenderer {
 
+	private static final long serialVersionUID = -1016998634304903402L;
+
 	public ColorRenderer(String column) {
 		super(column);
 		setOpaque(true);
