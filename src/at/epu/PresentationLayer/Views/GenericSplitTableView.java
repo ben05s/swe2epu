@@ -198,20 +198,7 @@ public class GenericSplitTableView extends JPanel {
 			                		newFrame.setVisible(true);
 		                		}
 	                		}); 
-	                	}/*
-	                	//Splitten in Bankkonto Tab   EDIT: NOT NEEDED ACCORIND TO SZACZEC
-	                	if(menu.getLabel() == "Rechnung Splitten") {
-	                		menu.addActionListener(new ActionListener() {
-		                		public void actionPerformed(ActionEvent e) {
-			                		JFrame newFrame = new JFrame();
-			                		newFrame.setTitle("Rechnung Splitten");
-			                		JLabel note = new JLabel("Hier wird die Rechnung gesplittet (Umsatzsteuer/Rechnungssumme)");
-			                		newFrame.add(note);
-			                		newFrame.setBounds(300, 150, 300, 500);
-			                		newFrame.setVisible(true);
-		                		}
-	                		}); 
-	                	}*/
+	                	}
 	                }
 	                popup.show(e.getComponent(), e.getX(), e.getY());
 	            }

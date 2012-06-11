@@ -34,7 +34,6 @@ package at.epu.PresentationLayer;
 import org.apache.log4j.Logger;
 import javax.swing.*;
 
-import org.apache.log4j.Logger;
 
 import java.awt.*;
  

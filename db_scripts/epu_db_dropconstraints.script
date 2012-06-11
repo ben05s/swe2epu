@@ -10,7 +10,6 @@ ALTER TABLE ausgangsrechnungen DROP CONSTRAINT fk_ausgr_kunde;
 --ALTER TABLE ausgangsrechnungen DROP CONSTRAINT fk_ausgr_rzeilenmapping;
 --ALTER TABLE ausgangsrechnungen DROP CONSTRAINT fk_ausgr_bzeilenmapping;
 ALTER TABLE eingangsrechnungen DROP CONSTRAINT fk_eingr_kontakt;
---ALTER TABLE eingangsrechnungen DROP CONSTRAINT fk_eingr_rzeilenmapping;
 --ALTER TABLE eingangsrechnungen DROP CONSTRAINT fk_eingr_bzeilenmapping;
 ALTER TABLE rechnungszeilen DROP CONSTRAINT fk_rzeilen_ausgrechnung;
 ALTER TABLE rechnungszeilen DROP CONSTRAINT fk_rzeilen_angebote;

@@ -35,9 +35,6 @@ FOREIGN KEY(kunde_id) REFERENCES kunden(id);
 ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_kontakt
 FOREIGN KEY(kontakt_id) REFERENCES kontakte(id);
 
---ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_rzeilenmapping
---FOREIGN KEY(rzeile_mapping_id) REFERENCES rzeilen_mapping(id);
-
 --ALTER TABLE eingangsrechnungen ADD CONSTRAINT fk_eingr_bzeilenmapping
 --FOREIGN KEY(bzeile_mapping_id) REFERENCES bzeilen_mapping(id);
 

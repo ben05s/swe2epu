@@ -33,7 +33,6 @@ public class ProjectViewController extends ViewController implements ActionListe
 		buttonList.add(new JButton("Zeiten Buchen"));
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-		labelList.add(new JLabel("Offene Projekte: "));
 		labelList.add(new JLabel("Stundensatz(gesamt): "));
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();

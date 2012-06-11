@@ -105,7 +105,8 @@ public class DataModelFactory {
 			String [] columnNames_ = {"ID",
 					"Titel",
 					"Angebot",
-					"Ausgangsrechnungen"};
+					"Ausgangsrechnungen",
+					"Zeit"};
 			
 			tmp = columnNames_;
 		} else {

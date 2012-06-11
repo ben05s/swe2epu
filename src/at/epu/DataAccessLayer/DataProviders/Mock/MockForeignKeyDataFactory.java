@@ -80,7 +80,7 @@ public class MockForeignKeyDataFactory {
 	
 	static ArrayList<String> getNameForForeignKey(String tableName, int foreignKey, String fieldName) {
 		ArrayList<String> retVal = new ArrayList<String>();
-		
+		/*
 		try {
 			DataObjectCollection collection = ApplicationManager.getInstance().getDatabaseManager().getAllObjectsForTableName(tableName);
 			
@@ -89,7 +89,7 @@ public class MockForeignKeyDataFactory {
 			}
 			
 			/** Get field index for fieldName */
-			int fieldIndex = collection.get(0).getIndexForFieldName(fieldName);
+			/*int fieldIndex = collection.get(0).getIndexForFieldName(fieldName);
 			
 			if( fieldIndex == 0) {
 				return retVal;
@@ -103,7 +103,7 @@ public class MockForeignKeyDataFactory {
 		} catch (DataProviderException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		return retVal;
 	}
 	

@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import at.epu.DataAccessLayer.DataObjects.BankAccountDataObject;
+import at.epu.DataAccessLayer.DataObjects.CategoryDataObject;
 import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
@@ -64,11 +65,20 @@ public class MockDataFactory {
 			
 			collection.add(obj2);
 		} else if( tableName.equals("Kategorien") ) {
-			Object[][] data_ = {
-				    {new Integer(1), "Einnahme"},
-				    {new Integer(2), "Ausgabe"},
-				    {new Integer(3), "Steuer"}
-				};
+			
+			CategoryDataObject obj1 = new CategoryDataObject();
+			obj1.setName("Einnahme");
+			collection.add(obj1);
+			
+			CategoryDataObject obj2 = new CategoryDataObject();
+			obj2.setName("Ausgabe");
+			collection.add(obj2);
+			
+			CategoryDataObject obj3 = new CategoryDataObject();
+			obj3.setName("Steuer");
+			collection.add(obj3);
+			
+
 		} else if( tableName.equals("Kunden") ) {
 			CustomerDataObject obj1 = new CustomerDataObject();
 			
@@ -100,9 +110,16 @@ public class MockDataFactory {
 			
 			collection.add(obj1);
 			
-			Object [][] data_ = {
-					{new Integer(2), "InBill932", "Black", new Integer(0), new Integer(0), "offen"}
-			};
+			InBillDataObject obj2 = new InBillDataObject();
+			
+			obj2.setId(2);
+			obj2.setRechnungskürzel("InBill932");
+			obj2.setKontakt_id(2);
+			obj2.setBzeile_mapping_id(0);
+			obj2.setStatus("offen");
+			
+			collection.add(obj2);
+			
 		} else if( tableName.equals("Angebote") ) {
 			Object[][] data_ = {
 				    {new Integer(1), "Admin billig A.", "Hur", new Double(20000.00), new Integer(365),

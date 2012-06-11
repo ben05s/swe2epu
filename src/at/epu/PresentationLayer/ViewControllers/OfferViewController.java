@@ -10,12 +10,16 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.PDFManager;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
 public class OfferViewController extends ViewController implements ActionListener{
+	
+	FilepathViewController viewController;
+	
 	public OfferViewController(JFrame mainWindow) {
 		super(mainWindow);
 	}
@@ -31,8 +35,12 @@ public class OfferViewController extends ViewController implements ActionListene
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		
-		buttonList.add(new JButton("Jahresprognose der Angebote PDF"));
-
+		JButton pdfButton = new JButton("Angebote Prognose PDF");
+		pdfButton.setActionCommand("CREATE");
+		pdfButton.addActionListener(this);
+		
+		buttonList.add(pdfButton);
+		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
@@ -47,7 +55,18 @@ public class OfferViewController extends ViewController implements ActionListene
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
-		super.actionPerformed(event);
+	public void actionPerformed(ActionEvent ev) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
+		
+		BackofficeTableModel model = appManager.getModelForTableName("Angebote");
+		
+		if(ev.getActionCommand().equals("CREATE")) {
+			PDFManager pdfManager = new PDFManager();
+			
+			pdfManager.createAnnualPrognosis(model);
+				
+		} else {
+			super.actionPerformed(ev);
+		}
 	}
 }

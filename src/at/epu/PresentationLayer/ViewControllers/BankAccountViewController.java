@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.PDFManager;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
@@ -33,13 +34,17 @@ public class BankAccountViewController extends ViewController implements ActionL
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		
+		JButton pdfButton = new JButton("Ein/Ausgaben Report PDF");
+		pdfButton.setActionCommand("CREATE");
+		pdfButton.addActionListener(this);
+		
+		buttonList.add(pdfButton);
+		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
 		menuList.add(new JMenuItem("Löschen"));
-		/*EDIT: NOT NEEDED ACCORIND TO SZACZEC
-		menuList.add(new JMenuItem("Rechnung Splitten"));*/
 		
 		model.getAddEditState().getIndexChoosable().add(0);
 		model.getAddEditState().getIndexChoosable().add(1);
@@ -50,7 +55,18 @@ public class BankAccountViewController extends ViewController implements ActionL
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
-		super.actionPerformed(event);
+	public void actionPerformed(ActionEvent ev) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
+		
+		BackofficeTableModel model = appManager.getModelForTableName("Buchungszeilen");
+		
+		if(ev.getActionCommand().equals("CREATE")) {
+			PDFManager pdfManager = new PDFManager();
+			
+			pdfManager.createInOutBillReportPDF(model);
+				
+		} else {
+			super.actionPerformed(ev);
+		}
 	}
 }

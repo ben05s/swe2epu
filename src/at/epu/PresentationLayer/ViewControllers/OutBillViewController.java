@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import at.epu.BusinessLayer.ApplicationManager;
+import at.epu.BusinessLayer.PDFManager;
 import at.epu.PresentationLayer.Views.GenericSplitTableView;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
 import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
@@ -33,12 +34,13 @@ public class OutBillViewController extends ViewController implements ActionListe
 		
 		ArrayList<JButton> buttonList = getButtonsFromHandlers();
 		
-		buttonList.add(new JButton("Rechnungen generieren PDF"));
-		buttonList.add(new JButton("Rechnungsreport PDF"));
-		buttonList.add(new JButton("Ein- Ausgaben Report PDF"));
+		JButton pdfButton1 = new JButton("Rechnungsreport PDF");
+		pdfButton1.setActionCommand("CREATE");
+		pdfButton1.addActionListener(this);
+		
+		buttonList.add(pdfButton1);
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-		labelList.add(new JLabel("Offene Rechnungen: "));
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
@@ -56,7 +58,18 @@ public class OutBillViewController extends ViewController implements ActionListe
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
-		super.actionPerformed(event);
+	public void actionPerformed(ActionEvent ev) {
+		ApplicationManager appManager = ApplicationManager.getInstance();
+		
+		BackofficeTableModel model = appManager.getModelForTableName("Ausgangsrechnungen");
+		
+		if(ev.getActionCommand().equals("CREATE")) {
+			PDFManager pdfManager = new PDFManager();
+			
+			pdfManager.createBillReportPDF(model);
+				
+		} else {
+			super.actionPerformed(ev);
+		}
 	}
 }
