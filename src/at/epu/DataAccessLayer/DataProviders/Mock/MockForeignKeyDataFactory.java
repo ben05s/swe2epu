@@ -2,12 +2,28 @@ package at.epu.DataAccessLayer.DataProviders.Mock;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 
 public class MockForeignKeyDataFactory {
+	public static int createForeignNameResult(String tableName, String fieldName, String name) throws DataProviderException {
+		DataObjectCollection collection = ApplicationManager.getInstance().getDatabaseManager().getAllObjectsForTableName(tableName);
+		
+		for(DataObject object : collection) {
+			int idx = object.getIndexForFieldName(fieldName);
+			
+			if(object.getFieldValues().get(idx).equals(name)) {
+				return object.getId();
+			}
+		}
+			
+		return 0;
+	}
+	
 	public static ArrayList<String> createForeignKeyResults(String tableName, DataObject object, int fieldIndex) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		String fieldName = object.getFieldNames().get(fieldIndex);
@@ -54,7 +70,7 @@ public class MockForeignKeyDataFactory {
 				retVal = getAllNamesForTableName("Ausgangsrechnungen", "rechnungskuerzel");
 			}
 		} else {
-			System.err.println("[ERROR][MockForeignKeyDataFactory] You requested foreign key mock data that is not defined. (tableName = " + tableName + " )");
+			Logger.getLogger(MockForeignKeyDataFactory.class.getName()).error("[ERROR][MockForeignKeyDataFactory] You requested foreign key mock data that is not defined. (tableName = " + tableName + " )");
 			
 			return null;
 		}
@@ -73,13 +89,7 @@ public class MockForeignKeyDataFactory {
 			}
 			
 			/** Get field index for fieldName */
-			int fieldIndex = 0;
-			for(String name : collection.get(0).getFieldNames()) {
-				if(name.equals(fieldName)) {
-					break;
-				}
-				fieldIndex++;
-			}
+			int fieldIndex = collection.get(0).getIndexForFieldName(fieldName);
 			
 			if( fieldIndex == 0) {
 				return retVal;

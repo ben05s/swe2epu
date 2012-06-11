@@ -3,6 +3,9 @@ package at.epu.PresentationLayer.DataModels;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.log4j.Logger;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
@@ -25,7 +28,7 @@ public class BackofficeTableModel extends DefaultTableModel implements Filterabl
 		try {
 			presentedObjects = dataObjects = ApplicationManager.getInstance().getDatabaseManager().getAllObjectsForTableName(tableName);
 		} catch (DataProviderException e) {
-			System.err.println("Data provider failed to receive data for tablename: " + tableName + ".");
+			Logger.getLogger(BackofficeTableModel.class.getName()).error("Data provider failed to receive data for tablename: " + tableName + ".");
 			e.printStackTrace();
 		}
 	}

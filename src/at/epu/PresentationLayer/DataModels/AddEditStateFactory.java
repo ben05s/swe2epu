@@ -1,5 +1,7 @@
 package at.epu.PresentationLayer.DataModels;
 
+import org.apache.log4j.Logger;
+
 public class AddEditStateFactory {
 	public static AddEditState createAddEditStateForTableName(String tableName, BackofficeTableModel parent) {
 		AddEditState state = new AddEditState(parent);
@@ -45,6 +47,7 @@ public class AddEditStateFactory {
 		} else if( tableName.equals("Eingangsrechnungen") ) {
 			String [] addEditColNames_ = {"Rechnungskürzel",
 					"Kontakt",
+					"Buchungszeilen ID",
 					"Status"};
 			
 			state.setAddEditColNames(addEditColNames_);
@@ -60,6 +63,8 @@ public class AddEditStateFactory {
 		} else if( tableName.equals("Ausgangsrechnungen") ) {
 			String [] addEditColNames_ = {"Rechnungskürzel",
 					"Kunde",
+					"Rechnungszeilen ID",
+					"Buchungszeilen ID",
 					"Status"};
 			
 			state.setAddEditColNames(addEditColNames_);
@@ -70,7 +75,7 @@ public class AddEditStateFactory {
 			
 			state.setAddEditColNames(addEditColNames_);
 		} else {
-			System.err.println("[ERROR][AddEditStateFactory] You requested AddEditState data that is not defined. (tableName = " + tableName + " )");
+			Logger.getLogger(AddEditStateFactory.class.getName()).error("[ERROR][AddEditStateFactory] You requested AddEditState data that is not defined. (tableName = " + tableName + " )");
 			
 			return null;
 		}

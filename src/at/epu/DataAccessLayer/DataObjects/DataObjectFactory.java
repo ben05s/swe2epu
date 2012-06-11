@@ -3,6 +3,8 @@ package at.epu.DataAccessLayer.DataObjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 public class DataObjectFactory {
 	public static DataObject createObject(String tableName, ResultSet resultSet) throws SQLException {
 		DataObject retVal = null;
@@ -41,8 +43,8 @@ public class DataObjectFactory {
 			ContactDataObject tmp = new ContactDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setVorname(resultSet.getString(2));
-			tmp.setNachname(resultSet.getString(3));
+			tmp.setNachname(resultSet.getString(2));
+			tmp.setVorname(resultSet.getString(3));
 			tmp.setAdresse(resultSet.getString(4));
 			tmp.setEmail(resultSet.getString(5));
 			tmp.setTelefon(resultSet.getString(6));
@@ -52,8 +54,8 @@ public class DataObjectFactory {
 			CustomerDataObject tmp = new CustomerDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setVorname(resultSet.getString(2));
-			tmp.setNachname(resultSet.getString(3));
+			tmp.setNachname(resultSet.getString(2));
+			tmp.setVorname(resultSet.getString(3));
 			tmp.setUnternehmen(resultSet.getString(4));
 			tmp.setAdresse(resultSet.getString(5));
 			tmp.setEmail(resultSet.getString(6));
@@ -65,7 +67,7 @@ public class DataObjectFactory {
 			InBillDataObject tmp = new InBillDataObject();
 
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskuerzel(resultSet.getString(2));
+			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKontakt_id(resultSet.getInt(3));
 			tmp.setBzeile_mapping_id(resultSet.getInt(4));
 			tmp.setStatus(resultSet.getString(5));
@@ -87,7 +89,7 @@ public class DataObjectFactory {
 			OutBillDataObject tmp = new OutBillDataObject();
 			
 			tmp.setId(resultSet.getInt(1));
-			tmp.setRechnungskuerzel(resultSet.getString(2));
+			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKunde_id(resultSet.getInt(3));
 			tmp.setRzeile_mapping_id(resultSet.getInt(4));
 			tmp.setBzeile_mapping_id(resultSet.getInt(5));
@@ -105,7 +107,7 @@ public class DataObjectFactory {
 			
 			retVal = tmp;
 		} else {
-			System.err.println("[ERROR][DataObjectFactory] You requested an object for a table that is not defined. (table = " + tableName + " )");
+			Logger.getLogger(DataObjectFactory.class.getName()).error("[ERROR][DataObjectFactory] You requested an object for a table that is not defined. (table = " + tableName + " )");
 		}
 		
 		return retVal;

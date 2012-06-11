@@ -43,4 +43,12 @@ public class DatabaseManager {
 	public ArrayList<String> resolveForeignKeyForTableNameAndObject(String tableName, DataObject object, int fieldIndex) throws DataProviderException {
 		return dataSource.resolveForeignKeyForTableNameAndObject(tableName, object, fieldIndex);
 	}
+	
+	public int getForeignKeyForName(String tableName, String fieldName, String name) throws DataProviderException {
+		return dataSource.getForeignKeyForName(tableName, fieldName, name);
+	}
+	
+	public int createMappingEntryForValues(String tableName, String mappingTableName, ArrayList<Integer> keys) throws DataProviderException {
+		return dataSource.createMappingEntryForValues(tableName, mappingTableName, keys);
+	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
 public class DataModelFactory {
 	HashMap<String, BackofficeTableModel> modelCache = null;
 	
@@ -76,7 +78,7 @@ public class DataModelFactory {
 			String [] columnNames_ = {"Eingangsrechnung ID",
 					"Rechnungskürzel",
 					"Kontakt",
-					"Anz Buchungszeilen",
+					"Buchungszeilen ID",
 					"Status"};
 			
 			tmp = columnNames_;
@@ -107,7 +109,7 @@ public class DataModelFactory {
 			
 			tmp = columnNames_;
 		} else {
-			System.err.println("[ERROR][DataModelFactory] You requested a table model that is not defined. (tableModel = " + tableName + " )");
+			Logger.getLogger(DataModelFactory.class.getName()).error("[ERROR][DataModelFactory] You requested a table model that is not defined. (tableModel = " + tableName + " )");
 			
 			return null;
 		}

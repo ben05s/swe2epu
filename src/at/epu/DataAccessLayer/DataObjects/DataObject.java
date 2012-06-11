@@ -18,6 +18,19 @@ public class DataObject {
 	
 	DataObjectState state;
 	
+	public int getIndexForFieldName(String fieldName) {
+		/** Get field index for fieldName */
+		int fieldIndex = 0;
+		for(String name : getFieldNames()) {
+			if(name.equals(fieldName)) {
+				break;
+			}
+			fieldIndex++;
+		}
+		
+		return fieldIndex;
+	}
+	
 	public boolean isForeignKeyField(int index) {
 		ArrayList<String> fieldNames = getFieldNames();
 		

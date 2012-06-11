@@ -1,5 +1,8 @@
 package at.epu.BusinessLayer;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import javax.swing.JFrame;
 
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
@@ -36,7 +39,10 @@ public class ApplicationManager {
 	/**
 	 * Setup code.
 	 */
-	public void applicationStarted(String[] args) {		
+	public void applicationStarted(String[] args) {	
+		
+		PropertyConfigurator.configure("config/logging.properties");
+		
 		if(args.length > 0)
 		{
 			/** SQL */
@@ -47,18 +53,20 @@ public class ApplicationManager {
 			/** Mock */
 			databaseManager = new DatabaseManager();
 		}
+		
+		Logger.getLogger(ApplicationManager.class.getName()).info("Application started.");
 	}
 	
 	/**
 	 * Tear-down code.
 	 */
 	public void applicationEnded() {
-		
+		Logger.getLogger(ApplicationManager.class.getName()).info("Application ended.");
 	}
 	
 	public DatabaseManager getDatabaseManager() {
 		if(databaseManager == null) {
-			System.err.println("DatabaseManager is null. Don't call it in constructors.");
+			Logger.getLogger(ApplicationManager.class.getName()).error("DatabaseManager is null. Don't call it in constructors.");
 		}
 		
 		return databaseManager;

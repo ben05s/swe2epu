@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.DatabaseManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
@@ -123,8 +125,6 @@ public class AddEditViewController extends ViewController implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String cmd = event.getActionCommand();
-		ArrayList<String> foreignValue = new ArrayList<String>();
-		StringBuilder val = new StringBuilder();
 		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
@@ -160,23 +160,114 @@ public class AddEditViewController extends ViewController implements ActionListe
 
 			if(cmd_.equals("ADD") || cmd_.equals("EDIT")) {
 				//check the user input. only if input is correct the frame is disposed
-				if(appManager.getBindingManager().checkInput(data, appManager.getActiveTableModel().getAddEditState().getChoosenData(), false)) {
+				
+				ArrayList<String> accumulatedChooseData = new ArrayList<String>();
+				
+				for(int i = 0; i < appManager.getActiveTableModel().getAddEditState().getMaxChosenDataSize(); ++i) {
+					accumulatedChooseData.addAll( appManager.getActiveTableModel().getAddEditState().getChoosenData(i) );
+				}
+				
+				if(appManager.getBindingManager().checkInput(data, accumulatedChooseData, false)) {
 					DataObjectCollection collection = model.getDataObjectCollection();
 					
-					for(int i=0;i<appManager.getActiveTableModel().getAddEditState().getChoosenData().size();i++) {
-						val.append(appManager.getActiveTableModel().getAddEditState().getChoosenData().get(i) + " ");
+					DataObject previous = collection.get(rowindex);
+					
+					ArrayList< ArrayList<String> > foreignValue = appManager.getActiveTableModel().getAddEditState().getAllChosenData();
+					ArrayList< ArrayList<Integer> > foreignKeys = new ArrayList<ArrayList<Integer>>();
+					
+					for(int i = 0; i < foreignValue.size(); ++i) {
+						ArrayList<String> valuesPerIndex = foreignValue.get(i);
+						foreignKeys.add(new ArrayList<Integer>());
+						
+						for(String value : valuesPerIndex) {
+							String tableName = null;
+							String fieldName = null;
+								
+							if(model.getTableName().equals("Kunden")){
+								tableName = "Angebote";
+								fieldName = "titel";
+							}
+							else if(model.getTableName().equals("Angebote")){
+								tableName = "Kunden";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Projekte")){
+								if(i == 0) {
+									tableName = "Angebote";
+									fieldName = "titel";
+								}
+								else if(i == 1) {
+									tableName = "Ausgangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+							}
+							else if(model.getTableName().equals("Ausgangsrechnungen")){
+								tableName = "Kunden";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Eingangsrechnungen")){
+								tableName = "Kontakte";
+								fieldName = "nachname";
+							}
+							else if(model.getTableName().equals("Rechnungszeilen")) {
+								tableName = "Angebote";
+								fieldName = "titel";
+							} 
+							else if(model.getTableName().equals("Buchungszeilen")){
+								if(i == 0) {
+									tableName = "Eingangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+								else if(i == 1) {
+									tableName = "Ausgangsrechnungen";
+									fieldName = "rechnungskürzel";
+								}
+								else if(i == 2) {
+									tableName = "Kategorien";
+									fieldName = "name";
+								}
+							}
+							
+							try {
+								foreignKeys.get(i).add(appManager.getDatabaseManager().getForeignKeyForName(tableName, fieldName, value));
+							} catch (DataProviderException e) {
+								e.printStackTrace();
+							}
+						}
 					}
-					foreignValue.add(val.toString());
 					
 					Object[] tmp = new Object[columnNames.length + 1];
 					
-					try {
-						tmp[0] = appManager.getDatabaseManager().getNextIdForTableName(model.getTableName());
-					} catch (DataProviderException e2) {
-						e2.printStackTrace();
+					if(cmd_.equals("ADD")) {
+						try {
+							tmp[0] = appManager.getDatabaseManager().getNextIdForTableName(model.getTableName());
+						} catch (DataProviderException e2) {
+							e2.printStackTrace();
+						}
+					} else if (cmd_.equals("EDIT")) {
+						tmp[0] = previous.getId();
 					}
 					
+					int chooseBtnNumber = 0;
 					for(int i = 1; i < tmp.length; i++) {
+						if( data[i - 1].equals("placeholder") ) {
+							ArrayList<Integer> keys = foreignKeys.get(chooseBtnNumber);
+							
+							if( isMappingValue(model.getTableName(), chooseBtnNumber) ) {
+								String mappingTableName = getMappingTableName(model.getTableName(), chooseBtnNumber);
+								try {
+									data[i - 1] = appManager.getDatabaseManager().createMappingEntryForValues(model.getTableName(), mappingTableName, keys);
+								} catch (DataProviderException e) {
+									e.printStackTrace();
+								}
+							}
+							else {
+								data[i - 1] = keys.get(0);
+							}
+							
+							chooseBtnNumber++;
+						}
+						
 						tmp[i] = data[i - 1];
 					}
 					
@@ -190,9 +281,17 @@ public class AddEditViewController extends ViewController implements ActionListe
 						e1.printStackTrace();
 					}
 					
-					object.setState(DataObjectState.DataObjectStateNew);
-					
-					collection.add(object);
+					if(cmd_.equals("ADD")) {
+						object.setState(DataObjectState.DataObjectStateNew);
+						
+						collection.add(object);
+					} else if (cmd_.equals("EDIT")) {
+						collection.remove(previous);
+
+						object.setState(DataObjectState.DataObjectStateModified);
+						
+						collection.add(object);
+					}
 					
 					try {
 						appManager.getDatabaseManager().synchronizeObjectsForTableName(model.getTableName(), collection);
@@ -210,6 +309,38 @@ public class AddEditViewController extends ViewController implements ActionListe
 		
 		if(cmd.equals("CANCEL")) {
 			appManager.getDialogManager().popDialog();
+		}
+	}
+
+	boolean isMappingValue(String tableName, int buttonIndex) {
+		if(tableName.equals("Kunden") && buttonIndex == 0 ||
+	       tableName.equals("Projekte") && buttonIndex == 1 ||
+	       tableName.equals("Ausgangsrechnungen") && (buttonIndex == 1 || buttonIndex == 2) ||
+	       tableName.equals("Eingangsrechnungen") && buttonIndex == 1 ||
+	       tableName.equals("Buchungszeilen") && buttonIndex == 2 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	String getMappingTableName(String tableName, int buttonIndex) {
+		if(tableName.equals("Kunden") && buttonIndex == 0 ) {
+			return "angebote_mapping";
+		} else if(tableName.equals("Projekte") && buttonIndex == 1 ) {
+			return "ausgangsrechnungen_mapping";
+		} else if( tableName.equals("Ausgangsrechnungen") && buttonIndex == 1) {
+			return "rzeilen_mapping";
+		} else if( tableName.equals("Ausgangsrechnungen") && buttonIndex == 2 ) {
+			return "bzeilen_mapping";
+		} else if( tableName.equals("Eingangsrechnungen") && buttonIndex == 1 ) {
+			return "bzeilen_mapping";
+		} else if( tableName.equals("Buchungszeilen") && buttonIndex == 2 ) {
+			return "kat_mapping";
+		} else {
+			Logger.getLogger(AddEditViewController.class.getName()).error("[ERROR] Requested mapping table name for a table that has no mapping table name defined.");
+			return "";
 		}
 	}
 }

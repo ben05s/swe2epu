@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 
@@ -14,6 +16,33 @@ public class SQLForeignKeyResolveFactory {
 	
 	public static void setDatabaseHandle(Connection databaseHandle) {
 		SQLForeignKeyResolveFactory.databaseHandle = databaseHandle;
+	}
+	
+	public static int getForeignNameResult(String tableName, String fieldName, String name) throws DataProviderException {
+		int retVal = 0;
+		
+		String sql = "SELECT id FROM " + tableName + " WHERE " + fieldName + " = ?";
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = databaseHandle.prepareStatement(sql);
+
+			statement.setString(1, name);
+			
+			if( statement.execute() ) {
+				ResultSet result = statement.getResultSet();
+				
+				while( result.next() ) {
+					return result.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", name = " + name + ".");
+			throw new DataProviderException(e.getMessage());
+		}
+		
+		return retVal;
 	}
 	
 	public static ArrayList<String> getForeignKeyResults(String tableName, DataObject object, int fieldIndex) throws DataProviderException {
@@ -61,8 +90,15 @@ public class SQLForeignKeyResolveFactory {
 			} else if(fieldName.equals("ausgr_mapping_id")) {
 				retVal = getAllNamesForTableNameWithMapping("Ausgangsrechnungen", "rechnungskürzel", "ausgangsrechnungen_mapping", foreignKey);
 			}
-		} else {
-			System.err.println("[ERROR][SQLForeignKeyResolveFactory] You requested foreign key data that is not defined. (tableName = " +
+		}  else if( tableName.equals("Rechnungszeilen") ) {
+			if(fieldName.equals("angebot_id")) {
+				retVal = getNameForForeignKey("Angebote", foreignKey, "titel");
+			} else if(fieldName.equals("ausgangsrechnung_id")) {
+				retVal = getNameForForeignKey("Ausgangsrechnungen", foreignKey, "rechnungskürzel");
+			}
+		}  
+		else {
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("[ERROR][SQLForeignKeyResolveFactory] You requested foreign key data that is not defined. (tableName = " +
 							   tableName + ", fieldName = " + fieldName + " )");
 			
 			return null;
@@ -94,7 +130,7 @@ public class SQLForeignKeyResolveFactory {
 				return retVal;
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", foreignKey = " + foreignKey + ".");
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get name for foreign key " + tableName + ", fieldName = " + fieldName + ", foreignKey = " + foreignKey + ".");
 			throw new DataProviderException(e.getMessage());
 		}
 		
@@ -127,7 +163,7 @@ public class SQLForeignKeyResolveFactory {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Failed to get all name mappings from table: " + tableName);
+			Logger.getLogger(SQLForeignKeyResolveFactory.class.getName()).error("Failed to get all name mappings from table: " + tableName);
 			throw new DataProviderException(e.getMessage());
 		}
 		

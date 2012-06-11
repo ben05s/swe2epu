@@ -19,10 +19,13 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
+
+import com.ibm.icu.text.SimpleDateFormat;
 
 public class ArrayResultSet implements ResultSet {
 	ArrayList<Object> results = new ArrayList<Object>();
@@ -225,7 +228,20 @@ public class ArrayResultSet implements ResultSet {
 
 	@Override
 	public Date getDate(int columnIndex) throws SQLException {
-		return (Date)genericGetter(columnIndex);
+		if(genericGetter(columnIndex).getClass().equals(String.class)) {
+			SimpleDateFormat stringToDate = new SimpleDateFormat("dd.MM.yyyy");
+			
+			try {
+				return new Date( stringToDate.parse((String)genericGetter(columnIndex)).getTime() );
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			return new Date( new java.util.Date().getTime() );
+		} else {
+			return (Date)genericGetter(columnIndex);
+		}
 	}
 
 	@Override
@@ -281,7 +297,12 @@ public class ArrayResultSet implements ResultSet {
 
 	@Override
 	public int getInt(int columnIndex) throws SQLException {
-		return (Integer)genericGetter(columnIndex);
+		if( genericGetter(columnIndex).getClass().equals(String.class) ) {
+			return Integer.parseInt((String) genericGetter(columnIndex));
+		}
+		else {
+			return (Integer)genericGetter(columnIndex);
+		}
 	}
 
 	@Override

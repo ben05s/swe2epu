@@ -3,6 +3,8 @@ package at.epu.DataAccessLayer.DataProviders.Mock;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import at.epu.DataAccessLayer.DataObjects.BankAccountDataObject;
 import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
@@ -91,7 +93,7 @@ public class MockDataFactory {
 			InBillDataObject obj1 = new InBillDataObject();
 			
 			obj1.setId(1);
-			obj1.setRechnungskuerzel("InBill123");
+			obj1.setRechnungskürzel("InBill123");
 			obj1.setKontakt_id(1);
 			obj1.setBzeile_mapping_id(1);
 			obj1.setStatus("bezahlt");
@@ -123,7 +125,7 @@ public class MockDataFactory {
 					{new Integer(3), "Nicht so gutes Projekt", "A003", new Integer(3)}
 			};
 		} else {
-			System.err.println("[ERROR][MockDataFactory] You requested mock data that is not defined. (tableName = " + tableName + " )");
+			Logger.getLogger(MockDataFactory.class.getName()).error("[ERROR][MockDataFactory] You requested mock data that is not defined. (tableName = " + tableName + " )");
 			
 			return null;
 		}

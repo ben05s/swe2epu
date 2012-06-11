@@ -23,4 +23,6 @@ public interface DataProvider {
 	public DataObjectCollection selectAll(String tableName) throws DataProviderException;
 	public void syncData(String tableName, DataObjectCollection collection) throws DataProviderException;
 	public ArrayList<String> resolveForeignKey(String tableName, DataObject object, int fieldIndex) throws DataProviderException;
+	public int getForeignKeyForName(String tableName, String fieldName, String name) throws DataProviderException;
+	public int createMappingEntryForValues(String tableName, String mappingTableName, ArrayList<Integer> keys) throws DataProviderException;
 }

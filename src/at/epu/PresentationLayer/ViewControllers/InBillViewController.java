@@ -43,6 +43,7 @@ import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 			title = "Eingangsrechnungen";
 			
 			model.getAddEditState().getIndexChoosable().add(1);
+			model.getAddEditState().getIndexChoosable().add(2);
 			
 			rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
 	                									appManager.getModelForTableName("Eingangsrechnungen"));
