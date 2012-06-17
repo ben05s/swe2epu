@@ -10,12 +10,16 @@ import java.util.ArrayList;
 import com.google.gson.*;
 
 public class JSONManager {
-	class TimeTable {
+	public class TimeTable {
 		String projectName;
 		ArrayList<Integer> times;
 		
 		TimeTable() {
 			times = new ArrayList<Integer>();
+		}
+		
+		public String getProjectName() {
+			return projectName;
 		}
 		
 		public int getTotal() {
@@ -54,8 +58,8 @@ public class JSONManager {
 			}
 		}
 	}
-	
-	public int getTimeTotalFromFile(String filepath) {
+
+	public TimeTable serializeTimeTable(String filepath) {
 		StringBuilder builder = new StringBuilder();
 		
 		BufferedReader reader = null;
@@ -83,7 +87,7 @@ public class JSONManager {
 		
 		TimeTable table = getGson().fromJson(builder.toString(), TimeTable.class);
 		
-		return table.getTotal();
+		return table;
 	}
 	
 	private Gson getGson() {

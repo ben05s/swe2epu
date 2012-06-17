@@ -149,7 +149,6 @@ public class PDFManager {
 		BackofficeTableModel model_kunden = appManager.getModelForTableName("Kunden");
 		BackofficeTableModel model_kontakte = appManager.getModelForTableName("Kontakte");
 		BackofficeTableModel model_buchungszeilen = appManager.getModelForTableName("Buchungszeilen");
-		BackofficeTableModel model_rechnungszeilen = appManager.getModelForTableName("Rechnungszeilen");
 		
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = "RechnungsReport-" + sdf.format(new Date()).toString();
@@ -404,7 +403,7 @@ public class PDFManager {
 	
 	private void saveDocument(PDDocument document, String filename) {
 		try {
-			document.save(filename + ".pdf");
+			document.save("pdf/" + filename + ".pdf");
 			document.close();
 		} catch (COSVisitorException e) {
 			e.printStackTrace();

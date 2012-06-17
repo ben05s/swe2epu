@@ -16,10 +16,7 @@ import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
-public class OfferViewController extends ViewController implements ActionListener{
-	
-	FilepathViewController viewController;
-	
+public class OfferViewController extends ViewController implements ActionListener{	
 	public OfferViewController(JFrame mainWindow) {
 		super(mainWindow);
 	}

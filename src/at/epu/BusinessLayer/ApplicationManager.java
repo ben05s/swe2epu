@@ -80,6 +80,10 @@ public class ApplicationManager {
 		return bindingManager;
 	}
 	
+	public JSONManager getJsonManager() {
+		return jsonManager;
+	}
+	
 	public BackofficeTableModel getModelForTableName(String tableName) {
 		return dataModelFactory.getModelForTableName(tableName);
 	}

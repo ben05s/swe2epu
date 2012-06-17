@@ -19,8 +19,6 @@ public class SQLForeignKeyResolveFactory {
 	}
 	
 	public static int getForeignNameResult(String tableName, String fieldName, String name) throws DataProviderException {
-		int retVal = 0;
-		
 		String sql = "SELECT id FROM " + tableName + " WHERE " + fieldName + " = ?";
 		
 		PreparedStatement statement = null;
@@ -42,7 +40,7 @@ public class SQLForeignKeyResolveFactory {
 			throw new DataProviderException(e.getMessage());
 		}
 		
-		return retVal;
+		throw new DataProviderException("No object with key " + name + ".");
 	}
 	
 	public static ArrayList<String> getForeignKeyResults(String tableName, DataObject object, int fieldIndex) throws DataProviderException {

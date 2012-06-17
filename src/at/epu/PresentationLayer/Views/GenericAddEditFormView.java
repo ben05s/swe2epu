@@ -11,7 +11,7 @@ import javax.swing.SpringLayout;
 
 import at.epu.PresentationLayer.SpringUtilities;
 
-public class GenericAddEditFormView extends JPanel{
+public class GenericAddEditFormView extends JPanel {
 
 	/**
 	 * 
