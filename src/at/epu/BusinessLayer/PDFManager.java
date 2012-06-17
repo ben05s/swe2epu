@@ -22,9 +22,9 @@ public class PDFManager {
 	private String filename;
 	private SimpleDateFormat sdf;
 	
-	public void createAnnualPrognosis(BackofficeTableModel model) {
+	public void createAnnualPrognosis(BackofficeTableModel model, String path) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
-		filename = "Prognose-" + sdf.format(new Date()).toString();
+		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
 		PDDocument doc = newDocument();
 		PDPage page = newPage();
@@ -143,7 +143,7 @@ public class PDFManager {
 		saveDocument(doc, filename);
 	}
 	
-	public void createBillReportPDF(BackofficeTableModel model_ausgRechnungen) {
+	public void createBillReportPDF(BackofficeTableModel model_ausgRechnungen, String path) {
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		BackofficeTableModel model_eingRechnungen = appManager.getModelForTableName("Eingangsrechnungen");
 		BackofficeTableModel model_kunden = appManager.getModelForTableName("Kunden");
@@ -151,7 +151,7 @@ public class PDFManager {
 		BackofficeTableModel model_buchungszeilen = appManager.getModelForTableName("Buchungszeilen");
 		
 		sdf = new SimpleDateFormat("ddMMyyyy");
-		filename = "RechnungsReport-" + sdf.format(new Date()).toString();
+		filename = path;
 		String date = new SimpleDateFormat("dd.MM.yyyy").format(new Date()).toString();
 		PDDocument doc = newDocument();
 		PDPage page = newPage();
@@ -278,9 +278,9 @@ public class PDFManager {
 		}
 	}
 	
-	public void createInOutBillReportPDF(BackofficeTableModel model) {
+	public void createInOutBillReportPDF(BackofficeTableModel model, String path) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
-		filename = "EinAus-Report-" + sdf.format(new Date()).toString();
+		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
 		String month = new SimpleDateFormat("MMMM").format(new Date()).toString();
 		String mm = new SimpleDateFormat("MM").format(new Date()).toString();
@@ -403,7 +403,7 @@ public class PDFManager {
 	
 	private void saveDocument(PDDocument document, String filename) {
 		try {
-			document.save("pdf/" + filename + ".pdf");
+			document.save(filename);
 			document.close();
 		} catch (COSVisitorException e) {
 			e.printStackTrace();

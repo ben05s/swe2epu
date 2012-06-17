@@ -2,12 +2,15 @@ package at.epu.PresentationLayer.ViewControllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.PDFManager;
@@ -64,10 +67,22 @@ public class OutBillViewController extends ViewController implements ActionListe
 		BackofficeTableModel model = appManager.getModelForTableName("Ausgangsrechnungen");
 		
 		if(ev.getActionCommand().equals("CREATE")) {
-			PDFManager pdfManager = new PDFManager();
+			JFileChooser chooser = new JFileChooser();
 			
-			pdfManager.createBillReportPDF(model);
+			chooser.setCurrentDirectory(new File("pdf"));
+			
+			int retVal = chooser.showSaveDialog(null);
+			
+			if( retVal == JFileChooser.APPROVE_OPTION ) {
+				String path = chooser.getSelectedFile().getPath();
+				PDFManager pdfManager = new PDFManager();
 				
+				pdfManager.createBillReportPDF(model, path);
+					
+				JOptionPane.showMessageDialog(null, 
+						"Das Rechnungs-Report-PDF(" + path + ") wurde erfolgreich erzeugt.",
+						"Information", JOptionPane.INFORMATION_MESSAGE);
+			}
 		} else {
 			super.actionPerformed(ev);
 		}
