@@ -1,7 +1,6 @@
 package at.epu.PresentationLayer.DataModels;
 
 import java.util.ArrayList;
-
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;

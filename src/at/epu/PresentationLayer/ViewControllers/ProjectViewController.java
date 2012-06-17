@@ -11,17 +11,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
+import com.ibm.icu.text.DecimalFormat;
 
 import at.epu.BusinessLayer.ApplicationManager;
 import at.epu.BusinessLayer.JSONManager;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
+import at.epu.DataAccessLayer.DataObjects.OfferDataObject;
 import at.epu.DataAccessLayer.DataObjects.ProjectDataObject;
 import at.epu.DataAccessLayer.DataProviders.DataProvider.DataProviderException;
 import at.epu.PresentationLayer.ActionHandlers.AddActionHandler;
@@ -29,7 +33,9 @@ import at.epu.PresentationLayer.ActionHandlers.FilterActionHandler;
 import at.epu.PresentationLayer.DataModels.BackofficeTableModel;
 import at.epu.PresentationLayer.Views.GenericSplitTableView;
 
-public class ProjectViewController extends ViewController implements ActionListener {	
+public class ProjectViewController extends ViewController implements ActionListener, TableModelListener {
+	JLabel hourlyWageLabel;
+	
 	public ProjectViewController(JFrame mainWindow) {
 		super(mainWindow);
 	}
@@ -39,6 +45,7 @@ public class ProjectViewController extends ViewController implements ActionListe
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		
 		BackofficeTableModel model = appManager.getModelForTableName("Projekte");
+		model.addTableModelListener(this);
 		
 		registerActionHandler(new FilterActionHandler(this));
 		registerActionHandler(new AddActionHandler(this, model));
@@ -51,7 +58,10 @@ public class ProjectViewController extends ViewController implements ActionListe
 		buttonList.add(bookTimeButton);
 		
 		ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-		labelList.add(new JLabel("Stundensatz(gesamt): "));
+		
+		hourlyWageLabel = new JLabel( getHourlyWageString() );
+		
+		labelList.add(hourlyWageLabel);
 		
 		ArrayList<JMenuItem> menuList = new ArrayList<JMenuItem>();
 		menuList.add(new JMenuItem("Editieren"));
@@ -138,5 +148,52 @@ public class ProjectViewController extends ViewController implements ActionListe
 				}
 			}
 		}
+	}
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+		hourlyWageLabel.setText( getHourlyWageString() );
+	}
+	
+	String getHourlyWageString() {
+		DecimalFormat format = new DecimalFormat("0.00");
+		
+		return "Stundensatz(gesamt): " + format.format( getHourlyWage() ) + " € / h";
+	}
+	
+	double getHourlyWage() {
+		BackofficeTableModel projectModel = ApplicationManager.getInstance().getModelForTableName("Projekte");
+		BackofficeTableModel offerModel = ApplicationManager.getInstance().getModelForTableName("Angebote");
+		
+		int numOffers = offerModel.getDataObjectCollection().size();
+		int[] timePerOffer = new int[numOffers];
+		
+		for(DataObject object : projectModel.getDataObjectCollection()) {
+			ProjectDataObject projectDataObject = (ProjectDataObject)object;
+			
+			double projectTime = projectDataObject.getZeit();
+			
+			for(DataObject offerObject : offerModel.getDataObjectCollection()) {
+				OfferDataObject offerDataObject = (OfferDataObject)offerObject;
+				
+				if(offerDataObject.getId() == projectDataObject.getAngebot_id()) {
+					timePerOffer[offerModel.getDataObjectCollection().indexOf(offerDataObject)] += projectTime;
+					break;
+				}
+			}
+		}
+	
+		double hourlyWageAccumulator = 0;
+		for(int i = 0; i < offerModel.getDataObjectCollection().size(); ++i) {
+			OfferDataObject object = (OfferDataObject)offerModel.getDataObjectCollection().get(i);
+			
+			double offerMoney = object.getSumme();
+			
+			if(timePerOffer[i] != 0) {
+				hourlyWageAccumulator += (offerMoney / timePerOffer[i]);
+			}
+		}
+		
+		return (double)hourlyWageAccumulator / (double)numOffers;
 	}
 }
