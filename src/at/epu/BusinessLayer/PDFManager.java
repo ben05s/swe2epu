@@ -23,6 +23,7 @@ public class PDFManager {
 	private SimpleDateFormat sdf;
 	
 	public void createAnnualPrognosis(BackofficeTableModel model, String path) {
+		if(model.getRowCount() != 0) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
@@ -131,6 +132,7 @@ public class PDFManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
 	}
 	
 	public void createOutBillPDF(OutBillDataObject outbill) {
@@ -144,12 +146,14 @@ public class PDFManager {
 	}
 	
 	public void createBillReportPDF(BackofficeTableModel model_ausgRechnungen, String path) {
+		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		BackofficeTableModel model_eingRechnungen = appManager.getModelForTableName("Eingangsrechnungen");
 		BackofficeTableModel model_kunden = appManager.getModelForTableName("Kunden");
 		BackofficeTableModel model_kontakte = appManager.getModelForTableName("Kontakte");
 		BackofficeTableModel model_buchungszeilen = appManager.getModelForTableName("Buchungszeilen");
 		
+		if(model_ausgRechnungen.getRowCount() != 0 && model_eingRechnungen.getRowCount() != 0) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String date = new SimpleDateFormat("dd.MM.yyyy").format(new Date()).toString();
@@ -251,7 +255,34 @@ public class PDFManager {
 		        	content.moveTextPositionByAmount(60, 0);
 		        	content.drawString(model_ausgRechnungen.getObjectAtRow(x).getFieldValues().get(5).toString());
 		        	content.moveTextPositionByAmount(-180, -20);
+		        	content.moveTextPositionByAmount(10, 0);
+			       	font = PDType1Font.HELVETICA_BOLD;
+			       	content.setFont(font, 8);
+			       	content.drawString("Buchungszeilen");	
+			       	font = PDType1Font.HELVETICA;
+			       	content.setFont(font, 8);
+			       	content.moveTextPositionByAmount(0, -10);
+			       	content.drawString("BETRAG");
+			       	content.moveTextPositionByAmount(80, 0);
+			       	content.drawString("UMSATZSTEUER");
+			       	content.moveTextPositionByAmount(100, 0);
+			       	content.drawString("BUCHUNGSDATUM");
+			       	content.moveTextPositionByAmount(-180, -10);
+			       	for(int f=0;f<model_buchungszeilen.getRowCount();f++) {
+			       		if(model_buchungszeilen.getObjectAtRow(f).getFieldValues().get(2).toString().equals(model_ausgRechnungen.getObjectAtRow(x).getFieldValues().get(0).toString())) {
+			       			content.drawString(model_buchungszeilen.getObjectAtRow(f).getFieldValues().get(3).toString());
+			       			content.moveTextPositionByAmount(80, 0);
+			       			content.drawString(model_buchungszeilen.getObjectAtRow(f).getFieldValues().get(4).toString());
+			       			content.moveTextPositionByAmount(100, 0);
+			       			content.drawString(model_buchungszeilen.getObjectAtRow(f).getFieldValues().get(5).toString());
+			       			content.moveTextPositionByAmount(-180, -20);
+			       		}
+			       	}
+			       	content.moveTextPositionByAmount(-10, 0);
 	        }
+	        
+	        
+	        
 			int offeneRechnungen = 0;
 			for(int i=0;i<model_eingRechnungen.getRowCount();i++) {
 				if(model_eingRechnungen.getObjectAtRow(i).getFieldValues().get(4).toString().equals("offen")) {
@@ -276,9 +307,11 @@ public class PDFManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
 	}
 	
 	public void createInOutBillReportPDF(BackofficeTableModel model, String path) {
+		if(model.getRowCount() != 0) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
@@ -321,7 +354,7 @@ public class PDFManager {
 	        content.setFont(font, 10);
 	        
 	        for(int x=0;x<model.getRowCount();x++) {
-	        	if(model.getObjectAtRow(x).getFieldValues().get(1).toString().equals("0") && 
+	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(2).toString()) > 0 && 
 	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
 	        		//resolve Foreign Key
 		        	for(int i=0;i<modelFK1.getRowCount();i++) {
@@ -355,7 +388,7 @@ public class PDFManager {
 	        content.setFont(font, 10);
 	        
 	        for(int x=0;x<model.getRowCount();x++) {
-	        	if(model.getObjectAtRow(x).getFieldValues().get(2).toString().equals("0") && 
+	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(1).toString()) > 0 && 
 	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
 	        		//resolve Foreign Key
 		        	for(int i=0;i<modelFK2.getRowCount();i++) {
@@ -378,6 +411,7 @@ public class PDFManager {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 	}
 	
