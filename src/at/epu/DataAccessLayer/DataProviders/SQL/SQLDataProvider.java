@@ -119,13 +119,8 @@ public class SQLDataProvider implements DataProvider {
 		builder.replace(builder.length()-1, builder.length(), ")");
 		builder.append(" VALUES (");
 		
-		for(Object obj : object.getFieldValues()) {
-			if(obj.getClass() == String.class) {
-				obj = new String("'" + obj + "'");
-			}
-			
-			
-			builder.append(obj + ",");
+		for(int i = 0; i < object.getFieldValues().size(); ++i) {
+			builder.append("?,");
 		}
 		
 		builder.replace(builder.length()-1, builder.length(), ")");
@@ -134,7 +129,30 @@ public class SQLDataProvider implements DataProvider {
 		
 		PreparedStatement statement = databaseHandle.prepareStatement(sql);
 		
+		setParams(statement, object);
+		
 		statement.execute();
+	}
+	
+	void setParams(PreparedStatement statement, DataObject object) throws SQLException {
+		int index = 1;
+		for(Object obj : object.getFieldValues()) {
+			if(obj.getClass().equals(String.class)) {
+				statement.setString(index, (String)obj);
+			} else if(obj.getClass().equals(Integer.class)) {
+				statement.setInt(index, (Integer)obj);
+			} else if(obj.getClass().equals(Double.class)) {
+				statement.setDouble(index, (Double)obj);
+			} else if(obj.getClass().equals(java.sql.Date.class)) {
+				statement.setDate(index, (java.sql.Date)obj);
+			} else if(obj.getClass().equals(java.util.Date.class)) {
+				statement.setDate(index, new java.sql.Date( ((java.util.Date)obj).getTime()));
+			} else {
+				Logger.getLogger(this.getClass().getName()).error("Can't transmit an object of type " + obj.getClass().getName() + " to the SQL database.");
+			}
+			
+			index++;
+		}
 	}
 	
 	void delete(String tableName, DataObject object) throws SQLException {
@@ -153,15 +171,10 @@ public class SQLDataProvider implements DataProvider {
 		builder.append("UPDATE " + tableName + " SET ");
 		
 		ArrayList<String> fieldNames = object.getFieldNames();
-		ArrayList<Object> fieldValues = object.getFieldValues();
 		
 		for(int i = 0; i < object.getFieldNames().size(); i++) {
 			String fieldName = fieldNames.get(i);
-			Object value = fieldValues.get(i);
-			
-			if(value.getClass() == String.class) {
-				value = new String("'" + value + "'");
-			}
+			Object value = "?";
 			
 			builder.append(fieldName + "=" + value);
 			
@@ -176,7 +189,9 @@ public class SQLDataProvider implements DataProvider {
 		
 		PreparedStatement statement = databaseHandle.prepareStatement(sql);
 		
-		statement.setInt(1, object.getId());
+		setParams(statement, object);
+		
+		statement.setInt(object.getFieldValues().size() + 1, object.getId());
 		
 		int numUpdates = statement.executeUpdate();
 		

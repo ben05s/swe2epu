@@ -53,8 +53,6 @@ public class OutBillViewController extends ViewController implements ActionListe
 		title = "Ausgangsrechnungen";
 		
 		model.getAddEditState().getIndexChoosable().add(1);
-		model.getAddEditState().getIndexChoosable().add(2);
-		model.getAddEditState().getIndexChoosable().add(3);
 		
 		rootComponent = new GenericSplitTableView(buttonList, labelList, menuList, title,
                 									appManager.getModelForTableName("Ausgangsrechnungen"));

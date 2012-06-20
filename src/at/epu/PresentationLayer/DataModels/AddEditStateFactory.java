@@ -47,7 +47,6 @@ public class AddEditStateFactory {
 		} else if( tableName.equals("Eingangsrechnungen") ) {
 			String [] addEditColNames_ = {"Rechnungskürzel",
 					"Kontakt",
-					"Buchungszeilen ID",
 					"Status"};
 			
 			state.setAddEditColNames(addEditColNames_);
@@ -63,8 +62,6 @@ public class AddEditStateFactory {
 		} else if( tableName.equals("Ausgangsrechnungen") ) {
 			String [] addEditColNames_ = {"Rechnungskürzel",
 					"Kunde",
-					"Rechnungszeilen ID",
-					"Buchungszeilen ID",
 					"Status"};
 			
 			state.setAddEditColNames(addEditColNames_);

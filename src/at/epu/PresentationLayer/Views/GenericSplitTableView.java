@@ -201,6 +201,11 @@ public class GenericSplitTableView extends JPanel {
 	                	}
 	                }
 	                popup.show(e.getComponent(), e.getX(), e.getY());
+	            } else if(e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e) && e.getComponent() instanceof JTable) {
+	            	String cmd = "EDIT";
+        			AddEditViewController controller = new AddEditViewController(cmd, rowindex, indexChoosable);
+        			
+        			ApplicationManager.getInstance().getDialogManager().pushDialog(controller);
 	            }
 	        } 
 	 });

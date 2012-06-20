@@ -262,7 +262,11 @@ public class AddEditViewController extends ViewController implements ActionListe
 								}
 							}
 							else {
-								data[i - 1] = keys.get(0);
+								if(keys.size() == 0) {
+									data[i - 1] = null;
+								} else {
+									data[i - 1] = keys.get(0);
+								}
 							}
 							
 							chooseBtnNumber++;
