@@ -22,7 +22,6 @@ public class PDFManager {
 	private SimpleDateFormat sdf;
 	
 	public void createAnnualPrognosis(BackofficeTableModel model, String path) {
-		if(model.getRowCount() != 0) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
@@ -133,7 +132,6 @@ public class PDFManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
 	}
 	
 	public void createBillReportPDF(BackofficeTableModel model_ausgRechnungen, String path) {
@@ -143,8 +141,7 @@ public class PDFManager {
 		BackofficeTableModel model_kunden = appManager.getModelForTableName("Kunden");
 		BackofficeTableModel model_kontakte = appManager.getModelForTableName("Kontakte");
 		BackofficeTableModel model_buchungszeilen = appManager.getModelForTableName("Buchungszeilen");
-		
-		if(model_ausgRechnungen.getRowCount() != 0 && model_eingRechnungen.getRowCount() != 0) {
+
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String date = new SimpleDateFormat("dd.MM.yyyy").format(new Date()).toString();
@@ -266,11 +263,11 @@ public class PDFManager {
 		        content.endText();
 		        content.close();
 			}
+			
 			saveDocument(doc, filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
 		}
 	}
 	
