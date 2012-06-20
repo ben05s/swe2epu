@@ -15,7 +15,8 @@ public class MockDataTests {
 	
 	@Test
 	public void saveDataTest() {
-		String[] args= new String[0];
+		String[] args = {"config/app.properties"};
+		
 		
 		appManager.applicationStarted(args);
 		

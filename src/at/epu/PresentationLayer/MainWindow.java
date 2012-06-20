@@ -50,6 +50,10 @@ public class MainWindow {
 	public MainWindow() {
 		initialize();
 	}
+	
+	public void setVisible(boolean visible) {
+		frmBackoffice.setVisible(visible);
+	}
 
 	public JFrame getFrmBackoffice() {
 		return frmBackoffice;

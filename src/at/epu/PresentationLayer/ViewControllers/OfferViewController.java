@@ -69,7 +69,7 @@ public class OfferViewController extends ViewController implements ActionListene
 			
 			if( retVal == JFileChooser.APPROVE_OPTION ) {
 				String path = chooser.getSelectedFile().getPath();
-				PDFManager pdfManager = new PDFManager();
+				PDFManager pdfManager = appManager.getPdfManager();
 			
 				pdfManager.createAnnualPrognosis(model, path);
 				

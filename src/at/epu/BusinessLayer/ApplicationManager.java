@@ -120,6 +120,10 @@ public class ApplicationManager {
 		return jsonManager;
 	}
 	
+	public PDFManager getPdfManager() {
+		return pdfManager;
+	}
+	
 	public BackofficeTableModel getModelForTableName(String tableName) {
 		return dataModelFactory.getModelForTableName(tableName);
 	}

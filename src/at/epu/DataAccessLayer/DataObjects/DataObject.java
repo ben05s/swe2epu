@@ -23,12 +23,12 @@ public class DataObject {
 		int fieldIndex = 0;
 		for(String name : getFieldNames()) {
 			if(name.equals(fieldName)) {
-				break;
+				return fieldIndex;
 			}
 			fieldIndex++;
 		}
 		
-		return fieldIndex;
+		throw new IllegalArgumentException();
 	}
 	
 	public boolean isForeignKeyField(int index) {

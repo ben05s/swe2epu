@@ -1,6 +1,5 @@
 package at.epu.DataAccessLayer.DataProviders.Mock;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -93,12 +92,12 @@ public class MockDataFactory {
 			
 			collection.add(obj1);
 			
-			Object[][] data_ = {
+			/**Object[][] data_ = {
 				    {new Integer(2), "Fritz", "DD", "Privat", 
 				     "Zeilengasse 143/22", "f.DD@gmail.com", "06761252042", null},
 				    {new Integer(3), "Heinz", "MrX", "Haus Gmbh",
 				     "Franzgasse 9/12", "x.x@chello.at", "066465352325", "A003"},
-				};
+				};*/
 		} else if( tableName.equals("Eingangsrechnungen") ) {
 			InBillDataObject obj1 = new InBillDataObject();
 			
@@ -121,26 +120,26 @@ public class MockDataFactory {
 			collection.add(obj2);
 			
 		} else if( tableName.equals("Angebote") ) {
-			Object[][] data_ = {
+			/**Object[][] data_ = {
 				    {new Integer(1), "Admin billig A.", "Hur", new Double(20000.00), new Integer(365),
 				     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.55)},
 				    {new Integer(2), "Gutes Projekt teuer A.", "Hur", new Double(150000.00), new Integer(180),
 				     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.45)},
 				    {new Integer(3), "A003", "MrX", new Double(50000.00), new Integer(85), 
 				     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.80)},
-				};
+				};*/
 		} else if( tableName.equals("Ausgangsrechnungen") ) {
-			Object [][] data_ = {
+			/**Object [][] data_ = {
 					{new Integer(1), "R2054", "MrX", new Integer(2), new Integer(1), "bezahlt"},
 					{new Integer(2), "R353", "Hur", new Integer(2), new Integer(1), "bezahlt"}
-			};
+			};*/
 			
 		} else if( tableName.equals("Projekte") ) {
-			Object [][] data_ = {
+			/**Object [][] data_ = {
 					{new Integer(1), "Admin Tool", "Admin billig A.", new Integer(1)},
 					{new Integer(2), "Gutes Projekt", "Gutes Projekt teuer A.", null},
 					{new Integer(3), "Nicht so gutes Projekt", "A003", new Integer(3)}
-			};
+			};*/
 		} else {
 			Logger.getLogger(MockDataFactory.class.getName()).error("[ERROR][MockDataFactory] You requested mock data that is not defined. (tableName = " + tableName + " )");
 			

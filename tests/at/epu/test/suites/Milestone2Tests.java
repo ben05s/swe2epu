@@ -9,7 +9,9 @@ import at.epu.test.DataObjectTest;
 import at.epu.test.MockDataTests;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DataBindingTests.class, MockDataTests.class, DataObjectTest.class })
+@SuiteClasses({ DataBindingTests.class, 
+	MockDataTests.class, 
+	DataObjectTest.class })
 public class Milestone2Tests {
 
 }

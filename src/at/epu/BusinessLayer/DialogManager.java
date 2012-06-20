@@ -12,6 +12,14 @@ public class DialogManager {
 		dialogStack = new Stack<JDialog>();
 	}
 	
+	public JDialog top() {
+		if(dialogStack.empty()) {
+			return null;
+		} else {
+			return dialogStack.peek();
+		}
+	}
+	
 	public void pushDialog(ViewController viewController) {
 		if(!dialogStack.empty()) {
 			dialogStack.peek().setEnabled(false);	
@@ -44,8 +52,10 @@ public class DialogManager {
 	}
 	
 	public void popDialog() {
-		dialogStack.peek().dispose();
-		dialogStack.pop();
+		if(!dialogStack.empty()) {
+			dialogStack.peek().dispose();
+			dialogStack.pop();
+		}
 		
 		if(dialogStack.empty()){
 			ApplicationManager.getInstance().getMainFrame().setEnabled(true);
