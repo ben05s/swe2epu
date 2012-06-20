@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
@@ -235,7 +236,7 @@ public class ArrayResultSet implements ResultSet {
 				return new Date( stringToDate.parse((String)genericGetter(columnIndex)).getTime() );
 				
 			} catch (ParseException e) {
-				e.printStackTrace();
+				Logger.getLogger(this.getClass().getName()).info("Date format could not be parsed. Use dd.MM.yyyy");
 			}
 			
 			return new Date( new java.util.Date().getTime() );
@@ -261,8 +262,11 @@ public class ArrayResultSet implements ResultSet {
 
 	@Override
 	public double getDouble(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		if(genericGetter(columnIndex).getClass().equals(String.class) ) {
+			return Double.parseDouble((String)genericGetter(columnIndex));
+		} else {
+			return (Double)genericGetter(columnIndex);
+		}
 	}
 
 	@Override

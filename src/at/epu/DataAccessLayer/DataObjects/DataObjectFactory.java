@@ -69,8 +69,7 @@ public class DataObjectFactory {
 			tmp.setId(resultSet.getInt(1));
 			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKontakt_id(resultSet.getInt(3));
-			tmp.setBzeile_mapping_id(resultSet.getInt(4));
-			tmp.setStatus(resultSet.getString(5));
+			tmp.setStatus(resultSet.getString(4));
 			
 			retVal = tmp;
 		} else if( tableName.equals("Angebote") ) {
@@ -91,9 +90,7 @@ public class DataObjectFactory {
 			tmp.setId(resultSet.getInt(1));
 			tmp.setRechnungskürzel(resultSet.getString(2));
 			tmp.setKunde_id(resultSet.getInt(3));
-			tmp.setRzeile_mapping_id(resultSet.getInt(4));
-			tmp.setBzeile_mapping_id(resultSet.getInt(5));
-			tmp.setStatus(resultSet.getString(6));
+			tmp.setStatus(resultSet.getString(4));
 			
 			retVal = tmp;
 		} else if( tableName.equals("Projekte") ) {
@@ -103,7 +100,7 @@ public class DataObjectFactory {
 			tmp.setTitel(resultSet.getString(2));
 			tmp.setAngebot_id(resultSet.getInt(3));
 			tmp.setAusgr_mapping_id(resultSet.getInt(4));
-			tmp.setZeit(resultSet.getDouble(5));
+			//tmp.setZeit(resultSet.getDouble(5));
 			
 			retVal = tmp;
 		} else {
