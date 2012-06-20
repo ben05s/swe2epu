@@ -9,6 +9,8 @@ import at.epu.DataAccessLayer.DataObjects.CategoryDataObject;
 import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
+import at.epu.DataAccessLayer.DataObjects.OfferDataObject;
+import at.epu.DataAccessLayer.DataObjects.OutBillDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject.DataObjectState;
 import at.epu.DataAccessLayer.DataObjects.DataObjectCollection;
 import at.epu.DataAccessLayer.DataObjects.InBillDataObject;
@@ -128,11 +130,27 @@ public class MockDataFactory {
 				    {new Integer(3), "A003", "MrX", new Double(50000.00), new Integer(85), 
 				     new SimpleDateFormat("dd.MM.yyyy").format(new Date()), new Double(0.80)},
 				};*/
+		    OfferDataObject obj1 = new OfferDataObject();
+		    obj1.setId(1);
+		    obj1.setChance(0.25);
+		    obj1.setDatum(new java.util.Date());
+		    obj1.setDauer(250);
+		    obj1.setKunde_id(1);
+		    obj1.setSumme(25000);
+		    obj1.setTitel("A001-Mega Angebot");
+		    
+		    collection.add(obj1);
 		} else if( tableName.equals("Ausgangsrechnungen") ) {
-			/**Object [][] data_ = {
-					{new Integer(1), "R2054", "MrX", new Integer(2), new Integer(1), "bezahlt"},
-					{new Integer(2), "R353", "Hur", new Integer(2), new Integer(1), "bezahlt"}
-			};*/
+		    OutBillDataObject obj1 = new OutBillDataObject();
+		    
+		    obj1.setId(1);
+		    obj1.setBzeile_mapping_id(1);
+		    obj1.setRzeile_mapping_id(1);
+		    obj1.setKunde_id(1);
+		    obj1.setRechnungskürzel("R01231");
+		    obj1.setStatus("offen");
+		    
+		    collection.add(obj1);
 			
 		} else if( tableName.equals("Projekte") ) {
 			/**Object [][] data_ = {

@@ -20,9 +20,14 @@ public class PDFManagerTests {
 	}
 
 	@Test
-	public void testCreateAnnualPrognosis() {
+	public void testCreateAnnualPrognosisEmpty() {
 		String path = new java.util.Date().toString();
 		BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Angebote");
+		
+		/** Clear the model */
+		model.getDataObjectCollection().removeAll(model.getDataObjectCollection());
+		
+		assertEquals(0, model.getDataObjectCollection().size());
 		
 		ApplicationManager.getInstance().getPdfManager().createAnnualPrognosis(model, path);
 		
@@ -33,10 +38,27 @@ public class PDFManagerTests {
 		file.delete();
 	}
 	
+   @Test
+    public void testCreateAnnualPrognosis() {
+        String path = new java.util.Date().toString();
+        BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Angebote");
+        
+        ApplicationManager.getInstance().getPdfManager().createAnnualPrognosis(model, path);
+        
+        File file = new File(path);
+        
+        assertEquals(true, file.exists());
+        
+        file.delete();
+    }
+	
 	@Test
-	public void testCreateBillReportPdf() {
+	public void testCreateBillReportPdfEmpty() {
 		String path = new java.util.Date().toString();
 		BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen");
+		
+	    /** Clear the model */
+        model.getDataObjectCollection().removeAll(model.getDataObjectCollection());
 		
 		ApplicationManager.getInstance().getPdfManager().createBillReportPDF(model, path);
 		
@@ -46,11 +68,28 @@ public class PDFManagerTests {
 		
 		file.delete();
 	}
+	
+   @Test
+    public void testCreateBillReportPdf() {
+        String path = new java.util.Date().toString();
+        BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Ausgangsrechnungen");
+        
+        ApplicationManager.getInstance().getPdfManager().createBillReportPDF(model, path);
+        
+        File file = new File(path);
+        
+        assertEquals(true, file.exists());
+        
+        file.delete();
+    }
 
 	@Test
-	public void testCreateInOutBillReportPdf() {
+	public void testCreateInOutBillReportPdfEmpty() {
 		String path = new java.util.Date().toString();
 		BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen");
+		
+	    /** Clear the model */
+        model.getDataObjectCollection().removeAll(model.getDataObjectCollection());
 		
 		ApplicationManager.getInstance().getPdfManager().createInOutBillReportPDF(model, path);
 		
@@ -60,4 +99,18 @@ public class PDFManagerTests {
 		
 		file.delete();
 	}
+	
+   @Test
+    public void testCreateInOutBillReportPdf() {
+        String path = new java.util.Date().toString();
+        BackofficeTableModel model = ApplicationManager.getInstance().getModelForTableName("Buchungszeilen");
+        
+        ApplicationManager.getInstance().getPdfManager().createInOutBillReportPDF(model, path);
+        
+        File file = new File(path);
+        
+        assertEquals(true, file.exists());
+        
+        file.delete();
+    }
 }

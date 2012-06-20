@@ -15,6 +15,7 @@ import at.epu.DataAccessLayer.DataObjects.ContactDataObject;
 import at.epu.DataAccessLayer.DataObjects.CustomerDataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObject;
 import at.epu.DataAccessLayer.DataObjects.DataObjectFactory;
+import at.epu.DataAccessLayer.DataObjects.InBillDataObject;
 import at.epu.DataAccessLayer.DataObjects.OfferDataObject;
 import at.epu.DataAccessLayer.DataObjects.OutBillDataObject;
 import at.epu.DataAccessLayer.DataObjects.ProjectDataObject;
@@ -134,4 +135,16 @@ public class DataObjectFactoryTests {
 		
 		assertEquals(ContactDataObject.class, object.getClass());
 	}
+	
+	   @Test
+	    public void testEingangsrechnungen() throws SQLException {
+	        Object[] data = 
+	            {new Integer(1), "R01321", 1, "bezahlt"};
+
+	        ArrayResultSet resultSet = new ArrayResultSet(data);
+	        
+	        DataObject object = DataObjectFactory.createObject("Eingangsrechnungen", resultSet);
+	        
+	        assertEquals(InBillDataObject.class, object.getClass());
+	    }
 }

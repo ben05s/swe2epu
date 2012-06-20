@@ -135,7 +135,6 @@ public class PDFManager {
 	}
 	
 	public void createBillReportPDF(BackofficeTableModel model_ausgRechnungen, String path) {
-		
 		ApplicationManager appManager = ApplicationManager.getInstance();
 		BackofficeTableModel model_eingRechnungen = appManager.getModelForTableName("Eingangsrechnungen");
 		BackofficeTableModel model_kunden = appManager.getModelForTableName("Kunden");
@@ -272,7 +271,6 @@ public class PDFManager {
 	}
 	
 	public void createInOutBillReportPDF(BackofficeTableModel model, String path) {
-		if(model.getRowCount() != 0) {
 		sdf = new SimpleDateFormat("ddMMyyyy");
 		filename = path;
 		String year = new SimpleDateFormat("yyyy").format(new Date()).toString();
@@ -288,91 +286,92 @@ public class PDFManager {
 		PDPage page = newPage();
 		
 		try {
-			doc.addPage(page);
-			PDFont font = PDType1Font.HELVETICA_BOLD;
-				
-		    PDPageContentStream content = new PDPageContentStream(doc, page);
-		    
-			content.beginText();
-	        content.setFont( font, 18 );
-	        content.moveTextPositionByAmount( 100, 700 );
-	        content.drawString("Einnahmen / Ausgaben Report " + month + " " + year);
-	        content.moveTextPositionByAmount(10, -50);
-	        content.setFont(font, 16);
-	        content.drawString("Einnahmen");
-	        
-	        content.moveTextPositionByAmount(-10, -50);
-	        content.setFont(font, 10);
-	        
-	        content.drawString("AUSGANGSRECHNUNG");
-	        content.moveTextPositionByAmount(150, 0);
-	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(3).toString().toUpperCase());
-	        content.moveTextPositionByAmount(60, 0);
-	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(5).toString().toUpperCase());
-	        content.moveTextPositionByAmount(-210, -20);
-	        
-	        font = PDType1Font.HELVETICA;
-	        content.setFont(font, 10);
-	        
-	        for(int x=0;x<model.getRowCount();x++) {
-	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(2).toString()) > 0 && 
-	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
-	        		//resolve Foreign Key
-		        	for(int i=0;i<modelFK1.getRowCount();i++) {
-		        		if(modelFK1.getObjectAtRow(i).getFieldValues().get(0).toString().equals(model.getObjectAtRow(x).getFieldValues().get(2).toString())) {
-		    		        content.drawString(modelFK1.getObjectAtRow(i).getFieldValues().get(1).toString()); 
-		        		}
-		        	}  	
-		        	content.moveTextPositionByAmount(150, 0);
-		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(3).toString());
-		        	content.moveTextPositionByAmount(60, 0);
-		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(5).toString());
-		        	content.moveTextPositionByAmount(-210, -20);
-	        	}
-	        }
-			
-			content.moveTextPositionByAmount(10, -50);
-			font = PDType1Font.HELVETICA_BOLD;
-			content.setFont(font, 16);
-			content.drawString("Ausgaben");
-	        content.setFont(font, 10);
-	        content.moveTextPositionByAmount(-10, -50);
-	        
-	        content.drawString("EINGANGSRECHNUNG");
-	        content.moveTextPositionByAmount(150, 0);
-	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(3).toString().toUpperCase());
-	        content.moveTextPositionByAmount(60, 0);
-	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(5).toString().toUpperCase());
-	        content.moveTextPositionByAmount(-210, -20);
-	        
-	        font = PDType1Font.HELVETICA;
-	        content.setFont(font, 10);
-	        
-	        for(int x=0;x<model.getRowCount();x++) {
-	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(1).toString()) > 0 && 
-	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
-	        		//resolve Foreign Key
-		        	for(int i=0;i<modelFK2.getRowCount();i++) {
-		        		if(modelFK2.getObjectAtRow(i).getFieldValues().get(0).toString().equals(model.getObjectAtRow(x).getFieldValues().get(1).toString())) {
-		    		        content.drawString(modelFK2.getObjectAtRow(i).getFieldValues().get(1).toString()); 
-		        		}
-		        	}
-		        	content.moveTextPositionByAmount(150, 0);
-		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(3).toString());
-		        	content.moveTextPositionByAmount(60, 0);
-		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(5).toString());
-		        	content.moveTextPositionByAmount(-210, -20);
-	        	}
-	        }
-			
-	        content.endText();
-	        content.close();
+		    if(model.getDataObjectCollection().size() != 0) {
+    			doc.addPage(page);
+    			PDFont font = PDType1Font.HELVETICA_BOLD;
+    				
+    		    PDPageContentStream content = new PDPageContentStream(doc, page);
+    		    
+    			content.beginText();
+    	        content.setFont( font, 18 );
+    	        content.moveTextPositionByAmount( 100, 700 );
+    	        content.drawString("Einnahmen / Ausgaben Report " + month + " " + year);
+    	        content.moveTextPositionByAmount(10, -50);
+    	        content.setFont(font, 16);
+    	        content.drawString("Einnahmen");
+    	        
+    	        content.moveTextPositionByAmount(-10, -50);
+    	        content.setFont(font, 10);
+    	        
+    	        content.drawString("AUSGANGSRECHNUNG");
+    	        content.moveTextPositionByAmount(150, 0);
+    	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(3).toString().toUpperCase());
+    	        content.moveTextPositionByAmount(60, 0);
+    	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(5).toString().toUpperCase());
+    	        content.moveTextPositionByAmount(-210, -20);
+    	        
+    	        font = PDType1Font.HELVETICA;
+    	        content.setFont(font, 10);
+    	        
+    	        for(int x=0;x<model.getRowCount();x++) {
+    	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(2).toString()) > 0 && 
+    	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
+    	        		//resolve Foreign Key
+    		        	for(int i=0;i<modelFK1.getRowCount();i++) {
+    		        		if(modelFK1.getObjectAtRow(i).getFieldValues().get(0).toString().equals(model.getObjectAtRow(x).getFieldValues().get(2).toString())) {
+    		    		        content.drawString(modelFK1.getObjectAtRow(i).getFieldValues().get(1).toString()); 
+    		        		}
+    		        	}  	
+    		        	content.moveTextPositionByAmount(150, 0);
+    		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(3).toString());
+    		        	content.moveTextPositionByAmount(60, 0);
+    		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(5).toString());
+    		        	content.moveTextPositionByAmount(-210, -20);
+    	        	}
+    	        }
+    			
+    			content.moveTextPositionByAmount(10, -50);
+    			font = PDType1Font.HELVETICA_BOLD;
+    			content.setFont(font, 16);
+    			content.drawString("Ausgaben");
+    	        content.setFont(font, 10);
+    	        content.moveTextPositionByAmount(-10, -50);
+    	        
+    	        content.drawString("EINGANGSRECHNUNG");
+    	        content.moveTextPositionByAmount(150, 0);
+    	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(3).toString().toUpperCase());
+    	        content.moveTextPositionByAmount(60, 0);
+    	        content.drawString(model.getObjectAtRow(0).getFieldNames().get(5).toString().toUpperCase());
+    	        content.moveTextPositionByAmount(-210, -20);
+    	        
+    	        font = PDType1Font.HELVETICA;
+    	        content.setFont(font, 10);
+    	        
+    	        for(int x=0;x<model.getRowCount();x++) {
+    	        	if(Integer.parseInt(model.getObjectAtRow(x).getFieldValues().get(1).toString()) > 0 && 
+    	        			model.getObjectAtRow(x).getFieldValues().get(5).toString().contains(year +"-"+ mm)) {
+    	        		//resolve Foreign Key
+    		        	for(int i=0;i<modelFK2.getRowCount();i++) {
+    		        		if(modelFK2.getObjectAtRow(i).getFieldValues().get(0).toString().equals(model.getObjectAtRow(x).getFieldValues().get(1).toString())) {
+    		    		        content.drawString(modelFK2.getObjectAtRow(i).getFieldValues().get(1).toString()); 
+    		        		}
+    		        	}
+    		        	content.moveTextPositionByAmount(150, 0);
+    		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(3).toString());
+    		        	content.moveTextPositionByAmount(60, 0);
+    		        	content.drawString(model.getObjectAtRow(x).getFieldValues().get(5).toString());
+    		        	content.moveTextPositionByAmount(-210, -20);
+    	        	}
+    	        }
+    			
+    	        content.endText();
+    	        content.close();
+    		}
 	        
 			saveDocument(doc, filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
 		}
 	}
 	
